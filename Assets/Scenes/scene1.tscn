@@ -1,13 +1,25 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://KinematicBody22D.gd" type="Script" id=1]
-[ext_resource path="res://rockpixel.png" type="Texture" id=2]
-[ext_resource path="res://MovePlayer.gd" type="Script" id=3]
-[ext_resource path="res://idleMan.png" type="Texture" id=4]
-[ext_resource path="res://areaCircle.tscn" type="PackedScene" id=5]
-[ext_resource path="res://enemy2.gd" type="Script" id=6]
-[ext_resource path="res://manSpear.png" type="Texture" id=7]
-[ext_resource path="res://tileSouce2.tres" type="TileSet" id=8]
+[ext_resource path="res://Assets/Scripts/KinematicBody22D.gd" type="Script" id=1]
+[ext_resource path="res://Assets/PNG/rockpixel.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Scripts/MovePlayer.gd" type="Script" id=3]
+[ext_resource path="res://Assets/PNG/idleMan.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Scenes/areaCircle.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Scripts/enemy2.gd" type="Script" id=6]
+[ext_resource path="res://Assets/PNG/manSpear.png" type="Texture" id=7]
+[ext_resource path="res://Assets/tileSouce2.tres" type="TileSet" id=8]
+
+
+
+
+
+
+
+
+
+
+
+
 
 [sub_resource type="RectangleShape2D" id=1]
 
