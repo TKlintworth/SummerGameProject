@@ -16,8 +16,8 @@ _global_script_class_icons={
 [application]
 
 config/name="sampleGladiator"
-run/main_scene="res://Assets/Scenes/scene1.tscn"
-config/icon="res://Assets/PNG/icon.png"
+run/main_scene="res://scene1.tscn"
+config/icon="res://icon.png"
 
 [input]
 
