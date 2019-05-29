@@ -1,6 +1,10 @@
 [gd_scene load_steps=2 format=2]
 
+<<<<<<< HEAD
+[ext_resource path="res://PNG/hyptosis_tile-art-batch-1.png" type="Texture" id=1]
+=======
 [ext_resource path="res://Assets/hyptosis_tile-art-batch-1.png" type="Texture" id=1]
+>>>>>>> 1da9c1254807e3fd6e3d4d679a6b977db83b7e7b
 
 
 [node name="Node2D" type="Node2D"]
