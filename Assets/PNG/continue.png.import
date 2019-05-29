@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/wolf.jpg-1288244baf4a9f0746e13a372bb4cfff.stex"
+path="res://.import/continue.png-0c0266846ec8fdfdffc4111d2b70abbe.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://wolf.jpg"
-dest_files=[ "res://.import/wolf.jpg-1288244baf4a9f0746e13a372bb4cfff.stex" ]
+source_file="res://PNG/continue.png"
+dest_files=[ "res://.import/continue.png-0c0266846ec8fdfdffc4111d2b70abbe.stex" ]
 
 [params]
 

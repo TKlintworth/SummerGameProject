@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/idleMan.png-16a97128cb43e382a1997d3ccac24d3f.stex"
+path="res://.import/image8.png-08593236974c43108a7202adffa5cb26.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://idleMan.png"
-dest_files=[ "res://.import/idleMan.png-16a97128cb43e382a1997d3ccac24d3f.stex" ]
+source_file="res://githubReadme/image8.png"
+dest_files=[ "res://.import/image8.png-08593236974c43108a7202adffa5cb26.stex" ]
 
 [params]
 

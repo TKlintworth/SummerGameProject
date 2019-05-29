@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/spearicon.png-902bbe443ce65f37000545f49d0eb546.stex"
+path="res://.import/slavestage_throwspear_active.png-83d87934a0ed653aca4cb13cbcea4e9e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spearicon.png"
-dest_files=[ "res://.import/spearicon.png-902bbe443ce65f37000545f49d0eb546.stex" ]
+source_file="res://spritesheets/slavestage_throwspear_active.png"
+dest_files=[ "res://.import/slavestage_throwspear_active.png-83d87934a0ed653aca4cb13cbcea4e9e.stex" ]
 
 [params]
 
