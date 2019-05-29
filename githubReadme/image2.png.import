@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/spearicon.png-902bbe443ce65f37000545f49d0eb546.stex"
+path="res://.import/image2.png-b01b6136c8177cfd12f89b098b9e4a71.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spearicon.png"
-dest_files=[ "res://.import/spearicon.png-902bbe443ce65f37000545f49d0eb546.stex" ]
+source_file="res://githubReadme/image2.png"
+dest_files=[ "res://.import/image2.png-b01b6136c8177cfd12f89b098b9e4a71.stex" ]
 
 [params]
 

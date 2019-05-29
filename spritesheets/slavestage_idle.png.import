@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/manSpear.png-50e7fc733fedd43eb7fe4769840f8abb.stex"
+path="res://.import/slavestage_idle.png-b8365b60c3f77a481b4bf52f1795978f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://manSpear.png"
-dest_files=[ "res://.import/manSpear.png-50e7fc733fedd43eb7fe4769840f8abb.stex" ]
+source_file="res://spritesheets/slavestage_idle.png"
+dest_files=[ "res://.import/slavestage_idle.png-b8365b60c3f77a481b4bf52f1795978f.stex" ]
 
 [params]
 

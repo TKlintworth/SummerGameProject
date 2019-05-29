@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/manSpear.png-50e7fc733fedd43eb7fe4769840f8abb.stex"
+path="res://.import/image12.png-c76aad7ee039b166264a0ea84553e600.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://manSpear.png"
-dest_files=[ "res://.import/manSpear.png-50e7fc733fedd43eb7fe4769840f8abb.stex" ]
+source_file="res://githubReadme/image12.png"
+dest_files=[ "res://.import/image12.png-c76aad7ee039b166264a0ea84553e600.stex" ]
 
 [params]
 
