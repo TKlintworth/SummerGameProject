@@ -12,14 +12,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="TextureProgress" type="TextureProgress" parent="NinePatchRect"]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -461.071
-margin_top = -101.803
-margin_right = -65.071
-margin_bottom = -48.8032
+margin_left = 54.7965
+margin_top = 61.6461
+margin_right = 450.797
+margin_bottom = 114.646
 value = 20.0
 texture_under = ExtResource( 1 )
 texture_progress = ExtResource( 2 )
