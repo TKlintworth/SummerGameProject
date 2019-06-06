@@ -60,7 +60,7 @@ func _physics_process(delta):
 		$Area2D.show()
 		$AnimatedSprite.play("slave_jab_spear_active")
 		if $AnimatedSprite.flip_h == false:
-			$Area2D/AnimationPlayer.play("spear_attack")
+			$Area2D/AnimationPlayer.play("spear_attack_left")
 		if $AnimatedSprite.flip_h == true:
 			$Area2D/AnimationPlayer.play("spear_attack_right")
 		spear_attack_bool = true
