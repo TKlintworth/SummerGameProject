@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/death5gargle.wav-3451e2572338f536d20ab004a0b1b477.sample"
+
+[deps]
+
+source_file="res://sounds/death5gargle.wav"
+dest_files=[ "res://.import/death5gargle.wav-3451e2572338f536d20ab004a0b1b477.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
