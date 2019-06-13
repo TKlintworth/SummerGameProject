@@ -1,15 +1,16 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/SpriteAnimation.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Area2D.gd" type="Script" id=2]
 [ext_resource path="res://PNG/icon.png" type="Texture" id=3]
 [ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Art/BigArena.png" type="Texture" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 2.89655, 10 )
 
 [sub_resource type="Animation" id=2]
-resource_name = "spear_attack"
+resource_name = "spear_attack_left"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
@@ -23,7 +24,7 @@ tracks/0/keys = {
 "values": [ Vector2( -95.6838, -13.339 ), Vector2( -80.982, -13.339 ), Vector2( -117.35, -13.339 ), Vector2( -95.6838, -13.339 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "spear_attack_right"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -38,19 +39,21 @@ tracks/0/keys = {
 "values": [ Vector2( 95.684, -13.339 ), Vector2( 80.982, -13.339 ), Vector2( 117.35, -13.339 ), Vector2( 95.684, -13.339 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 64.0647, 61.6501 )
 
 [node name="Node2D" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 632.642, 367.815 )
+scale = Vector2( 0.5, 0.5 )
 
 [node name="Area2D" type="Area2D" parent="Player"]
 position = Vector2( 95.684, -13.339 )
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="Player/Area2D"]
+visible = false
 scale = Vector2( 0.8, 0.6 )
 texture = ExtResource( 3 )
 
@@ -59,16 +62,12 @@ scale = Vector2( 8, 1 )
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player/Area2D"]
-anims/spear_attack = SubResource( 2 )
-anims/spear_attack_right = SubResource( 4 )
+anims/spear_attack_left = SubResource( 2 )
+anims/spear_attack_right = SubResource( 3 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource( 4 )]
-margin_left = 136.612
-margin_top = 6.96402
-margin_right = 136.612
-margin_bottom = 6.96399
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="." groups=[
 "Character",
@@ -77,7 +76,17 @@ position = Vector2( 373.291, 340.655 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
 scale = Vector2( 0.5, 0.5 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="KinematicBody2D"]
 texture = ExtResource( 3 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer"]
+margin_right = 640.0
+margin_bottom = 320.0
+rect_scale = Vector2( 2, 2.25 )
+texture = ExtResource( 5 )
