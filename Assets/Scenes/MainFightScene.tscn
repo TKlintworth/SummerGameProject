@@ -24,7 +24,7 @@ tracks/0/keys = {
 "values": [ Vector2( -95.6838, -13.339 ), Vector2( -80.982, -13.339 ), Vector2( -117.35, -13.339 ), Vector2( -95.6838, -13.339 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "spear_attack_right"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
@@ -39,7 +39,7 @@ tracks/0/keys = {
 "values": [ Vector2( 95.684, -13.339 ), Vector2( 80.982, -13.339 ), Vector2( 117.35, -13.339 ), Vector2( 95.684, -13.339 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 64.0647, 61.6501 )
 
 [node name="Node2D" type="Node2D"]
@@ -63,7 +63,7 @@ shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player/Area2D"]
 anims/spear_attack_left = SubResource( 2 )
-anims/spear_attack_right = SubResource( 4 )
+anims/spear_attack_right = SubResource( 3 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -76,7 +76,7 @@ position = Vector2( 373.291, 340.655 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
 scale = Vector2( 0.5, 0.5 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="KinematicBody2D"]
 texture = ExtResource( 3 )
