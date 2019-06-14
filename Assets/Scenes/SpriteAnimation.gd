@@ -10,6 +10,7 @@ var down = false
 var spear_point_pos
 export var spear_attack_bool = false
 var spear_ready
+var player_dead = false
 
 onready var player_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/TextureProgress")
 
@@ -21,7 +22,10 @@ func _ready():
 
 
 func _physics_process(delta):
-	if(Input.is_key_pressed(KEY_LEFT) && spear_ready == true):
+	if (player_node.value <=27) :
+		player_dead = true
+		$AnimatedSprite.play("slave_dying")
+	elif(Input.is_key_pressed(KEY_LEFT) && spear_ready == true && player_dead == false):
 		$AnimatedSprite.set_flip_h(false)
 		$Area2D.position.x = spear_point_pos
 		$AnimatedSprite.play("slave_spear_running")
@@ -30,7 +34,7 @@ func _physics_process(delta):
 		right = false
 		down = false
 		up = false
-	elif(Input.is_key_pressed(KEY_RIGHT) && spear_ready == true):
+	elif(Input.is_key_pressed(KEY_RIGHT) && spear_ready == true && player_dead == false):
 		$AnimatedSprite.set_flip_h(true)
 		$Area2D.position.x = spear_point_pos * (-1)
 		$AnimatedSprite.play("slave_spear_running")
@@ -39,21 +43,21 @@ func _physics_process(delta):
 		right = true
 		down = false
 		up = false
-	elif(Input.is_key_pressed(KEY_DOWN) && spear_ready == true):
+	elif(Input.is_key_pressed(KEY_DOWN) && spear_ready == true && player_dead == false):
 		$AnimatedSprite.play("slave_spear_running")
 		vel.y = 300
 		left = false
 		right = false
 		down = true
 		up = false
-	elif(Input.is_key_pressed(KEY_UP) && spear_ready == true):
+	elif(Input.is_key_pressed(KEY_UP) && spear_ready == true && player_dead == false):
 		$AnimatedSprite.play("slave_spear_running")
 		vel.y = -300
 		left = false
 		right = false
 		down = false
 		up = true
-	elif(Input.is_key_pressed(KEY_T)):
+	elif(Input.is_key_pressed(KEY_T) && player_dead == false):
 		spear_ready = false
 		$Area2D.show()
 		$AnimatedSprite.play("slave_jab_spear_active")
@@ -63,7 +67,7 @@ func _physics_process(delta):
 			$Area2D/AnimationPlayer.play("spear_attack_right")
 		spear_attack_bool = true
 	else:
-		if(spear_ready == true):
+		if(spear_ready == true && player_dead == false):
 			$AnimatedSprite.play("slave_jab_spear_inactive")
 			vel.x = 0
 			vel.y = 0
@@ -75,6 +79,8 @@ func _physics_process(delta):
 	
 	if(Input.is_key_pressed(KEY_Y)):
 		take_damage()
+		
+		
 	
 #
 #func _input(event):
@@ -82,9 +88,13 @@ func _physics_process(delta):
 #		$AnimatedSprite.play("idle")
 func take_damage():
 	player_node.value -= 2
+		
+	
 
 func _on_AnimatedSprite_animation_finished():
 	$AnimatedSprite.play("slave_jab_spear_inactive")
 	spear_attack_bool = false
 	$Area2D.hide()
 	spear_ready = true
+	if(player_dead == true):
+		$AnimatedSprite.hide()
