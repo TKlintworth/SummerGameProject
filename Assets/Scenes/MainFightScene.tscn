@@ -69,8 +69,8 @@ anims/spear_attack_right = SubResource( 3 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource( 4 )]
-margin_left = -1.67017
-margin_right = -1.67017
+margin_left = -0.200016
+margin_right = -0.200073
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="." groups=[
 "Character",
