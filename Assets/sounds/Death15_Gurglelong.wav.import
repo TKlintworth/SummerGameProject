@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Death15_Gurglelong.wav-8c36fc029122401c717b38805a348a4a.sample"
+
+[deps]
+
+source_file="res://sounds/Death15_Gurglelong.wav"
+dest_files=[ "res://.import/Death15_Gurglelong.wav-8c36fc029122401c717b38805a348a4a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

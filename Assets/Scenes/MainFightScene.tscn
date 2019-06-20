@@ -45,8 +45,9 @@ extents = Vector2( 64.0647, 61.6501 )
 [node name="Node2D" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 632.642, 367.815 )
+position = Vector2( 674.968, 415.444 )
 scale = Vector2( 0.5, 0.5 )
+speed = 400
 
 [node name="Area2D" type="Area2D" parent="Player"]
 position = Vector2( 95.684, -13.339 )
@@ -68,6 +69,8 @@ anims/spear_attack_right = SubResource( 3 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource( 4 )]
+margin_left = -1.67017
+margin_right = -1.67017
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="." groups=[
 "Character",
@@ -86,7 +89,12 @@ texture = ExtResource( 3 )
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer"]
-margin_right = 640.0
-margin_bottom = 320.0
+margin_left = 22.689
+margin_top = 3.78149
+margin_right = 662.689
+margin_bottom = 323.781
 rect_scale = Vector2( 2, 2.25 )
 texture = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}

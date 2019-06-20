@@ -2,7 +2,6 @@ extends KinematicBody2D
 
 export (int) var speed
 
-#var man_spear = preload("res://manSpear.png")
 var velocity = Vector2()
 
 func get_input():
