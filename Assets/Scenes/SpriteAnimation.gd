@@ -15,8 +15,8 @@ onready var player_node = get_parent().get_node("CanvasLayer/Control/NinePatchRe
 #	$AnimatedSprite.play("slave_jab_spear_inactive")
 #	spear_point_pos = $Area2D.position.x
 #	spear_ready = true
-#func take_damage():
-	#player_node.value -= 2
+func take_damage():
+	player_node.value -= 2
 	
 #func _on_AnimatedSprite_animation_finished():
 #	$AnimatedSprite.play("slave_jab_spear_inactive")
@@ -29,7 +29,8 @@ onready var player_node = get_parent().get_node("CanvasLayer/Control/NinePatchRe
 func get_input():
 	velocity = Vector2()
 	var sprint = false
-	if (player_node.value <=27) :
+	
+	if (player_node.value <=27):
 		player_dead = true
 		$AnimatedSprite.play("slave_dying")
 	if Input.is_action_pressed("right"):
@@ -46,6 +47,10 @@ func get_input():
 	if Input.is_action_pressed("up"):
 		velocity.y -= 1
 		$AnimatedSprite.play("player_run_spear")
+	if Input.is_action_pressed("Q"):
+		player_dead = true
+		$Area2D/AudioStreamPlayer2D.play_noise()
+		$AnimatedSprite.play("slave_dying")
 	if Input.is_action_pressed("shift"):
 		$AnimatedSprite.set_speed_scale(1.5)
 		$AnimatedSprite.play("player_run_spear")
@@ -53,13 +58,14 @@ func get_input():
 	else:
 		sprint = false
 		$AnimatedSprite.set_speed_scale(1)
-	if Input.is_action_pressed("left") == false && Input.is_action_pressed("down") == false && Input.is_action_pressed("right") == false && Input.is_action_pressed("up") == false:
+	if Input.is_action_pressed("left") == false && Input.is_action_pressed("down") == false && Input.is_action_pressed("right") == false && Input.is_action_pressed("up") == false && player_dead == false:
 		#$AnimatedSprite.stop()
-		$AnimatedSprite.play("player_idle_spear")
+		$AnimatedSprite.play("player_idle_spear")	
+		#$AnimatedSprite.hide()
 	if sprint == false:
 		velocity = velocity.normalized() * speed
-	#if(Input.is_key_pressed(KEY_Y)):
-		#take_damage()
+#	if(Input.is_key_pressed(KEY_Y)):
+#		take_damage()
 	else:
 		#sprinting increases speed by 150%
 		velocity = velocity.normalized() * (speed+ (0.5*(speed)))

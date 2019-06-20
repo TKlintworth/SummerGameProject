@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/SpriteAnimation.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Area2D.gd" type="Script" id=2]
 [ext_resource path="res://PNG/icon.png" type="Texture" id=3]
-[ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Art/BigArena.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Art/BigArena.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 2.89655, 10 )
@@ -66,11 +67,17 @@ shape = SubResource( 1 )
 anims/spear_attack_left = SubResource( 2 )
 anims/spear_attack_right = SubResource( 3 )
 
+[node name="AudioStreamPlayer2D" parent="Player/Area2D" instance=ExtResource( 4 )]
+position = Vector2( -95.684, 13.339 )
+autoplay = false
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Control" parent="CanvasLayer" instance=ExtResource( 4 )]
-margin_left = -0.200016
-margin_right = -0.200073
+[node name="Control" parent="CanvasLayer" instance=ExtResource( 5 )]
+margin_left = 40.9653
+margin_top = -0.735077
+margin_right = 40.9652
+margin_bottom = -0.735107
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="." groups=[
 "Character",
@@ -94,7 +101,7 @@ margin_top = 3.78149
 margin_right = 662.689
 margin_bottom = 323.781
 rect_scale = Vector2( 2, 2.25 )
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 __meta__ = {
 "_edit_lock_": true
 }
