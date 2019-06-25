@@ -7,7 +7,7 @@
 [ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Art/BigArena.png" type="Texture" id=6]
 [ext_resource path="res://Scenes/Enemy.gd" type="Script" id=7]
-[ext_resource path="res://Sprites/slave_jab_grip_spear_active/tile000.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/enemy_redguard_dagger_idle/tile000.png" type="Texture" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 2.89655, 10 )
@@ -122,5 +122,5 @@ shape = SubResource( 5 )
 
 [node name="Sprite" type="Sprite" parent="Enemy"]
 position = Vector2( 23.1489, -33.4375 )
-scale = Vector2( 0.15, 0.15 )
+scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 8 )
