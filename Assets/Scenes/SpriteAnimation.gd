@@ -7,6 +7,8 @@ export (int) var speed = 360
 export var spear_attack_bool = false
 var spear_ready
 var player_dead = false
+var player_block = false # boolean for if player is blocking
+var action = false # boolean for if player is performing an action. E.G. blocking, attacking
 
 onready var player_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/TextureProgress")
 
@@ -33,20 +35,24 @@ func get_input():
 	if (player_node.value <=27):
 		player_dead = true
 		$AnimatedSprite.play("slave_dying")
-	if Input.is_action_pressed("right"):
+	if Input.is_action_pressed("right") && action == false:
 		velocity.x += 1
 		$AnimatedSprite.set_flip_h(true)
 		$AnimatedSprite.play("player_run_spear")
-	if Input.is_action_pressed("left"):
+	if Input.is_action_pressed("left") && action == false:
 		velocity.x -= 1
 		$AnimatedSprite.set_flip_h(false)
 		$AnimatedSprite.play("player_run_spear")
-	if Input.is_action_pressed("down"):
+	if Input.is_action_pressed("down") && action == false:
 		velocity.y += 1
 		$AnimatedSprite.play("player_run_spear")
-	if Input.is_action_pressed("up"):
+	if Input.is_action_pressed("up") && action == false:
 		velocity.y -= 1
 		$AnimatedSprite.play("player_run_spear")
+	if Input.is_action_pressed("E"):
+		player_block = true
+		action = true
+		$AnimatedSprite.play("slave_block")
 	if Input.is_action_pressed("Q"):
 		player_dead = true
 		$Area2D/AudioStreamPlayer2D.play_noise()
@@ -58,7 +64,7 @@ func get_input():
 	else:
 		sprint = false
 		$AnimatedSprite.set_speed_scale(1)
-	if Input.is_action_pressed("left") == false && Input.is_action_pressed("down") == false && Input.is_action_pressed("right") == false && Input.is_action_pressed("up") == false && player_dead == false:
+	if Input.is_action_pressed("left") == false && Input.is_action_pressed("down") == false && Input.is_action_pressed("right") == false && Input.is_action_pressed("up") == false && player_dead == false && player_block == false && action == false:
 		#$AnimatedSprite.stop()
 		$AnimatedSprite.play("player_idle_spear")	
 		#$AnimatedSprite.hide()
@@ -133,3 +139,9 @@ func _physics_process(delta):
 #	if(event.is_action_pressed("shoot")):
 #		$AnimatedSprite.play("idle")
 
+
+
+func _on_AnimatedSprite_animation_finished():
+	player_block = false
+	if !Input.is_action_pressed("E"):
+		action = false
