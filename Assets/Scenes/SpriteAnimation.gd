@@ -49,10 +49,13 @@ func get_input():
 	if Input.is_action_pressed("up") && action == false:
 		velocity.y -= 1
 		$AnimatedSprite.play("player_run_spear")
-	if Input.is_action_pressed("E"):
+	if Input.is_action_pressed("E"): #block animation
 		player_block = true
 		action = true
 		$AnimatedSprite.play("slave_block")
+	if Input.is_action_pressed("T"):
+		action = true
+		$AnimatedSprite.play("slave_throw_spear_active")
 	if Input.is_action_pressed("Q"):
 		player_dead = true
 		$Area2D/AudioStreamPlayer2D.play_noise()
@@ -141,7 +144,7 @@ func _physics_process(delta):
 
 
 
-func _on_AnimatedSprite_animation_finished():
+func _on_AnimatedSprite_animation_finished(): #ran everytime animation is finished
 	player_block = false
-	if !Input.is_action_pressed("E"):
+	if !Input.is_action_pressed("E"): #this is needed so player does cannot move when animation plays
 		action = false
