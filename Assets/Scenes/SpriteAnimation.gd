@@ -9,10 +9,15 @@ var spear_ready
 var player_dead = false
 var player_block = false # boolean for if player is blocking
 var action = false # boolean for if player is performing an action. E.G. blocking, attacking
+var spear
+var spear_thrown = false
+var player_idle = false
 
 onready var player_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/TextureProgress")
 
-#func _ready():
+func _ready():
+	spear = get_node("Spear")
+	remove_child($Spear) #spear is not needed until key pressed
 	#pass
 #	$AnimatedSprite.play("slave_jab_spear_inactive")
 #	spear_point_pos = $Area2D.position.x
@@ -54,7 +59,9 @@ func get_input():
 		action = true
 		$AnimatedSprite.play("slave_block")
 	if Input.is_action_pressed("T"):
+		spear_thrown = true
 		action = true
+		add_child(spear)
 		$AnimatedSprite.play("slave_throw_spear_active")
 	if Input.is_action_pressed("Q"):
 		player_dead = true
@@ -148,3 +155,6 @@ func _on_AnimatedSprite_animation_finished(): #ran everytime animation is finish
 	player_block = false
 	if !Input.is_action_pressed("E"): #this is needed so player does cannot move when animation plays
 		action = false
+	if spear_thrown == true:
+		spear_thrown = false
+		player_idle = true

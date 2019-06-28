@@ -1,13 +1,14 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scenes/SpriteAnimation.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Area2D.gd" type="Script" id=2]
 [ext_resource path="res://PNG/icon.png" type="Texture" id=3]
 [ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Art/BigArena.png" type="Texture" id=6]
-[ext_resource path="res://Scenes/Enemy.gd" type="Script" id=7]
-[ext_resource path="res://Sprites/enemy_redguard_dagger_idle/tile000.png" type="Texture" id=8]
+[ext_resource path="res://Scenes/Spear.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Art/BigArena.png" type="Texture" id=7]
+[ext_resource path="res://Scenes/Enemy.gd" type="Script" id=8]
+[ext_resource path="res://Sprites/enemy_redguard_dagger_idle/tile000.png" type="Texture" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 2.89655, 10 )
@@ -75,9 +76,12 @@ anims/spear_attack_right = SubResource( 3 )
 position = Vector2( -95.684, 13.339 )
 autoplay = false
 
+[node name="Spear" parent="Player" instance=ExtResource( 5 )]
+position = Vector2( -164.517, -49.1094 )
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Control" parent="CanvasLayer" instance=ExtResource( 5 )]
+[node name="Control" parent="CanvasLayer" instance=ExtResource( 6 )]
 margin_left = 40.9653
 margin_top = -0.735077
 margin_right = 40.9652
@@ -90,10 +94,12 @@ visible = false
 position = Vector2( 373.291, 340.655 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
+visible = false
 scale = Vector2( 0.5, 0.5 )
 shape = SubResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="KinematicBody2D"]
+visible = false
 texture = ExtResource( 3 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
@@ -106,14 +112,14 @@ margin_top = 3.78149
 margin_right = 662.689
 margin_bottom = 323.781
 rect_scale = Vector2( 2, 2.25 )
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="Enemy" type="KinematicBody2D" parent="."]
 position = Vector2( 829.461, 461.106 )
-script = ExtResource( 7 )
+script = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
 position = Vector2( 23.6206, -35.8383 )
@@ -123,4 +129,4 @@ shape = SubResource( 5 )
 [node name="Sprite" type="Sprite" parent="Enemy"]
 position = Vector2( 23.1489, -33.4375 )
 scale = Vector2( 0.3, 0.3 )
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
