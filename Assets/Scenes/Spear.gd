@@ -35,15 +35,15 @@ func get_input():
 
 func _process(delta):
 	#vel = move_and_slide(vel)
-	direction = get_parent().character_direction
-	print(direction)
-	print(timer.time_left)
+	direction = get_parent().get_node("Player").character_direction
+	#print(direction)
+	#print(timer.time_left)
 	if(timer.time_left <= 0.5 && timer_start == true):
 		self.show()
 		timer_done = true
 	if(timer_done == true):
 		vel = move_and_slide(vel)
-	print(sec)
+	#print(sec)
 	get_input()
 	
 

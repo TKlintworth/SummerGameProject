@@ -19,8 +19,7 @@ var status # int value to decide animation type; 0 = Does have spear; 1 = Does N
 onready var player_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/TextureProgress")
 
 func _ready():
-	spear = get_node("Spear")
-	remove_child($Spear) #spear is not needed until key pressed
+	spear = get_parent().get_node("Spear") # gets spear node
 	status = 0 # status of 0 is slave with spear
 
 func take_damage():
@@ -65,13 +64,13 @@ func get_input():
 		player_block = true
 		action = true
 		$AnimatedSprite.play("slave_block")
-	if Input.is_action_pressed("T"):
+	if Input.is_action_pressed("T") && spear_thrown == false:
 		spear_thrown = true
 		action = true
-		add_child(spear) # adds the spear "object" to the scene
+		get_parent().add_child(spear) # adds the spear "object" to the scene
 		match character_direction:
-			0: spear.position = Vector2(-131, -78) # set starting position of spear when player is facing left
-			1: spear.position = Vector2(131, -78) # set starting postion of spear when player is facing right
+			0: spear.position = Vector2((self.position.x - 131), (self.position.y - 40)) # set starting position of spear when player is facing left
+			1: spear.position = Vector2((self.position.x + 131), (self.position.y - 40)) # set starting postion of spear when player is facing right
 		$AnimatedSprite.play("slave_throw_spear_active")
 	if Input.is_action_pressed("Q"):
 		player_dead = true
