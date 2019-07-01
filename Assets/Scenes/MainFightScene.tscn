@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/SpriteAnimation.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Area2D.gd" type="Script" id=2]
@@ -43,9 +43,6 @@ tracks/0/keys = {
 "values": [ Vector2( 95.684, -13.339 ), Vector2( 80.982, -13.339 ), Vector2( 117.35, -13.339 ), Vector2( 95.684, -13.339 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 64.0647, 61.6501 )
-
 [sub_resource type="RectangleShape2D" id=5]
 
 [node name="Node2D" type="Node2D"]
@@ -77,7 +74,7 @@ position = Vector2( -95.684, 13.339 )
 autoplay = false
 
 [node name="Spear" parent="Player" instance=ExtResource( 5 )]
-position = Vector2( -164.517, -49.1094 )
+position = Vector2( -131, -78 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -86,21 +83,6 @@ margin_left = 40.9653
 margin_top = -0.735077
 margin_right = 40.9652
 margin_bottom = -0.735107
-
-[node name="KinematicBody2D" type="KinematicBody2D" parent="." groups=[
-"Character",
-]]
-visible = false
-position = Vector2( 373.291, 340.655 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
-visible = false
-scale = Vector2( 0.5, 0.5 )
-shape = SubResource( 4 )
-
-[node name="Sprite" type="Sprite" parent="KinematicBody2D"]
-visible = false
-texture = ExtResource( 3 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 

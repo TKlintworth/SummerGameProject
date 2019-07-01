@@ -5,6 +5,8 @@ var sec = 0.0
 var timer
 var timer_done = false
 var timer_start = false
+var direction
+
 
 func _ready():
 	timer = Timer.new()
@@ -19,11 +21,22 @@ func get_input():
 		print(timer.time_left)
 		#self.show()
 		#self.add_force(Vector2(0,0), Vector2(-200,0))
-		vel.x = -300
-		vel.y = 0
+		match direction:
+			0:  # player facing left, so throw spear left
+				$AnimatedSprite.play("spear_flight")
+				vel.x = -300 
+				vel.y = 0
+			1: # player facing right, so throw spear right
+				$AnimatedSprite.set_flip_h(true)
+				$AnimatedSprite.play("spear_flight")
+				vel.x = 300 
+				vel.y = 0
+		
 
 func _process(delta):
 	#vel = move_and_slide(vel)
+	direction = get_parent().character_direction
+	print(direction)
 	print(timer.time_left)
 	if(timer.time_left <= 0.5 && timer_start == true):
 		self.show()
