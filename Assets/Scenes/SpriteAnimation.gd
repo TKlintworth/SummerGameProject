@@ -64,7 +64,7 @@ func get_input():
 		player_block = true
 		action = true
 		$AnimatedSprite.play("slave_block")
-	if Input.is_action_pressed("T") && spear_thrown == false:
+	if Input.is_action_pressed("T") && spear_thrown == false: # player has not thrown spear yet
 		spear_thrown = true
 		action = true
 		get_parent().add_child(spear) # adds the spear "object" to the scene

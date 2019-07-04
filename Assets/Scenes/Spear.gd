@@ -35,12 +35,12 @@ func get_input():
 		match direction:
 			0:  # player facing left, so throw spear left
 				$AnimatedSprite.play("spear_flight")
-				vel.x = -300 
+				vel.x = -400 
 				vel.y = 0
 			1: # player facing right, so throw spear right
 				$AnimatedSprite.set_flip_h(true)
 				$AnimatedSprite.play("spear_flight")
-				vel.x = 300 
+				vel.x = 400 
 				vel.y = 0
 		
 
