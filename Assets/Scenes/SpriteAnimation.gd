@@ -6,6 +6,8 @@ export (int) var speed = 360
 #var spear_point_pos
 export var spear_attack_bool = false
 export var character_direction = 0 # int value to decide direction; 0 = Character is facing LEFT; 1 = Character is facing RIGHT
+export (PackedScene) var spear_scene
+
 var spear_ready
 var player_dead = false
 var player_block = false # boolean for if player is blocking
@@ -13,17 +15,31 @@ var action = false # boolean for if player is performing an action. E.G. blockin
 var spear
 var spear_thrown = false
 var player_idle = false
-var status # int value to decide animation type; 0 = Does have spear; 1 = Does NOT have spear
-
+export var status = 0 # int value to decide animation type; 0 = Does have spear; 1 = Does NOT have spear
+var spear_pick
 
 onready var player_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/TextureProgress")
+var main_scene = load("res://Scenes/MainFightScene.gd").new()
 
 func _ready():
-	spear = get_parent().get_node("Spear") # gets spear node
 	status = 0 # status of 0 is slave with spear
 
+# take damage function
 func take_damage():
 	player_node.value -= 2
+
+# throw spear function	
+func throw_spear():
+	spear_thrown = true
+	action = true
+	spear = spear_scene.instance()
+	get_parent().add_child(spear) # adds the spear "object" to the scene
+	spear_pick = get_parent().get_node("Spear/Area2D")
+	print(spear_pick)
+	match character_direction:
+		0: spear.position = Vector2((self.position.x - 131), (self.position.y - 40)) # set starting position of spear when player is facing left
+		1: spear.position = Vector2((self.position.x + 131), (self.position.y - 40)) # set starting postion of spear when player is facing right
+	$AnimatedSprite.play("slave_throw_spear_active")
 
 func get_input():
 	velocity = Vector2()
@@ -60,22 +76,23 @@ func get_input():
 			1: $AnimatedSprite.play("slave_running")
 			
 	############# ACTIONS ###########################
+	# Block action
 	if Input.is_action_pressed("E"): #block animation
 		player_block = true
 		action = true
 		$AnimatedSprite.play("slave_block")
-	if Input.is_action_pressed("T") && spear_thrown == false:
-		spear_thrown = true
-		action = true
-		get_parent().add_child(spear) # adds the spear "object" to the scene
-		match character_direction:
-			0: spear.position = Vector2((self.position.x - 131), (self.position.y - 40)) # set starting position of spear when player is facing left
-			1: spear.position = Vector2((self.position.x + 131), (self.position.y - 40)) # set starting postion of spear when player is facing right
-		$AnimatedSprite.play("slave_throw_spear_active")
+	
+	# Throw spear action
+	if Input.is_action_pressed("T") && spear_thrown == false: # player has not thrown spear yet
+		throw_spear()
+	
+	#Die action
 	if Input.is_action_pressed("Q"):
 		player_dead = true
 		$Area2D/AudioStreamPlayer2D.play_noise()
 		$AnimatedSprite.play("slave_dying")
+		
+	#Sprint action
 	if Input.is_action_pressed("shift"):
 		$AnimatedSprite.set_speed_scale(1.5)
 		$AnimatedSprite.play("player_run_spear")
@@ -83,6 +100,8 @@ func get_input():
 	else:
 		sprint = false
 		$AnimatedSprite.set_speed_scale(1)
+		
+	# Standing player
 	if Input.is_action_pressed("left") == false && Input.is_action_pressed("down") == false && Input.is_action_pressed("right") == false && Input.is_action_pressed("up") == false && player_dead == false && player_block == false && action == false:
 		match status:
 			0: $AnimatedSprite.play("player_idle_spear") # player has not thrown spear yet
@@ -97,10 +116,23 @@ func get_input():
 		velocity = velocity.normalized() * (speed+ (0.5*(speed)))
 
 func _physics_process(delta):
+	if(spear_thrown == true && spear_pick.spear_pickup == true): # spear has been thrown, and player has entered the Area2D of the spear
+		get_parent().destroy_spear() # destroys the spear node in the main fight scene
+		spear_thrown = false
+		status = 0 # player is now holding the spear
+	
 	get_input()
 	velocity = move_and_slide(velocity)
-	
-	
+
+######### Plays after each animation finished ############
+func _on_AnimatedSprite_animation_finished(): #ran everytime animation is finished
+	player_block = false
+	if !Input.is_action_pressed("E"): #this is needed so player does cannot move when animation plays
+		action = false
+	if spear_thrown == true:
+		status = 1
+	else:
+		status = 0
 	
 #&& spear_ready == true && player_dead == false
 
@@ -163,9 +195,4 @@ func _physics_process(delta):
 
 
 
-func _on_AnimatedSprite_animation_finished(): #ran everytime animation is finished
-	player_block = false
-	if !Input.is_action_pressed("E"): #this is needed so player does cannot move when animation plays
-		action = false
-	if spear_thrown == true:
-		status = 1
+

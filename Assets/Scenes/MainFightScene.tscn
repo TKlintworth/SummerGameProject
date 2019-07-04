@@ -2,10 +2,10 @@
 
 [ext_resource path="res://Scenes/MainFightScene.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/SpriteAnimation.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/Area2D.gd" type="Script" id=3]
-[ext_resource path="res://PNG/icon.png" type="Texture" id=4]
-[ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/Spear.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Spear.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Area2D.gd" type="Script" id=4]
+[ext_resource path="res://PNG/icon.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Art/BigArena.png" type="Texture" id=8]
 [ext_resource path="res://Scenes/Enemy.gd" type="Script" id=9]
@@ -53,15 +53,16 @@ script = ExtResource( 1 )
 position = Vector2( 674.968, 415.444 )
 scale = Vector2( 0.5, 0.5 )
 speed = 400
+spear_scene = ExtResource( 3 )
 
 [node name="Area2D" type="Area2D" parent="Player"]
 position = Vector2( 95.684, -13.339 )
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="Player/Area2D"]
 visible = false
 scale = Vector2( 0.8, 0.6 )
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Player/Area2D"]
 scale = Vector2( 8, 1 )
@@ -71,13 +72,9 @@ shape = SubResource( 1 )
 anims/spear_attack_left = SubResource( 2 )
 anims/spear_attack_right = SubResource( 3 )
 
-[node name="AudioStreamPlayer2D" parent="Player/Area2D" instance=ExtResource( 5 )]
+[node name="AudioStreamPlayer2D" parent="Player/Area2D" instance=ExtResource( 6 )]
 position = Vector2( -95.684, 13.339 )
 autoplay = false
-
-[node name="Spear" parent="." instance=ExtResource( 6 )]
-position = Vector2( 609.468, 376.444 )
-scale = Vector2( 0.5, 0.5 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

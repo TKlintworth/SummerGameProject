@@ -1,4 +1,7 @@
 extends Node2D
 
 func _ready():
-	remove_child($Spear) # spear child not needed until "throw" key is pressed
+	destroy_spear() # spear child not needed until "throw" key is pressed
+	
+func destroy_spear():
+	remove_child($Spear) 

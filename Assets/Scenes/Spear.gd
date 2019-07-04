@@ -1,6 +1,8 @@
 extends KinematicBody2D
 
 var vel = Vector2()
+export (int) var speed_x = 400
+export (int) var speed_y = 0
 var sec = 0.0
 var timer # timer to tell when to show spear
 var spear_flight_timer # timer to tell when to stop spear
@@ -26,22 +28,17 @@ func _ready():
 
 func get_input():
 	if Input.is_action_pressed("T"):
-		timer.start()
-		spear_flight_timer.start()
 		timer_start = true
-		print(timer.time_left)
-		#self.show()
-		#self.add_force(Vector2(0,0), Vector2(-200,0))
 		match direction:
 			0:  # player facing left, so throw spear left
 				$AnimatedSprite.play("spear_flight")
-				vel.x = -300 
-				vel.y = 0
+				vel.x = -speed_x
+				vel.y = speed_y
 			1: # player facing right, so throw spear right
 				$AnimatedSprite.set_flip_h(true)
 				$AnimatedSprite.play("spear_flight")
-				vel.x = 300 
-				vel.y = 0
+				vel.x = speed_x
+				vel.y = speed_y
 		
 
 func _process(delta):
@@ -79,7 +76,3 @@ func _process(delta):
 		
 	get_input()
 	
-
-
-func _on_Timer_timeout():
-	sec += 1
