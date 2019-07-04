@@ -14,6 +14,7 @@ var waited_spear = 0
 var delay = 1
 var spear_distance = 2
 var rotate = true
+var thrown = false
 
 
 func _ready():
@@ -25,9 +26,11 @@ func _ready():
 	spear_flight_timer.wait_time = 2.5
 	add_child(spear_flight_timer)
 	self.hide()
+	thrown = false
 
 func get_input():
-	if Input.is_action_pressed("T"):
+	if Input.is_action_pressed("T") && thrown == false:
+		thrown = true
 		timer_start = true
 		match direction:
 			0:  # player facing left, so throw spear left

@@ -18,7 +18,8 @@ var player_idle = false
 export var status = 0 # int value to decide animation type; 0 = Does have spear; 1 = Does NOT have spear
 var spear_pick
 
-onready var player_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/TextureProgress")
+onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/TextureProgress")
+onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/TextureProgress2")
 var main_scene = load("res://Scenes/MainFightScene.gd").new()
 
 func _ready():
@@ -26,8 +27,15 @@ func _ready():
 
 # take damage function
 func take_damage():
-	player_node.value -= 2
+	player_health_node.value -= 2
 
+# player block function
+func block():
+	player_block = true
+	action = true
+	player_stamina_node.value -= 2
+	$AnimatedSprite.play("slave_block")
+	
 # throw spear function	
 func throw_spear():
 	spear_thrown = true
@@ -45,7 +53,7 @@ func get_input():
 	velocity = Vector2()
 	var sprint = false
 	
-	if (player_node.value <=27):
+	if (player_health_node.value <=27):
 		player_dead = true
 		$AnimatedSprite.play("slave_dying")
 		
@@ -78,9 +86,7 @@ func get_input():
 	############# ACTIONS ###########################
 	# Block action
 	if Input.is_action_pressed("E"): #block animation
-		player_block = true
-		action = true
-		$AnimatedSprite.play("slave_block")
+		block()
 	
 	# Throw spear action
 	if Input.is_action_pressed("T") && spear_thrown == false: # player has not thrown spear yet
