@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 var velocity = Vector2()
+var look_direction = Vector2(-1,0)
 export (int) var speed = 360
 
 #var spear_point_pos
@@ -18,7 +19,8 @@ var player_idle = false
 export var status = 0 # int value to decide animation type; 0 = Does have spear; 1 = Does NOT have spear
 var spear_pick
 
-onready var player_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/TextureProgress")
+onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/TextureProgress")
+onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/TextureProgress2")
 var main_scene = load("res://Scenes/MainFightScene.gd").new()
 
 func _ready():
@@ -26,8 +28,15 @@ func _ready():
 
 # take damage function
 func take_damage():
-	player_node.value -= 2
+	player_health_node.value -= 2
 
+# player block function
+func block():
+	player_block = true
+	action = true
+	player_stamina_node.value -= 2
+	$AnimatedSprite.play("slave_block")
+	
 # throw spear function	
 func throw_spear():
 	spear_thrown = true
@@ -45,12 +54,13 @@ func get_input():
 	velocity = Vector2()
 	var sprint = false
 	
-	if (player_node.value <=27):
+	if (player_health_node.value <=27):
 		player_dead = true
 		$AnimatedSprite.play("slave_dying")
 		
 	########### MOVEMENT #################
 	if Input.is_action_pressed("left") && action == false:
+		look_direction = Vector2(-1,0)
 		velocity.x -= 1
 		$AnimatedSprite.set_flip_h(false)
 		character_direction = 0 
@@ -58,6 +68,7 @@ func get_input():
 			0: $AnimatedSprite.play("player_run_spear")
 			1: $AnimatedSprite.play("slave_running")	
 	if Input.is_action_pressed("right") && action == false:
+		look_direction = Vector2(1,0)
 		velocity.x += 1
 		$AnimatedSprite.set_flip_h(true)
 		character_direction = 1
@@ -65,11 +76,13 @@ func get_input():
 			0: $AnimatedSprite.play("player_run_spear")
 			1: $AnimatedSprite.play("slave_running")
 	if Input.is_action_pressed("down") && action == false:
+		look_direction = Vector2(0,1)
 		velocity.y += 1
 		match status:
 			0: $AnimatedSprite.play("player_run_spear")
 			1: $AnimatedSprite.play("slave_running")
 	if Input.is_action_pressed("up") && action == false:
+		look_direction = Vector2(0,-1)
 		velocity.y -= 1
 		match status:
 			0: $AnimatedSprite.play("player_run_spear")
@@ -78,9 +91,7 @@ func get_input():
 	############# ACTIONS ###########################
 	# Block action
 	if Input.is_action_pressed("E"): #block animation
-		player_block = true
-		action = true
-		$AnimatedSprite.play("slave_block")
+		block()
 	
 	# Throw spear action
 	if Input.is_action_pressed("T") && spear_thrown == false: # player has not thrown spear yet

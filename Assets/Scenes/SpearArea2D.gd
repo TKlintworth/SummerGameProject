@@ -14,9 +14,9 @@ func _process(delta):
 	if not overlapping_bodies: # if no overlapping bodies, do not run any more code
 			return
 	for body in overlapping_bodies:
-		if not body.is_in_group("Player"): # if the overlapping body is not the player, do not run any more code
+		if not body.is_in_group("Player"): #or not body.is_in_group("Enemy"): # if the overlapping body is not the player, do not run any more code
 			return
-		#body.take_damage()
+		#if(body.is_in_group("Player")):
 		print("hit")
 		#player_status = get_tree().get_root().get_node("Node2D/Player").status
 		#player_status = 0
@@ -25,4 +25,7 @@ func _process(delta):
 		print(player_status)
 		spear_pickup = true
 		#get_parent().hide()
+		#else:
+		#	print("enemy hit")
+		#	body.hide()
 	set_physics_process(false)
