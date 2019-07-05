@@ -95,7 +95,7 @@ margin_left = 22.689
 margin_top = 3.78149
 margin_right = 662.689
 margin_bottom = 323.781
-rect_scale = Vector2( 2, 2.25 )
+rect_scale = Vector2( 3, 3.375 )
 texture = ExtResource( 8 )
 __meta__ = {
 "_edit_lock_": true
