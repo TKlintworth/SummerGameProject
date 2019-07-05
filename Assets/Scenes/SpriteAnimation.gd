@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 var velocity = Vector2()
+var look_direction = Vector2(-1,0)
 export (int) var speed = 360
 
 #var spear_point_pos
@@ -59,6 +60,7 @@ func get_input():
 		
 	########### MOVEMENT #################
 	if Input.is_action_pressed("left") && action == false:
+		look_direction = Vector2(-1,0)
 		velocity.x -= 1
 		$AnimatedSprite.set_flip_h(false)
 		character_direction = 0 
@@ -66,6 +68,7 @@ func get_input():
 			0: $AnimatedSprite.play("player_run_spear")
 			1: $AnimatedSprite.play("slave_running")	
 	if Input.is_action_pressed("right") && action == false:
+		look_direction = Vector2(1,0)
 		velocity.x += 1
 		$AnimatedSprite.set_flip_h(true)
 		character_direction = 1
@@ -73,11 +76,13 @@ func get_input():
 			0: $AnimatedSprite.play("player_run_spear")
 			1: $AnimatedSprite.play("slave_running")
 	if Input.is_action_pressed("down") && action == false:
+		look_direction = Vector2(0,1)
 		velocity.y += 1
 		match status:
 			0: $AnimatedSprite.play("player_run_spear")
 			1: $AnimatedSprite.play("slave_running")
 	if Input.is_action_pressed("up") && action == false:
+		look_direction = Vector2(0,-1)
 		velocity.y -= 1
 		match status:
 			0: $AnimatedSprite.play("player_run_spear")
