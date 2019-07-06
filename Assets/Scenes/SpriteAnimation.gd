@@ -127,11 +127,14 @@ func get_input():
 		velocity = velocity.normalized() * (speed+ (0.5*(speed)))
 
 func _physics_process(delta):
-	if(spear_thrown == true && spear_pick.spear_pickup == true): # spear has been thrown, and player has entered the Area2D of the spear
+	if(spear_thrown == true && spear_pick.spear_pickup == true): # spear has been thrown, and player has entered the Area2D of the spear, spear has not hit enemy
 		get_parent().destroy_spear() # destroys the spear node in the main fight scene
 		spear_thrown = false
 		status = 0 # player is now holding the spear
-	
+	elif(spear_thrown == true && spear_pick.spear_gone == true): # spear has been thrown, it has hit the enemy
+		get_parent().destroy_spear() # destroys the spear node in the main fight scene
+		get_parent().destroy_enemy() # destroys the enemy node in the main fight scene
+		status = 1 # player is now without the spear
 	get_input()
 	velocity = move_and_slide(velocity)
 
