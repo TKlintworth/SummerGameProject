@@ -7,13 +7,17 @@ var dir = 0
 var next_dir = 0
 var next_dir_time = 0
 var vel = Vector2(0,0)
+var attack = false
 
 func _ready():
 	set_process(true)
 
 
 func _process(delta):
-	$AnimatedSprite.play("redguard_idle")
+	if attack == false:
+		$AnimatedSprite.play("redguard_idle")
+	else:
+		$AnimatedSprite.play("redguard_attack")
 	var difference = Player.position.y - self.position.y
 	if(difference < 1 and difference > -1):
 		vel.y = 0
