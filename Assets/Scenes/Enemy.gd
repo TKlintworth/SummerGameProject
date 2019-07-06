@@ -8,6 +8,7 @@ var next_dir = 0
 var next_dir_time = 0
 var vel = Vector2(0,0)
 var attack = false
+var hit = false
 
 func _ready():
 	set_process(true)
@@ -18,6 +19,9 @@ func _process(delta):
 		$AnimatedSprite.play("redguard_idle")
 	else:
 		$AnimatedSprite.play("redguard_attack")
+	if hit == true:
+		get_parent().destroy_spear()
+		get_parent().destroy_enemy()
 	var difference = Player.position.y - self.position.y
 	if(difference < 1 and difference > -1):
 		vel.y = 0

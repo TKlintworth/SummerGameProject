@@ -18,7 +18,9 @@ animations = [ {
 
 [sub_resource type="RectangleShape2D" id=3]
 
-[node name="Spear" type="KinematicBody2D"]
+[node name="Spear" type="KinematicBody2D" groups=[
+"Spear",
+]]
 scale = Vector2( 0.5, 0.5 )
 script = ExtResource( 1 )
 
