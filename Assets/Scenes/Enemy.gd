@@ -13,6 +13,7 @@ func _ready():
 
 
 func _process(delta):
+	$AnimatedSprite.play("redguard_idle")
 	var difference = Player.position.y - self.position.y
 	if(difference < 1 and difference > -1):
 		vel.y = 0
