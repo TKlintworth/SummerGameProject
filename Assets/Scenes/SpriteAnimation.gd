@@ -9,21 +9,17 @@ export var spear_attack_bool = false
 export var character_direction = 0 # int value to decide direction; 0 = Character is facing LEFT; 1 = Character is facing RIGHT
 export (PackedScene) var spear_scene
 
-var spear_ready
+#var spear_ready
 var player_dead = false
 var player_block = false # boolean for if player is blocking
 var action = false # boolean for if player is performing an action. E.G. blocking, attacking
 var spear
 var spear_thrown = false
-var player_idle = false
 export var status = 0 # int value to decide animation type; 0 = Does have spear; 1 = Does NOT have spear
 var spear_pick
-var delay = 1
-var waited = 0
 
 onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/TextureProgress")
 onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/TextureProgress2")
-var main_scene = load("res://Scenes/MainFightScene.gd").new()
 
 func _ready():
 	status = 0 # status of 0 is slave with spear

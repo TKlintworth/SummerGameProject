@@ -4,8 +4,6 @@ var vel = Vector2()
 export (int) var speed_x = 400
 export (int) var speed_y = 0
 var sec = 0.0
-var timer # timer to tell when to show spear
-var spear_flight_timer # timer to tell when to stop spear
 var timer_done = false
 var timer_start = false
 var direction
@@ -18,21 +16,18 @@ var thrown = false
 
 
 func _ready():
-	timer = Timer.new()
-	timer.wait_time = 1.5
-	add_child(timer)
-	
-	spear_flight_timer = Timer.new()
-	spear_flight_timer.wait_time = 2.5
-	add_child(spear_flight_timer)
-	self.hide()
+	self.hide() # spear is added to scene but don't want it to be visible quite yet (until animation is finished)
 	thrown = false
+	
+	# do this so that when spear object is made, it does not hit anything until visible
+	self.set_collision_mask(0)
+	self.set_collision_layer(0)
 
 func get_input():
 	if Input.is_action_pressed("T") && thrown == false:
 		thrown = true
 		timer_start = true
-		#self.set_collision_layer(1)
+		
 		match direction:
 			0:  # player facing left, so throw spear left
 				$AnimatedSprite.play("spear_flight")
@@ -51,10 +46,8 @@ func _process(delta):
 	if (timer_start == true): #timer starts when "throw" button is pressed
 		if (waited >= delay): #throw spear after 1 second
 			self.show()
-			self.set_collision_mask(1)
+			self.set_collision_mask(1) #spear can now hit enemy
 			self.set_collision_layer(1)
-			#$Area2D.set_collision_mask(0)
-			#$Area2D.set_collision_layer(0)
 			timer_done = true
 		else:
 			waited += delta
