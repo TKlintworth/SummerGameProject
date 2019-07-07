@@ -8,10 +8,13 @@ func _process(delta):
 
 	if not overlapping_bodies: # if no overlapping bodies, do not run any more code
 			return
-	for body in overlapping_bodies:
-		if not body.is_in_group("Player"):
-			return
-		get_parent().attack = true # enemy will perform attack animation
-
+	for body in overlapping_bodies: 
+	# may want to find better way to do this
+		if body.is_in_group("Spear"): # enemy hit by spear
+			get_parent().hit = true # destroy spear and enemy
+		
+		
+		
+		
 func _on_AnimatedSprite_animation_finished():
 	get_parent().attack = false # enemy will stop playing attack animation

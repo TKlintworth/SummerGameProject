@@ -18,6 +18,8 @@ var spear_thrown = false
 var player_idle = false
 export var status = 0 # int value to decide animation type; 0 = Does have spear; 1 = Does NOT have spear
 var spear_pick
+var delay = 1
+var waited = 0
 
 onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/TextureProgress")
 onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/TextureProgress2")
@@ -46,8 +48,8 @@ func throw_spear():
 	spear_pick = get_parent().get_node("Spear/Area2D")
 	print(spear_pick)
 	match character_direction:
-		0: spear.position = Vector2((self.position.x - 131), (self.position.y - 40)) # set starting position of spear when player is facing left
-		1: spear.position = Vector2((self.position.x + 131), (self.position.y - 40)) # set starting postion of spear when player is facing right
+		0: spear.position = Vector2((self.position.x - 120), (self.position.y - 30)) # set starting position of spear when player is facing left
+		1: spear.position = Vector2((self.position.x + 120), (self.position.y - 30)) # set starting postion of spear when player is facing right
 	$AnimatedSprite.play("slave_throw_spear_active")
 
 func get_input():
@@ -135,6 +137,7 @@ func _physics_process(delta):
 		get_parent().destroy_spear() # destroys the spear node in the main fight scene
 		get_parent().destroy_enemy() # destroys the enemy node in the main fight scene
 		status = 1 # player is now without the spear
+	
 	get_input()
 	velocity = move_and_slide(velocity)
 
