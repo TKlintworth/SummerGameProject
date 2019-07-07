@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/MainFightScene.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/SpriteAnimation.tscn" type="PackedScene" id=2]
@@ -43,6 +43,8 @@ tracks/0/keys = {
 "values": [ Vector2( 95.684, -13.339 ), Vector2( 80.982, -13.339 ), Vector2( 117.35, -13.339 ), Vector2( 95.684, -13.339 ) ]
 }
 
+[sub_resource type="ShaderMaterial" id=4]
+
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -86,6 +88,7 @@ margin_bottom = -0.735107
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer"]
+material = SubResource( 4 )
 margin_left = 22.689
 margin_top = 3.78149
 margin_right = 662.689

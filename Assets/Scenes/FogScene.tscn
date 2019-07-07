@@ -6,7 +6,7 @@
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 2 )
-shader_param/color = Vector3( 0, 0, 0.1 )
+shader_param/color = Vector3( 0.1, 0.1, 0.1 )
 shader_param/OCTAVES = 4
 
 [node name="Fog" type="Node2D"]
@@ -19,6 +19,6 @@ texture = ExtResource( 1 )
 
 [node name="icon" type="Sprite" parent="."]
 material = SubResource( 1 )
-position = Vector2( 556.912, 352.006 )
+position = Vector2( 560.573, 481.233 )
 scale = Vector2( 20, 20 )
 texture = ExtResource( 3 )

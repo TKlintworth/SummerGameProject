@@ -32,6 +32,7 @@ func get_input():
 	if Input.is_action_pressed("T") && thrown == false:
 		thrown = true
 		timer_start = true
+		#self.set_collision_layer(1)
 		match direction:
 			0:  # player facing left, so throw spear left
 				$AnimatedSprite.play("spear_flight")
@@ -50,6 +51,10 @@ func _process(delta):
 	if (timer_start == true): #timer starts when "throw" button is pressed
 		if (waited >= delay): #throw spear after 1 second
 			self.show()
+			self.set_collision_mask(1)
+			self.set_collision_layer(1)
+			#$Area2D.set_collision_mask(0)
+			#$Area2D.set_collision_layer(0)
 			timer_done = true
 		else:
 			waited += delta
