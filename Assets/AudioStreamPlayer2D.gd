@@ -1,21 +1,32 @@
 extends AudioStreamPlayer2D
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+
 func play_noise():
 	var sounds
-	sounds = list_files_in_directory("res://sounds")
+	sounds = list_files_in_directory("res://sounds") # all sounds in directory, list
 	print(len(sounds))
 	randomize()
-	var randIndex = randi() % len(sounds)
+	var randIndex = randi() % len(sounds) # int value
 	print(randIndex)
 	print(sounds)
 	print("res://sounds/"+sounds[randIndex])
 	stream = load("res://sounds/"+sounds[randIndex])
 	print(stream)
 	play(0)
-# Called when the node enters the scene tree for the first time.
+
+func play_attack_noise():
+	var sounds
+	sounds = list_files_in_directory("res://sounds/Attack")
+	print(len(sounds))
+	randomize()
+	var randIndex = randi() % len(sounds)
+	print(randIndex)
+	print(sounds)
+	print("res://sounds/Attack/"+sounds[randIndex])
+	stream = load("res://sounds/Attack/"+sounds[randIndex])
+	print(stream)
+	play(0)
+
 func _ready():
 	pass
 	

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Untitled 6.wav-a3cfabc58501849257b7937a5c7aa7d2.sample"
+
+[deps]
+
+source_file="res://sounds/Misc/Untitled 6.wav"
+dest_files=[ "res://.import/Untitled 6.wav-a3cfabc58501849257b7937a5c7aa7d2.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

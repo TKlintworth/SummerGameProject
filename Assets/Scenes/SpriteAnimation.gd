@@ -23,6 +23,8 @@ onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/Nin
 
 func _ready():
 	status = 0 # status of 0 is slave with spear
+	character_direction = 1 # player starts facing right
+	$AnimatedSprite.set_flip_h(true) # make player face right
 
 # take damage function
 func take_damage():
@@ -39,6 +41,7 @@ func block():
 func throw_spear():
 	spear_thrown = true
 	action = true
+	$Area2D/AudioStreamPlayer2D.play_attack_noise()
 	spear = spear_scene.instance()
 	get_parent().add_child(spear) # adds the spear "object" to the scene
 	spear_pick = get_parent().get_node("Spear/Area2D")
