@@ -17,4 +17,4 @@ func _process(delta):
 		if not body.is_in_group("Player"):
 			return
 		get_parent().attack = true # enemy will perform attack animation
-			
+	
