@@ -7,7 +7,7 @@ var spear_gone = false # tells if spear has hit enemy or not
 
 func _ready():
 	spear_pickup = false
-	player_status = get_tree().get_root().get_node("Node2D/Player").status
+	player_status = get_tree().get_root().get_node("Node2D/Player").player_status
 
 func _process(delta):
 	var overlapping_bodies = get_overlapping_bodies()
