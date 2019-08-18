@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Scared.wav-8fff1c42391be619cec12b035d3303fc.sample"
+
+[deps]
+
+source_file="res://sounds/SFX Session 1/Scared.wav"
+dest_files=[ "res://.import/Scared.wav-8fff1c42391be619cec12b035d3303fc.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

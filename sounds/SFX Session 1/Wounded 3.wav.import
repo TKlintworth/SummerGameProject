@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Wounded 3.wav-7e1ef13f16c832edace670afd2e89dab.sample"
+
+[deps]
+
+source_file="res://sounds/SFX Session 1/Wounded 3.wav"
+dest_files=[ "res://.import/Wounded 3.wav-7e1ef13f16c832edace670afd2e89dab.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
