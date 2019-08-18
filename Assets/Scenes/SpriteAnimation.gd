@@ -20,8 +20,8 @@ export var player_status = 0 # int value to decide animation type; 0 = Does have
 var spear_pick
 var game_status = 0 # game is a go
 
-onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/TextureProgress")
-onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/TextureProgress2")
+onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Health")
+onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Stamina")
 
 func _ready():
 	game_status = 0
