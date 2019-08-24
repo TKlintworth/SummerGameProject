@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scenes/MainFightScene.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/SpriteAnimation.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Art/BigArena.png" type="Texture" id=8]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/FogScene.tscn" type="PackedScene" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 2.89655, 10 )
@@ -55,7 +56,7 @@ speed = 400
 spear_scene = ExtResource( 3 )
 
 [node name="Area2D" type="Area2D" parent="Player"]
-position = Vector2( 95.684, -13.339 )
+position = Vector2( -95.6838, -13.339 )
 script = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="Player/Area2D"]
@@ -101,3 +102,5 @@ __meta__ = {
 
 [node name="Enemy" parent="." instance=ExtResource( 9 )]
 position = Vector2( 1034.62, 426.213 )
+
+[node name="Fog" parent="." instance=ExtResource( 10 )]
