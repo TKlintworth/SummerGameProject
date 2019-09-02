@@ -2,6 +2,7 @@ shader_type canvas_item;
 
 uniform vec3 color = vec3(0.1, 0.1, 0.1);
 uniform int OCTAVES = 4;
+uniform float scale : hint_range(0.0, 1.5);
 
 float rand(vec2 coord) {
 	return fract(sin(dot(coord, vec2(98,9))*1000.0)*1000.0); //fract takes fraction bit, i.e. 5.78 = .78
@@ -25,12 +26,12 @@ float noise(vec2 coord){
 
 float fbm(vec2 coord){
 	float value = 0.0;
-	float scale = 0.5;
+	float scale1 = scale;
 	
 	for(int i = 0; i<OCTAVES; i++){
 		value += noise(coord) * scale;
 		coord *= 2.0;
-		scale *= 0.5;
+		scale1 *= 0.5;
 		}
 	return value;
 	}

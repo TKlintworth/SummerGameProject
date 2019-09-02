@@ -28,7 +28,8 @@ func _ready():
 	player_status = 0 # status of 0 is slave with spear
 	character_direction = 1 # player starts facing right
 	$AnimatedSprite.set_flip_h(true) # make player face right
-
+	#print(get_parent().get_node("ColorRect/AnimationPlayer").play("transition_in"))
+	
 ############## FUNCTIONS ################
 # take damage function
 func take_damage():
@@ -104,6 +105,7 @@ func get_input():
 	############# ACTIONS ###########################
 	# Block action
 	if Input.is_action_pressed("E"): #block animation
+		#get_parent().get_node("ColorRect/AnimationPlayer").play("transition_in")
 		block()
 	
 	# Throw spear action
