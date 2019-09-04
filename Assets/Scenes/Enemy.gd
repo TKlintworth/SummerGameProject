@@ -1,63 +1,97 @@
 extends KinematicBody2D
 
+signal attack_finished
+
 onready var Player = get_parent().get_node("Player")
 
+const SPEED = 320.0
+var health = 100.0
+var playerAlive
 var react_time = 0
-var dir = 0
-var next_dir = 0
-var next_dir_time = 0
-var vel = Vector2(0,0)
-var attack = false
-var hit = false
-var area_entered = false
-var enemy_attack_noise
-var animation_done
-var scene_done = false
+var dir = 1
+var attacking = false
+#var next_dir = 0
+#var next_dir_time = 0
+var vel = Vector2()
+#var attack = false
+var state = "inCombat"
+var states = ["idle", "inCombat", "fleeing"]
 
 func _ready():
+	playerAlive = !Player.player_dead
 	set_process(true)
-	animation_done = true
 
+func change_state(nextState):
+	if nextState == "inCombat":
+		state = "inCombat"
+	if nextState == "fleeing":
+		state = states[2]
+	else:
+		state = "idle"
+
+func _on_Area2D_area_entered(area: Area2D) -> void:
+	#print(area.name)
+	if area.name == "attackZone":
+		attacking = true
+		
+# Seperating out playing attack animations into chooseable attacks
+func choose_attack(attack):
+	if attack == "light_flurry":
+		# Light flurry plays individual attack animations faster
+		$AnimatedSprite.speed_scale = 1.85
+		$AnimatedSprite.play("redguard_attack")
+		yield(get_node("AnimatedSprite"), "animation_finished")
+		$AnimatedSprite.play("redguard_attack")
+		yield(get_node("AnimatedSprite"), "animation_finished")
+		$AnimatedSprite.play("redguard_attack")
+		yield(get_node("AnimatedSprite"), "animation_finished")
+		emit_signal("attack_finished")
+	# Add more attack types ...
 
 func _process(delta):
-	if attack == false:
-		$AnimatedSprite.play("redguard_idle")
-	#elif animation_done == true:
-	else:
-		#animation_done = false
+	print(state)
+	#print(attacking)
+	if state == "inCombat":
+		#if Player.position.x > position.x:
+		#	vel.x += SPEED
+		if attacking == false:
+			print("position fleeing,", position)
+			dir = (Player.position - position).normalized()
+			print("dir,",dir)
+			var motion = dir * SPEED * delta
+			print("motion,",motion)
+			$AnimatedSprite.play("redguard_running")
+			position += motion
+		if attacking == true:
+			#"light flurry" attack
+			choose_attack("light_flurry")
+			yield(self, "attack_finished")
+			# Change state to flee after attack
+			change_state(states[2])
+			attacking = false
+		#print(position.normalized(), Player.position.normalized())
+		#print("in combat")
 		
-		#$AudioStreamPlayer2D.play_attack_noise()
-		if animation_done == true && Player.player_dead == false:
-			animation_done = false
-			$AnimatedSprite.play("redguard_attack")
-			#$AudioStreamPlayer.play_attack_noise()
-		#elif animation_done == true && Player.player_dead == true && scene_done == false:
-		#	$AudioStreamPlayer2D.play_noise()
-		#	scene_done == true
-		#if player is in the sense area of the enemy when enemy animation reaches frame 3, player takes damage
-		if $AnimatedSprite.get_frame() == 3 and area_entered == true:
-			Player.take_damage()
-	if hit == true:
-		get_parent().destroy_spear()
-		get_parent().destroy_enemy()
-	var difference = Player.position.y - self.position.y
-	if(difference < 1 and difference > -1):
-		vel.y = 0
-	elif(Player.position.y < self.position.y and next_dir != -1):
-		vel.y = -200
-	elif(Player.position.y > self.position.y and next_dir != 1):
-		vel.y = 200
-	vel = move_and_slide(vel)
-
-func _on_SenseArea_area_entered(area):
-	print("area enter")
-	area_entered = true
+	if(state == "fleeing"):
+		#print("fleeing")
+		print("position fleeing,", position)
+		dir = -1.0*(Player.position - position).normalized()
+		var motion = dir * SPEED * delta
+		$AnimatedSprite.play("redguard_running")
+		position += motion
+		
+	if state == "idle":
+		print("idle")
+		$AnimatedSprite.play("redguard_idle")
+		#print("is player alive?")
+		#print(!playerAlive)
+		if(playerAlive):
+			change_state("inCombat")
+		else:
+			$AnimatedSprite.play("redguard_idle")
 	
 
+func _physics_process(delta):
+	vel = move_and_slide(vel * delta)
 
-func _on_SenseArea_area_exited(area):
-	print("area exit")
-	area_entered = false
 
-func _on_AnimatedSprite_animation_finished():
-	animation_done = true
