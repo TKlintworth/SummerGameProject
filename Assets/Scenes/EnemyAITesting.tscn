@@ -35,14 +35,16 @@ position = Vector2( 131.001, 197.001 )
 shape = SubResource( 2 )
 
 [node name="move2" type="CollisionShape2D" parent="enemyMovementZones" index="1"]
-position = Vector2( 151.218, 627.516 )
+position = Vector2( 137.002, 953.191 )
 shape = SubResource( 3 )
 
 [node name="move3" type="CollisionShape2D" parent="enemyMovementZones" index="2"]
-position = Vector2( 1217.08, 169.946 )
+position = Vector2( 1783.13, 177.7 )
 shape = SubResource( 3 )
 
 [node name="move4" type="CollisionShape2D" parent="enemyMovementZones" index="3"]
-position = Vector2( 1225.2, 638.346 )
+position = Vector2( 1786.08, 998.915 )
 shape = SubResource( 3 )
 [connection signal="area_entered" from="Player/Area2D/attackZone" to="Enemy" method="_on_attackZone_area_entered"]
+[connection signal="area_entered" from="enemyMovementZones" to="Enemy" method="_on_enemyMovementZones_area_entered"]
+[connection signal="area_exited" from="enemyMovementZones" to="Enemy" method="_on_enemyMovementZones_area_exited"]

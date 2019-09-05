@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 signal attack_finished
+signal enemyInMovementZone
 
 onready var Player = get_parent().get_node("Player")
 onready var enemyMovementZones = get_parent().get_node("enemyMovementZones")
@@ -11,10 +12,11 @@ var playerAlive
 var react_time = 0
 var dir = 1
 var attacking = false
-#var next_dir = 0
-#var next_dir_time = 0
+var enemyMovementZoneChosen = false
+var isEnemyInMovementZone = false
+#Used around line 80 to choose a zone to run to only once
+var runToZone
 var vel = Vector2()
-#var attack = false
 var state = "inCombat"
 var states = ["idle", "inCombat", "fleeing"]
 
@@ -22,12 +24,12 @@ func _ready():
 	playerAlive = !Player.player_dead
 	set_process(true)
 
-func change_state(nextState):
+func change_state(var nextState):
 	if nextState == "inCombat":
 		state = "inCombat"
 	if nextState == "fleeing":
-		state = states[2]
-	else:
+		state = "fleeing" #was states[2]?
+	if nextState == "idle":
 		state = "idle"
 
 func _on_Area2D_area_entered(area: Area2D) -> void:
@@ -51,6 +53,9 @@ func choose_attack(attack):
 		emit_signal("attack_finished")
 	# Add more attack types ...
 
+func ai_get_direction(target):
+	return target.position - self.position
+
 func _process(delta):
 	#print(state)
 	#print(attacking)
@@ -70,21 +75,34 @@ func _process(delta):
 			choose_attack("light_flurry")
 			yield(self, "attack_finished")
 			# Change state to flee after attack
-			change_state(states[2])
+			change_state("fleeing")
 			attacking = false
 		#print(position.normalized(), Player.position.normalized())
 		#print("in combat")
 		
 	if(state == "fleeing"):
-		print("fleeing")
+		#print("fleeing")
 		#Choose corner to run to
-		print(enemyMovementZones.zones)
-		var runToIndex = range(1,5)[randi()%range(1,5).size()]
-		var runToName = enemyMovementZones.zones[runToIndex]
-		dir = 1.0*(Player.position - position).normalized()
-		var motion = dir * SPEED * delta
-		$AnimatedSprite.play("redguard_running")
-		position += motion
+		#print(enemyMovementZones.zones)
+		if enemyMovementZoneChosen == false:
+			runToZone = chooseMovementZone()
+			print("run to Zone: ", runToZone)
+			enemyMovementZoneChosen = true
+		if enemyMovementZoneChosen == true:
+			#print(position)
+			#print("run to Zone: " , runToZone.position)
+			#dir = (runToZone.position - position).normalized()
+			var direction = ai_get_direction(runToZone)
+			var motion = direction.normalized() * SPEED #dir * SPEED * delta
+			$AnimatedSprite.play("redguard_running")
+			move_and_slide(motion) #position += motion
+			if isEnemyInMovementZone:
+				print(isEnemyInMovementZone)
+				attacking = false
+				change_state("inCombat")
+				enemyMovementZoneChosen = false
+			#enemyMovementZoneChosen = false
+		
 		
 	if state == "idle":
 		print("idle")
@@ -97,19 +115,14 @@ func _process(delta):
 			$AnimatedSprite.play("redguard_idle")
 	
 
-func _physics_process(delta):
-	vel = move_and_slide(vel * delta)
+#func _physics_process(delta):
+	#vel = move_and_slide(vel * delta)
 
-
-
-
-
-
-
-
-
-
-
+func chooseMovementZone():
+	var runToIndex = range(0,4)[randi()%range(0,4).size()]
+	var runToZone = enemyMovementZones.zones[runToIndex]
+	print("run to zone returned: ", runToZone)
+	return runToZone
 
 
 
@@ -117,3 +130,14 @@ func _on_attackZone_area_entered(area: Area2D) -> void:
 	print(area.name)
 	if area.name == "SenseArea":
 		attacking = true
+
+
+func _on_enemyMovementZones_area_entered(area: Area2D) -> void:
+	print(area.name)
+	print("in a movement zone")
+	isEnemyInMovementZone = true
+	#return isEnemyInMovementZone
+
+
+func _on_enemyMovementZones_area_exited(area: Area2D) -> void:
+	isEnemyInMovementZone = false
