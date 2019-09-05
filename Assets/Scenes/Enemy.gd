@@ -3,6 +3,7 @@ extends KinematicBody2D
 signal attack_finished
 
 onready var Player = get_parent().get_node("Player")
+onready var enemyMovementZones = get_parent().get_node("enemyMovementZones")
 
 const SPEED = 320.0
 var health = 100.0
@@ -30,9 +31,11 @@ func change_state(nextState):
 		state = "idle"
 
 func _on_Area2D_area_entered(area: Area2D) -> void:
-	#print(area.name)
-	if area.name == "attackZone":
-		attacking = true
+	print(area.name)
+	#if area.name == "attackZone":
+	#	attacking = true
+	#if area.name == "attackZone":
+	#	attacking = true
 		
 # Seperating out playing attack animations into chooseable attacks
 func choose_attack(attack):
@@ -49,17 +52,17 @@ func choose_attack(attack):
 	# Add more attack types ...
 
 func _process(delta):
-	print(state)
+	#print(state)
 	#print(attacking)
 	if state == "inCombat":
 		#if Player.position.x > position.x:
 		#	vel.x += SPEED
 		if attacking == false:
-			print("position fleeing,", position)
+			#print("position fleeing,", position)
 			dir = (Player.position - position).normalized()
-			print("dir,",dir)
+			#print("dir,",dir)
 			var motion = dir * SPEED * delta
-			print("motion,",motion)
+			#print("motion,",motion)
 			$AnimatedSprite.play("redguard_running")
 			position += motion
 		if attacking == true:
@@ -73,9 +76,12 @@ func _process(delta):
 		#print("in combat")
 		
 	if(state == "fleeing"):
-		#print("fleeing")
-		print("position fleeing,", position)
-		dir = -1.0*(Player.position - position).normalized()
+		print("fleeing")
+		#Choose corner to run to
+		print(enemyMovementZones.zones)
+		var runToIndex = range(1,5)[randi()%range(1,5).size()]
+		var runToName = enemyMovementZones.zones[runToIndex]
+		dir = 1.0*(Player.position - position).normalized()
 		var motion = dir * SPEED * delta
 		$AnimatedSprite.play("redguard_running")
 		position += motion
@@ -95,3 +101,19 @@ func _physics_process(delta):
 	vel = move_and_slide(vel * delta)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+func _on_attackZone_area_entered(area: Area2D) -> void:
+	print(area.name)
+	if area.name == "SenseArea":
+		attacking = true

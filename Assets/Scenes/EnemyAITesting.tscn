@@ -1,16 +1,48 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/MainFightScene.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/attackZone.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/enemyMovementZones.gd" type="Script" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 105.154
+radius = 100.353
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 24.0215
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 22.9011
 
 [node name="Node2D" index="0" instance=ExtResource( 1 )]
 
-[node name="attackZone" type="CollisionShape2D" parent="Player" index="4"]
+[node name="attackZone" type="Area2D" parent="Player/Area2D" index="4"]
+position = Vector2( 95.6838, 13.3391 )
+
+[node name="attackZone" type="CollisionShape2D" parent="Player/Area2D/attackZone" index="0"]
+position = Vector2( 2.39478, -4.78992 )
 shape = SubResource( 1 )
 script = ExtResource( 2 )
 
 [node name="Fog" parent="." index="4"]
+visible = false
 position = Vector2( 123.385, 46.9373 )
+
+[node name="enemyMovementZones" type="Area2D" parent="." index="5"]
+script = ExtResource( 3 )
+
+[node name="move1" type="CollisionShape2D" parent="enemyMovementZones" index="0"]
+position = Vector2( 131.001, 197.001 )
+shape = SubResource( 2 )
+
+[node name="move2" type="CollisionShape2D" parent="enemyMovementZones" index="1"]
+position = Vector2( 151.218, 627.516 )
+shape = SubResource( 3 )
+
+[node name="move3" type="CollisionShape2D" parent="enemyMovementZones" index="2"]
+position = Vector2( 1217.08, 169.946 )
+shape = SubResource( 3 )
+
+[node name="move4" type="CollisionShape2D" parent="enemyMovementZones" index="3"]
+position = Vector2( 1225.2, 638.346 )
+shape = SubResource( 3 )
+[connection signal="area_entered" from="Player/Area2D/attackZone" to="Enemy" method="_on_attackZone_area_entered"]
