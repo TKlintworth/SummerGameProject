@@ -10,6 +10,7 @@ func _ready():
 	progress = false
 	#wave_num = 1
 	#enemy_count = 1
+	print("wave 2 open")
 	set_process(false)
 	
 func destroy_spear():
@@ -34,8 +35,8 @@ func play_wave_text(): # Wave transition
 	progress = true
 	print("wave: ")
 	print(wave_num)
-	#scene_path_to_load = "res://Scenes/Wave2.tscn"
-	#get_tree().change_scene(scene_path_to_load)
+	scene_path_to_load = "res://Scenes/Wave2.tscn"
+	get_tree().change_scene(scene_path_to_load)
 	$CanvasLayer/Control/NinePatchRect/Wave_Small.progress() # increases wave count and plays wave text
 	set_process(false)
 	
