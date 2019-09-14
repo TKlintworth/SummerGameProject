@@ -35,7 +35,7 @@ func _process(delta):
 func change_wave():
 	new_wave = true
 	wave_num_large += 1
-	print(get_tree().get_root().get_child(0).wave_num)
+	print(get_tree().get_root().get_child(1).wave_num)
 	print("wave_num_large")
 	print(wave_num_large)
 	self.text = wave_string_large + str(wave_num_large)

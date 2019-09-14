@@ -167,64 +167,10 @@ func _on_AnimatedSprite_animation_finished(): #ran everytime animation is finish
 	else:
 		player_status = 0
 	
-#&& spear_ready == true && player_dead == false
+	# GAME OVER, player has died. Return to menu
+	if game_status == 1:
+		get_node("/root/GameStateManager").getScene("res://Scenes/TitleScreen/TitleScreen.tscn")
 
-#func _physics_process(delta):
-#	if (player_node.value <=27) :
-#		player_dead = true
-#		$AnimatedSprite.play("slave_dying")
-#	elif(Input.is_key_pressed(KEY_LEFT) && spear_ready == true && player_dead == false):
-#		$AnimatedSprite.set_flip_h(false)
-#		$Area2D.position.x = spear_point_pos
-#		$AnimatedSprite.play("slave_spear_running")
-#		vel.x = -300
-#		left = true
-#		right = false
-#		down = false
-#		up = false
-#	elif(Input.is_key_pressed(KEY_RIGHT) && spear_ready == true && player_dead == false):
-#		$AnimatedSprite.set_flip_h(true)
-#		$Area2D.position.x = spear_point_pos * (-1)
-#		$AnimatedSprite.play("slave_spear_running")
-#		vel.x = 300
-#		left = false
-#		right = true
-#		down = false
-#		up = false
-#	elif(Input.is_key_pressed(KEY_DOWN) && spear_ready == true && player_dead == false):
-#		$AnimatedSprite.play("slave_spear_running")
-#		vel.y = 300
-#		left = false
-#		right = false
-#		down = true
-#		up = false
-#	elif(Input.is_key_pressed(KEY_UP) && spear_ready == true && player_dead == false):
-#		$AnimatedSprite.play("slave_spear_running")
-#		vel.y = -300
-#		left = false
-#		right = false
-#		down = false
-#		up = true
-#	elif(Input.is_key_pressed(KEY_T) && player_dead == false):
-#		spear_ready = false
-#		$Area2D.show()
-#		$AnimatedSprite.play("slave_jab_spear_active")
-#		if $AnimatedSprite.flip_h == false:
-#			$Area2D/AnimationPlayer.play("spear_attack_left")
-#		if $AnimatedSprite.flip_h == true:
-#			$Area2D/AnimationPlayer.play("spear_attack_right")
-#		spear_attack_bool = true
-#	else:
-#		if(spear_ready == true && player_dead == false):
-#			$AnimatedSprite.play("slave_jab_spear_inactive")
-#			vel.x = 0
-#			vel.y = 0
-#
-#	vel = move_and_slide(vel)
-
-#func _input(event):
-#	if(event.is_action_pressed("shoot")):
-#		$AnimatedSprite.play("idle")
 
 
 
