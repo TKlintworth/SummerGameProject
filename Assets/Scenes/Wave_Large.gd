@@ -26,6 +26,7 @@ func _process(delta):
 		new_wave = false
 		percent = 0
 		self.set_percent_visible(percent)
+		get_tree().get_root().get_child(1).play_battle_music()
 		#load scene
 		#scene_path_to_load = "res://Scenes/Wave2.tscn"
 		#get_tree().change_scene(scene_path_to_load)
@@ -35,7 +36,7 @@ func _process(delta):
 func change_wave():
 	new_wave = true
 	wave_num_large += 1
-	print(get_tree().get_root().get_child(0).wave_num)
+	print(get_tree().get_root().get_child(1).wave_num)
 	print("wave_num_large")
 	print(wave_num_large)
 	self.text = wave_string_large + str(wave_num_large)

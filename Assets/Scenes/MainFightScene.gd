@@ -55,6 +55,9 @@ func start_wave_2():
 		add_child(enemy)
 		enemy.position = Vector2(100 + (i*10), 100)
 
+func play_battle_music():
+	$Music.play_battle_music()
+
 func _process(delta):
 	if $CanvasLayer/Control/Timer.time_left <= 0.1 && new_wave == true: # time to play the wave text
 		play_wave_text()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scenes/MainFightScene.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=2]
@@ -10,7 +10,9 @@
 [ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Art/BigArena.png" type="Texture" id=10]
-[ext_resource path="res://Scenes/FogScene.tscn" type="PackedScene" id=11]
+[ext_resource path="res://sounds/Music/BattleMusic.wav" type="AudioStream" id=11]
+[ext_resource path="res://Scenes/Music.gd" type="Script" id=12]
+[ext_resource path="res://Scenes/FogScene.tscn" type="PackedScene" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 2.89655, 10 )
@@ -107,7 +109,11 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 11 )
+script = ExtResource( 12 )
+
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1034.62, 426.213 )
 
-[node name="Fog" parent="." instance=ExtResource( 11 )]
+[node name="Fog" parent="." instance=ExtResource( 13 )]
