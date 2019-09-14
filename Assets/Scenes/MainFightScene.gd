@@ -7,8 +7,6 @@ export (PackedScene) var enemy_scene
 var enemy
 
 func _ready():
-	print("tree:")
-	print(get_tree().get_root().get_child(0).name)
 	$Fog/icon/AnimationPlayer.play("fog_in") # play fog shader at start of game
 	set_process(false) # set process to false to make less expensive
 	#start_wave_2()
@@ -56,6 +54,9 @@ func start_wave_2():
 		enemy = enemy_scene.instance()
 		add_child(enemy)
 		enemy.position = Vector2(100 + (i*10), 100)
+
+func play_battle_music():
+	$Music.play_battle_music()
 
 func _process(delta):
 	if $CanvasLayer/Control/Timer.time_left <= 0.1 && new_wave == true: # time to play the wave text

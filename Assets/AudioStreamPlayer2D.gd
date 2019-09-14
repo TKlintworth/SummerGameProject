@@ -33,6 +33,13 @@ func play_wave_noise():
 	stream = load("res://sounds/Misc/wave_sound_effect.wav")
 	play(0)
 
+
+func play_menu_music():
+	stream = load("res://sounds/Music/MenuMusic.wav")
+	play(0)
+
+
+
 func _ready():
 	pass
 	

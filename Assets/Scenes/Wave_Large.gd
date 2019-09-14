@@ -26,6 +26,7 @@ func _process(delta):
 		new_wave = false
 		percent = 0
 		self.set_percent_visible(percent)
+		get_tree().get_root().get_child(1).play_battle_music()
 		#load scene
 		#scene_path_to_load = "res://Scenes/Wave2.tscn"
 		#get_tree().change_scene(scene_path_to_load)
