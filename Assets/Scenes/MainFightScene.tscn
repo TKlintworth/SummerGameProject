@@ -1,15 +1,16 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scenes/MainFightScene.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/SpriteAnimation.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/Spear.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Area2D.gd" type="Script" id=5]
-[ext_resource path="res://PNG/icon.png" type="Texture" id=6]
-[ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Art/BigArena.png" type="Texture" id=9]
-[ext_resource path="res://Scenes/FogScene.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scripts/PlayerController.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/Spear.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Area2D.gd" type="Script" id=6]
+[ext_resource path="res://PNG/icon.png" type="Texture" id=7]
+[ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Art/BigArena.png" type="Texture" id=10]
+[ext_resource path="res://Scenes/FogScene.tscn" type="PackedScene" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 2.89655, 10 )
@@ -46,24 +47,24 @@ tracks/0/keys = {
 
 [sub_resource type="ShaderMaterial" id=4]
 
-[node name="Node2D" type="Node2D"]
+[node name="MainRoot" type="Node2D"]
 script = ExtResource( 1 )
 enemy_scene = ExtResource( 2 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 249.255, 415.444 )
 scale = Vector2( 0.5, 0.5 )
-speed = 400
-spear_scene = ExtResource( 4 )
+script = ExtResource( 4 )
+spear_scene = ExtResource( 5 )
 
 [node name="Area2D" type="Area2D" parent="Player"]
 position = Vector2( -95.6838, -13.339 )
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 
 [node name="Sprite" type="Sprite" parent="Player/Area2D"]
 visible = false
 scale = Vector2( 0.8, 0.6 )
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Player/Area2D"]
 scale = Vector2( 8, 1 )
@@ -73,13 +74,13 @@ shape = SubResource( 1 )
 anims/spear_attack_left = SubResource( 2 )
 anims/spear_attack_right = SubResource( 3 )
 
-[node name="AudioStreamPlayer2D" parent="Player/Area2D" instance=ExtResource( 7 )]
+[node name="AudioStreamPlayer2D" parent="Player/Area2D" instance=ExtResource( 8 )]
 position = Vector2( -95.684, 13.339 )
 autoplay = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Control" parent="CanvasLayer" instance=ExtResource( 8 )]
+[node name="Control" parent="CanvasLayer" instance=ExtResource( 9 )]
 margin_left = 40.9653
 margin_top = -0.735077
 margin_right = 40.9652
@@ -101,7 +102,7 @@ margin_top = 3.78149
 margin_right = 662.689
 margin_bottom = 323.781
 rect_scale = Vector2( 3, 3.375 )
-texture = ExtResource( 9 )
+texture = ExtResource( 10 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -109,4 +110,4 @@ __meta__ = {
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1034.62, 426.213 )
 
-[node name="Fog" parent="." instance=ExtResource( 10 )]
+[node name="Fog" parent="." instance=ExtResource( 11 )]
