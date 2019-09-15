@@ -4,7 +4,10 @@ var face_left = Vector2(-105.5, -14)
 var face_right = Vector2(105.5, -14)
 
 func _ready():
+	self.set_collision_mask(1) #spear can now hit enemy
+	self.set_collision_layer(1)
 	set_process(true)
+	print(self.get_groups())
 
 func check_if_enemy_hit():
 	var overlapping_bodies = get_overlapping_bodies()
@@ -16,9 +19,19 @@ func check_if_enemy_hit():
 		if not body.is_in_group("Enemy1"):
 			return
 		print("hit")
-		get_parent().get_parent().destroy_enemy()
+		#get_parent().get_parent().destroy_enemy()
 
 func _process(delta):
+
+	var overlapping_bodies = get_overlapping_bodies()
+
+	if not overlapping_bodies: # if no overlapping bodies, do not run any more code
+			return
+	for body in overlapping_bodies: 
+		print("hit")
+		if not body.is_in_group("Enemy1"):
+			return
+		print("hit")
 
 	match get_parent().character_direction:
 		0: $SpearCollisionShape.position = face_left # player facing left, move collider to left

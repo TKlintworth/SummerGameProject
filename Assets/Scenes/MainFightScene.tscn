@@ -59,9 +59,7 @@ __meta__ = {
 stream = ExtResource( 8 )
 script = ExtResource( 9 )
 
-[node name="Enemy" parent="." groups=[
-"Enemy1",
-] instance=ExtResource( 2 )]
+[node name="Enemy" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1034.62, 426.213 )
 
 [node name="Fog" parent="." instance=ExtResource( 10 )]

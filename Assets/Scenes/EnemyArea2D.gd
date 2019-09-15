@@ -18,3 +18,6 @@ func _process(delta):
 		
 func _on_AnimatedSprite_animation_finished():
 	get_parent().attack = false # enemy will stop playing attack animation
+
+
+ # Replace with function body.

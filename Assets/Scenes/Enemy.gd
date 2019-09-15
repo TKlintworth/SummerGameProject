@@ -39,7 +39,8 @@ func _process(delta):
 			Player.take_damage()
 	if hit == true:
 		get_parent().destroy_spear()
-		get_parent().destroy_enemy()
+		#get_parent().destroy_enemy()
+		self.queue_free()
 	var difference = Player.position.y - self.position.y
 	if(difference < 1 and difference > -1):
 		vel.y = 0
@@ -53,11 +54,13 @@ func _on_SenseArea_area_entered(area):
 	print("area enter")
 	area_entered = true
 	
-
-
 func _on_SenseArea_area_exited(area):
 	print("area exit")
 	area_entered = false
 
 func _on_AnimatedSprite_animation_finished():
 	animation_done = true
+
+
+func _on_DamageArea_area_entered(area):
+	print("damage area entered") # Replace with function body.

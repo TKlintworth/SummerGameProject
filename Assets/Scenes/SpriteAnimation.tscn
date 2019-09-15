@@ -92,11 +92,12 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=3]
-
 [sub_resource type="CapsuleShape2D" id=4]
 
+[sub_resource type="RectangleShape2D" id=3]
+
 [node name="Player" type="KinematicBody2D" groups=[
+"Spear",
 "Player",
 ]]
 position = Vector2( 645.853, 357.943 )
@@ -109,11 +110,19 @@ frames = SubResource( 2 )
 animation = "slave_jab_spear_active"
 frame = 5
 
+[node name="SpearCollisionShape2" type="CollisionShape2D" parent="."]
+position = Vector2( -105, -14 )
+rotation = 1.5708
+scale = Vector2( 1, 5 )
+shape = SubResource( 4 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2( 5, 9 )
 shape = SubResource( 3 )
 
-[node name="EnemyDamageArea" type="Area2D" parent="."]
+[node name="EnemyDamageArea" type="Area2D" parent="." groups=[
+"Spear",
+]]
 script = ExtResource( 45 )
 
 [node name="SpearCollisionShape" type="CollisionShape2D" parent="EnemyDamageArea"]
