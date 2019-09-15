@@ -38,7 +38,7 @@ func take_damage():
 # function for player death
 func player_die():
 	if player_dead == true && dead_animation_played == false:
-		$Area2D/AudioStreamPlayer2D.play_noise()
+		$AudioStreamPlayer2D.play_noise()
 		$AnimatedSprite.play("slave_dying")
 		game_status = 1
 		dead_animation_played = true # prevents audio stream from playing sounds more than once
@@ -54,7 +54,7 @@ func block():
 func throw_spear():
 	spear_thrown = true
 	action = true
-	$Area2D/AudioStreamPlayer2D.play_attack_noise()
+	$AudioStreamPlayer2D.play_attack_noise()
 	spear = spear_scene.instance()
 	get_parent().add_child(spear) # adds the spear "object" to the scene
 	spear_pick = get_parent().get_node("Spear/Area2D")
@@ -63,6 +63,11 @@ func throw_spear():
 		0: spear.position = Vector2((self.position.x - 120), (self.position.y - 30)) # set starting position of spear when player is facing left
 		1: spear.position = Vector2((self.position.x + 120), (self.position.y - 30)) # set starting postion of spear when player is facing right
 	$AnimatedSprite.play("slave_throw_spear_active")
+
+func jab():
+	action = true
+	$AnimatedSprite.play("slave_jab_spear_active")
+	#$EnemyDamageArea.check_if_enemy_hit()
 
 func get_input():
 	velocity = Vector2()
@@ -112,10 +117,13 @@ func get_input():
 	if Input.is_action_pressed("T") && spear_thrown == false: # player has not thrown spear yet
 		throw_spear()
 	
+	if Input.is_action_pressed("space"):
+		jab()
+	
 	#Die action
 	if Input.is_action_pressed("Q"):
 		player_dead = true
-		$Area2D/AudioStreamPlayer2D.play_noise()
+		$AudioStreamPlayer2D.play_noise()
 		$AnimatedSprite.play("slave_dying")
 		
 	#Sprint action
@@ -151,6 +159,9 @@ func _physics_process(delta):
 		get_parent().destroy_enemy() # destroys the enemy node in the main fight scene
 		player_status = 1 # player is now without the spear
 	
+	if $AnimatedSprite.get_animation() == "slave_jab_spear_active":
+		if $AnimatedSprite.frame == 5:
+			$EnemyDamageArea.check_if_enemy_hit()
 	
 	match game_status: # if player is alive, get input. Otherwise, do not get input
 		0: get_input()
