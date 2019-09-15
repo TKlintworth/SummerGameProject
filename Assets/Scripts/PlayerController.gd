@@ -38,7 +38,7 @@ func take_damage():
 # function for player death
 func player_die():
 	if player_dead == true && dead_animation_played == false:
-		$Area2D/AudioStreamPlayer2D.play_noise()
+		$AudioStreamPlayer2D.play_noise()
 		$AnimatedSprite.play("slave_dying")
 		game_status = 1
 		dead_animation_played = true # prevents audio stream from playing sounds more than once
@@ -54,7 +54,7 @@ func block():
 func throw_spear():
 	spear_thrown = true
 	action = true
-	$Area2D/AudioStreamPlayer2D.play_attack_noise()
+	$AudioStreamPlayer2D.play_attack_noise()
 	spear = spear_scene.instance()
 	get_parent().add_child(spear) # adds the spear "object" to the scene
 	spear_pick = get_parent().get_node("Spear/Area2D")
@@ -115,7 +115,7 @@ func get_input():
 	#Die action
 	if Input.is_action_pressed("Q"):
 		player_dead = true
-		$Area2D/AudioStreamPlayer2D.play_noise()
+		$AudioStreamPlayer2D.play_noise()
 		$AnimatedSprite.play("slave_dying")
 		
 	#Sprint action
