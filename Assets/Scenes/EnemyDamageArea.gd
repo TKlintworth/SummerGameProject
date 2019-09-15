@@ -13,7 +13,7 @@ func check_if_enemy_hit():
 			return
 	for body in overlapping_bodies: 
 		
-		if not body.is_in_group("Enemy"):
+		if not body.is_in_group("Enemy1"):
 			return
 		print("hit")
 		get_parent().get_parent().destroy_enemy()
