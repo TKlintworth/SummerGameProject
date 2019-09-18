@@ -64,3 +64,6 @@ func _on_AnimatedSprite_animation_finished():
 
 func _on_DamageArea_area_entered(area):
 	print("damage area entered") # Replace with function body.
+	print(area.name)
+	if(area.name == "EnemyDamageArea"):
+		self.queue_free()
