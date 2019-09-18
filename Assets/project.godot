@@ -19,6 +19,10 @@ config/name="sampleGladiator"
 run/main_scene="res://Scenes/TitleScreen/TitleScreen.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+GameStateManager="*res://GameStateManager.gd"
+
 [display]
 
 window/size/width=1280

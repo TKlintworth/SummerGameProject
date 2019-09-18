@@ -7,12 +7,9 @@ export (PackedScene) var enemy_scene
 var enemy
 
 func _ready():
-	$Fog/icon/AnimationPlayer.play("fog_in") # play fog shader at start of game
+	#$Fog/icon/AnimationPlayer.play("fog_in") # play fog shader at start of game
 	set_process(false) # set process to false to make less expensive
-	#start_wave_2()
-	#enemy = enemy_scene.instance()
-	#add_child(enemy)
-	#enemy.position = Vector2(100, 100)
+	
 	
 func destroy_spear():
 	remove_child($Spear)
