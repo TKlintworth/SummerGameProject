@@ -19,10 +19,6 @@ config/name="sampleGladiator"
 run/main_scene="res://Scenes/TitleScreen/TitleScreen.tscn"
 config/icon="res://icon.png"
 
-[autoload]
-
-GameStateManager="*res://GameStateManager.gd"
-
 [display]
 
 window/size/width=1280
@@ -89,19 +85,6 @@ T={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":84,"unicode":0,"echo":false,"script":null)
  ]
 }
-<<<<<<< HEAD
-=======
-M={
-"deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":77,"unicode":0,"echo":false,"script":null)
- ]
-}
-space={
-"deadzone": 0.5,
-"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
- ]
-}
->>>>>>> 309eb0d74801d4a129f4836bc80b4b656aee6abe
 
 [rendering]
 

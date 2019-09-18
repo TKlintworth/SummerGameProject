@@ -65,13 +65,13 @@ func _process(delta):
 		#	vel.x += SPEED
 		if attacking == false:
 			#print("position fleeing,", position)
-			print(dir)
+			#print(dir)
 			dir = (Player.position - position).normalized()
 			#print("dir,",dir)
 			var motion = dir * SPEED * delta
 			#print("motion,",motion)
 			$AnimatedSprite.play("redguard_running")
-			print("MOTION IN COMBAT", motion)
+			#print("MOTION IN COMBAT", motion)
 			position += motion
 		if attacking == true:
 			#"light flurry" attack
@@ -84,7 +84,7 @@ func _process(delta):
 		#print("in combat")
 		
 	if(state == "fleeing"):
-		#print("fleeing")
+		print("fleeing")
 		#Choose corner to run to
 		#print(enemyMovementZones.zones)
 		if enemyMovementZoneChosen == false:
