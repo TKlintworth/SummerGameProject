@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scenes/MainFightScene.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=2]
@@ -10,8 +10,15 @@
 [ext_resource path="res://sounds/Music/BattleMusic.wav" type="AudioStream" id=8]
 [ext_resource path="res://Scenes/Music.gd" type="Script" id=9]
 [ext_resource path="res://Scenes/FogScene.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/enemyMovementZones.gd" type="Script" id=11]
 
-[sub_resource type="ShaderMaterial" id=1]
+[sub_resource type="ShaderMaterial" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 24.0215
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 22.9011
 
 [node name="MainRoot" type="Node2D"]
 script = ExtResource( 1 )
@@ -44,7 +51,7 @@ autostart = true
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer"]
-material = SubResource( 1 )
+material = SubResource( 3 )
 margin_left = 22.689
 margin_top = 3.78149
 margin_right = 662.689
@@ -65,3 +72,22 @@ script = ExtResource( 9 )
 position = Vector2( 1034.62, 426.213 )
 
 [node name="Fog" parent="." instance=ExtResource( 10 )]
+
+[node name="enemyMovementZones" type="Area2D" parent="."]
+script = ExtResource( 11 )
+
+[node name="move1" type="CollisionShape2D" parent="enemyMovementZones"]
+position = Vector2( 131.001, 197.001 )
+shape = SubResource( 1 )
+
+[node name="move2" type="CollisionShape2D" parent="enemyMovementZones"]
+position = Vector2( 137.002, 953.191 )
+shape = SubResource( 2 )
+
+[node name="move3" type="CollisionShape2D" parent="enemyMovementZones"]
+position = Vector2( 1783.13, 177.7 )
+shape = SubResource( 2 )
+
+[node name="move4" type="CollisionShape2D" parent="enemyMovementZones"]
+position = Vector2( 1786.08, 998.915 )
+shape = SubResource( 2 )
