@@ -37,9 +37,7 @@ animations = [ {
 
 [sub_resource type="CircleShape2D" id=4]
 
-[node name="Enemy" type="KinematicBody2D" groups=[
-"Enemy1",
-]]
+[node name="Enemy" type="KinematicBody2D"]
 scale = Vector2( 0.3, 0.3 )
 script = ExtResource( 1 )
 
@@ -52,7 +50,9 @@ shape = SubResource( 1 )
 frames = SubResource( 2 )
 animation = "redguard_attack"
 
-[node name="DamageArea" type="Area2D" parent="."]
+[node name="DamageArea" type="Area2D" parent="." groups=[
+"Enemy1",
+]]
 scale = Vector2( 1.2, 1.2 )
 script = ExtResource( 11 )
 

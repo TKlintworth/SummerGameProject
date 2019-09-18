@@ -15,10 +15,19 @@ func _process(delta):
 	if not overlapping_bodies: # if no overlapping bodies, do not run any more code
 			return
 	for body in overlapping_bodies:
-		if not body.is_in_group("Player") and not body.is_in_group("Enemy"): #or not body.is_in_group("Enemy"): # if the overlapping body is not the player, do not run any more code
+		if not body.is_in_group("Player") and not body.is_in_group("Enemy1"): #or not body.is_in_group("Enemy"): # if the overlapping body is not the player, do not run any more code
 			return
-		elif(body.is_in_group("Enemy")):
+		elif(body.is_in_group("Player")):
+			get_parent().get_tree().get_root().get_node("MainRoot/Player").set_player_status(0)
+			get_parent().get_tree().get_root().get_node("MainRoot/Player").set_thrown(false)
+			self.queue_free()
+		elif(body.is_in_group("Enemy1")):
+			print("hit enemy")
+			get_parent().queue_free()
+			get_parent().get_tree().get_root().get_node("MainRoot/Player").set_player_status(1)
+			get_parent().get_tree().get_root().get_node("MainRoot/Player").set_thrown(true)
 			spear_gone = true
-			return
+			
+			#return
 		spear_pickup = true
 	set_physics_process(false)

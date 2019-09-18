@@ -8,6 +8,7 @@ export (int) var speed = 360
 export var spear_attack_bool = false
 export var character_direction = 0 # int value to decide direction; 0 = Character is facing LEFT; 1 = Character is facing RIGHT
 export (PackedScene) var spear_scene
+export (PackedScene) var spear_on_ground
 
 #var spear_ready
 var player_dead = false
@@ -52,7 +53,8 @@ func block():
 	
 # throw spear function	
 func throw_spear():
-	spear_thrown = true
+	#spear_thrown = true
+	set_thrown(true)
 	action = true
 	$AudioStreamPlayer2D.play_attack_noise()
 	spear = spear_scene.instance()
@@ -150,15 +152,23 @@ func get_input():
 		#sprinting increases speed by 150%
 		velocity = velocity.normalized() * (speed+ (0.5*(speed)))
 
+func set_player_status(status):
+	match status:
+		0: player_status = 0
+		1: player_status = 1
+		
+func set_thrown(spear_thrown):
+	self.spear_thrown = spear_thrown
+	
 func _physics_process(delta):
-	if(spear_thrown == true && spear_pick.spear_pickup == true): # spear has been thrown, and player has entered the Area2D of the spear, spear has not hit enemy
-		get_parent().destroy_spear() # destroys the spear node in the main fight scene
-		spear_thrown = false
-		player_status = 0 # player is now holding the spear
-	elif(spear_thrown == true && spear_pick.spear_gone == true): # spear has been thrown, it has hit the enemy
-		get_parent().destroy_spear() # destroys the spear node in the main fight scene
+	#if(spear_thrown == true && spear_pick.spear_pickup == true): # spear has been thrown, and player has entered the Area2D of the spear, spear has not hit enemy
+		#get_parent().destroy_spear() # destroys the spear node in the main fight scene
+		#spear_thrown = false
+		#player_status = 0 # player is now holding the spear
+	#elif(spear_thrown == true && spear_pick.spear_gone == true): # spear has been thrown, it has hit the enemy
+		#get_parent().destroy_spear() # destroys the spear node in the main fight scene
 		#get_parent().destroy_enemy() # destroys the enemy node in the main fight scene
-		player_status = 1 # player is now without the spear
+		#player_status = 1 # player is now without the spear
 	
 	if $AnimatedSprite.get_animation() == "slave_jab_spear_active":
 		if $AnimatedSprite.frame == 4:
@@ -177,7 +187,7 @@ func _on_AnimatedSprite_animation_finished(): #ran everytime animation is finish
 	if !Input.is_action_pressed("E"): #this is needed so player does cannot move when animation plays
 		action = false
 	if spear_thrown == true:
-		player_status = 1
+		set_player_status(1)
 	else:
 		player_status = 0
 	$EnemyDamageArea.set_collision_mask(0) # set player spear to cannot kill enemy

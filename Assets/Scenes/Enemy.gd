@@ -38,7 +38,7 @@ func _process(delta):
 		if $AnimatedSprite.get_frame() == 3 and area_entered == true:
 			Player.take_damage()
 	if hit == true:
-		get_parent().destroy_spear()
+		#get_parent().destroy_spear()
 		#get_parent().destroy_enemy()
 		self.queue_free()
 	var difference = Player.position.y - self.position.y
