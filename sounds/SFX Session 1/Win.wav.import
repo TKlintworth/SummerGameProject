@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Win.wav-390c153706d960234c45e1023b096f67.sample"
+
+[deps]
+
+source_file="res://sounds/SFX Session 1/Win.wav"
+dest_files=[ "res://.import/Win.wav-390c153706d960234c45e1023b096f67.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
