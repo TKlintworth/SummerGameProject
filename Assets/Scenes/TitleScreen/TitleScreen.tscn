@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/TitleScreen/title_screen.gd" type="Script" id=1]
 [ext_resource path="res://Big-Sale-v1.0.otf" type="DynamicFontData" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://Scenes/TitleScreen/Buttons/OptionsButton.tscn" type="PackedScene" id=5]
 [ext_resource path="res://PNG/idleMan.png" type="Texture" id=6]
 [ext_resource path="res://fade_in/FadeIn.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 64
@@ -94,6 +93,4 @@ text = "Version 0.0
 
 [node name="FadeIn" parent="." instance=ExtResource( 7 )]
 visible = false
-
-[node name="AudioStreamPlayer2D" parent="." instance=ExtResource( 8 )]
 [connection signal="fade_finished" from="FadeIn" to="." method="_on_FadeIn_fade_finished"]
