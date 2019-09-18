@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 signal attack_finished
+signal animation_finished
 signal enemyInMovementZone
 
 onready var Player = get_parent().get_node("Player")
@@ -42,6 +43,7 @@ func _on_Area2D_area_entered(area: Area2D) -> void:
 # Seperating out playing attack animations into chooseable attacks
 func choose_attack(attack):
 	if attack == "light_flurry":
+		print("ATTACKING")
 		# Light flurry plays individual attack animations faster
 		$AnimatedSprite.speed_scale = 1.85
 		$AnimatedSprite.play("redguard_attack")
@@ -130,6 +132,8 @@ func chooseMovementZone():
 
 func _on_attackZone_area_entered(area: Area2D) -> void:
 	print(area.name)
+	#if area.name == "attackZone":
+	#	attacking = true
 	if area.name == "SenseArea":
 		attacking = true
 
@@ -143,3 +147,10 @@ func _on_enemyMovementZones_area_entered(area: Area2D) -> void:
 
 func _on_enemyMovementZones_area_exited(area: Area2D) -> void:
 	isEnemyInMovementZone = false
+
+
+func _on_SenseArea_area_entered(area: Area2D):
+	print(area.name)
+	if area.name == "attackZone":
+		attacking = true
+
