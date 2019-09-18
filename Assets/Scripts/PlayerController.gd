@@ -75,6 +75,7 @@ func get_input():
 	
 	if (player_health_node.value <=27):
 		player_dead = true
+		#action = true
 		player_die()
 		
 	########### MOVEMENT #################
@@ -156,7 +157,7 @@ func _physics_process(delta):
 		player_status = 0 # player is now holding the spear
 	elif(spear_thrown == true && spear_pick.spear_gone == true): # spear has been thrown, it has hit the enemy
 		get_parent().destroy_spear() # destroys the spear node in the main fight scene
-		get_parent().destroy_enemy() # destroys the enemy node in the main fight scene
+		#get_parent().destroy_enemy() # destroys the enemy node in the main fight scene
 		player_status = 1 # player is now without the spear
 	
 	if $AnimatedSprite.get_animation() == "slave_jab_spear_active":
@@ -181,8 +182,8 @@ func _on_AnimatedSprite_animation_finished(): #ran everytime animation is finish
 		player_status = 0
 	$EnemyDamageArea.set_collision_mask(0) # set player spear to cannot kill enemy
 	# GAME OVER, player has died. Return to menu
-	if game_status == 1:
-		get_node("/root/GameStateManager").getScene("res://Scenes/TitleScreen/TitleScreen.tscn")
+	#if game_status == 1:
+	#	get_node("/root/GameStateManager").getScene("res://Scenes/TitleScreen/TitleScreen.tscn")
 
 
 

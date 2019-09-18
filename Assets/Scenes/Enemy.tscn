@@ -62,6 +62,8 @@ scale = Vector2( 6, 16 )
 shape = SubResource( 3 )
 
 [node name="SenseArea" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource( 12 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea"]

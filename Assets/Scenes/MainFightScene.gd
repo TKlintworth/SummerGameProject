@@ -60,6 +60,8 @@ func play_battle_music():
 func start_new_wave():
 	wave_num += 1
 	get_enemy_number()
+	$CanvasLayer/Control/NinePatchRect/Wave_Large.change_wave()
+	$CanvasLayer/Control/NinePatchRect/Wave_Small.progress()
 	print("enemy count")
 	print(enemy_count)
 	for i in range(enemy_count):

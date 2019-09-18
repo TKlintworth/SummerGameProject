@@ -21,7 +21,7 @@ func check_if_enemy_hit():
 		#get_parent().get_parent().destroy_enemy()
 
 func _process(delta):
-
+	
 	match get_parent().character_direction:
 		0: $SpearCollisionShape.position = face_left # player facing left, move collider to left
 		1: $SpearCollisionShape.position = face_right # player facing right, move collider to right
