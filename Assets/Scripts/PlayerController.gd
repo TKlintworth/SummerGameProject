@@ -67,6 +67,7 @@ func throw_spear():
 	$AnimatedSprite.play("slave_throw_spear_active")
 
 func jab():
+	print("jab")
 	action = true
 	$AnimatedSprite.play("slave_jab_spear_active")
 	$EnemyDamageArea.check_if_enemy_hit()
@@ -194,6 +195,8 @@ func _on_AnimatedSprite_animation_finished(): #ran everytime animation is finish
 	# GAME OVER, player has died. Return to menu
 	#if game_status == 1:
 	#	get_node("/root/GameStateManager").getScene("res://Scenes/TitleScreen/TitleScreen.tscn")
+
+
 
 
 

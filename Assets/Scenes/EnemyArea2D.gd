@@ -11,8 +11,8 @@ func _process(delta):
 	for body in overlapping_bodies: 
 	# may want to find better way to do this
 		if body.is_in_group("Spear"): # enemy hit by spear
-			get_parent().hit = true # destroy spear and enemy
-		
+			#get_parent().hit = true # destroy spear and enemy
+			pass
 		
 		
 		

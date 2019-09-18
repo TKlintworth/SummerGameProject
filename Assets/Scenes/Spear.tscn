@@ -44,3 +44,4 @@ script = ExtResource( 5 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 scale = Vector2( 8, 1 )
 shape = SubResource( 3 )
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

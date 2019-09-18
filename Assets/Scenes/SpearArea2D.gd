@@ -20,12 +20,12 @@ func _process(delta):
 		elif(body.is_in_group("Player")):
 			get_parent().get_tree().get_root().get_node("MainRoot/Player").set_player_status(0)
 			get_parent().get_tree().get_root().get_node("MainRoot/Player").set_thrown(false)
-			self.queue_free()
+			get_parent().queue_free()
 		elif(body.is_in_group("Enemy1")):
 			print("hit enemy")
-			get_parent().queue_free()
-			get_parent().get_tree().get_root().get_node("MainRoot/Player").set_player_status(1)
-			get_parent().get_tree().get_root().get_node("MainRoot/Player").set_thrown(true)
+			#get_parent().queue_free()
+			#get_parent().get_tree().get_root().get_node("MainRoot/Player").set_player_status(1)
+			#get_parent().get_tree().get_root().get_node("MainRoot/Player").set_thrown(true)
 			spear_gone = true
 			
 			#return
