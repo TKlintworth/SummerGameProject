@@ -77,3 +77,8 @@ func _process(delta):
 		
 	get_input()
 	
+
+func _on_Area2D_area_entered(area):
+	if(area.name == "DamageArea"):
+		area.get_parent().queue_free()
+		self.queue_free()
