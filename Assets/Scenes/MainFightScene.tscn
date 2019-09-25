@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scenes/MainFightScene.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Scenes/Music.gd" type="Script" id=9]
 [ext_resource path="res://Scenes/FogScene.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/enemyMovementZones.gd" type="Script" id=11]
+[ext_resource path="res://Scenes/SpearPickup.tscn" type="PackedScene" id=12]
 
 [sub_resource type="ShaderMaterial" id=1]
 
@@ -91,3 +92,6 @@ shape = SubResource( 3 )
 [node name="move4" type="CollisionShape2D" parent="enemyMovementZones"]
 position = Vector2( 1786.08, 998.915 )
 shape = SubResource( 3 )
+
+[node name="PickupSpear" parent="." instance=ExtResource( 12 )]
+position = Vector2( 619.272, 570.454 )

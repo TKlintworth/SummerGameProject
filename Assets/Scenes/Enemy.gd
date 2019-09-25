@@ -34,7 +34,8 @@ func change_state(var nextState):
 		state = "idle"
 
 func _on_Area2D_area_entered(area: Area2D) -> void:
-	print(area.name)
+	pass
+	#print(area.name)
 	#if area.name == "attackZone":
 	#	attacking = true
 	#if area.name == "attackZone":
@@ -43,7 +44,7 @@ func _on_Area2D_area_entered(area: Area2D) -> void:
 # Seperating out playing attack animations into chooseable attacks
 func choose_attack(attack):
 	if attack == "light_flurry":
-		print("ATTACKING")
+		#print("ATTACKING")
 		# Light flurry plays individual attack animations faster
 		$AnimatedSprite.speed_scale = 1.85
 		$AnimatedSprite.play("redguard_attack")
@@ -86,7 +87,7 @@ func _process(delta):
 		#print("in combat")
 		
 	if(state == "fleeing"):
-		print("fleeing")
+		#print("fleeing")
 		#Choose corner to run to
 		#print(enemyMovementZones.zones)
 		if enemyMovementZoneChosen == false:
@@ -109,7 +110,7 @@ func _process(delta):
 		
 		
 	if state == "idle":
-		print("idle")
+		#print("idle")
 		$AnimatedSprite.play("redguard_idle")
 		#print("is player alive?")
 		#print(!playerAlive)
