@@ -162,6 +162,8 @@ func set_thrown(spear_thrown):
 	self.spear_thrown = spear_thrown
 	
 func _physics_process(delta):
+	#print("layers: ")
+	#print()
 	#if(spear_thrown == true && spear_pick.spear_pickup == true): # spear has been thrown, and player has entered the Area2D of the spear, spear has not hit enemy
 		#get_parent().destroy_spear() # destroys the spear node in the main fight scene
 		#spear_thrown = false
@@ -173,7 +175,8 @@ func _physics_process(delta):
 	
 	if $AnimatedSprite.get_animation() == "slave_jab_spear_active":
 		if $AnimatedSprite.frame == 4:
-			$EnemyDamageArea.set_collision_mask(1)
+			$EnemyDamageArea.set_collision_mask(2)
+			print("hit the enemy")
 			#$EnemyDamageArea.setdisabled(false)
 			#$EnemyDamageArea.check_if_enemy_hit()
 	
@@ -195,3 +198,7 @@ func _on_AnimatedSprite_animation_finished(): #ran everytime animation is finish
 	# GAME OVER, player has died. Return to menu
 	#if game_status == 1:
 	#	get_node("/root/GameStateManager").getScene("res://Scenes/TitleScreen/TitleScreen.tscn")
+
+func _on_EnemyDamageArea_area_entered(area):
+	if area.name == "DamageArea":
+		area.get_parent().queue_free()
