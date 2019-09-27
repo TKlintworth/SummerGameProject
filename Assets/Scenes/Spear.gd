@@ -42,12 +42,13 @@ func get_input():
 
 func _process(delta):
 	direction = get_parent().get_node("Player").character_direction
-	
+	print("name")
+	print(get_parent().name)
 	if (timer_start == true): #timer starts when "throw" button is pressed
 		if (waited >= delay): #throw spear after 1 second
 			self.show()
-			self.set_collision_mask(1) #spear can now hit enemy
-			self.set_collision_layer(1)
+			$Area2D.set_collision_mask(2) #spear can now hit enemy
+			$Area2D.set_collision_layer(2)
 			timer_done = true
 		else:
 			waited += delta

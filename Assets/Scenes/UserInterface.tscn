@@ -4,17 +4,17 @@
 [ext_resource path="res://spritesheets/items&UI/player_healthbar_health-export.png" type="Texture" id=2]
 [ext_resource path="res://PNG/lifebar_bg.png" type="Texture" id=3]
 [ext_resource path="res://PNG/lifebar_fill.png" type="Texture" id=4]
-[ext_resource path="res://Big-Sale-v1.0.otf" type="DynamicFontData" id=5]
+[ext_resource path="res://Resources/Fonts/norse.bold.otf" type="DynamicFontData" id=5]
 [ext_resource path="res://Scenes/Wave.gd" type="Script" id=6]
 [ext_resource path="res://Scenes/Wave_Large.gd" type="Script" id=7]
 [ext_resource path="res://Scenes/AudioStreamPlayer2D.gd" type="Script" id=8]
 
 [sub_resource type="DynamicFont" id=1]
-size = 32
+size = 42
 font_data = ExtResource( 5 )
 
 [sub_resource type="DynamicFont" id=2]
-size = 72
+size = 100
 font_data = ExtResource( 5 )
 
 [sub_resource type="AudioStreamSample" id=3]

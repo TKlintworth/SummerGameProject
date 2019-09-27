@@ -35,7 +35,6 @@ position = Vector2( -191.368, 0 )
 autoplay = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-editor/display_folded = true
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource( 6 )]
 margin_left = 40.9653
@@ -49,7 +48,6 @@ autostart = true
 [node name="Wave_Enemy_Spawn_Timer" type="Timer" parent="CanvasLayer/Control"]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-editor/display_folded = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 

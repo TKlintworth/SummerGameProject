@@ -38,7 +38,8 @@ animation = "spear_flight"
 frame = 2
 
 [node name="Area2D" type="Area2D" parent="."]
-scale = Vector2( 2, 2 )
+position = Vector2( -34.9169, -12.5701 )
+scale = Vector2( 0.959999, 1.57864 )
 script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
