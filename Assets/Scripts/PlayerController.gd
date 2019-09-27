@@ -62,8 +62,8 @@ func throw_spear():
 	spear_pick = get_parent().get_node("Spear/Area2D")
 	print(spear_pick)
 	match character_direction:
-		0: spear.position = Vector2((self.position.x - 120), (self.position.y - 30)) # set starting position of spear when player is facing left
-		1: spear.position = Vector2((self.position.x + 120), (self.position.y - 30)) # set starting postion of spear when player is facing right
+		0: spear.position = Vector2((self.position.x - 50), (self.position.y - 30)) # set starting position of spear when player is facing left
+		1: spear.position = Vector2((self.position.x + 50), (self.position.y - 30)) # set starting postion of spear when player is facing right
 	$AnimatedSprite.play("slave_throw_spear_active")
 
 func jab():
@@ -176,7 +176,7 @@ func _physics_process(delta):
 	if $AnimatedSprite.get_animation() == "slave_jab_spear_active":
 		if $AnimatedSprite.frame == 4:
 			$EnemyDamageArea.set_collision_mask(2)
-			print("hit the enemy")
+			#print("hit the enemy")
 			#$EnemyDamageArea.setdisabled(false)
 			#$EnemyDamageArea.check_if_enemy_hit()
 	

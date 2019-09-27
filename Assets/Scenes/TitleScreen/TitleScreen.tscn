@@ -1,21 +1,22 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scenes/TitleScreen/title_screen.gd" type="Script" id=1]
-[ext_resource path="res://Big-Sale-v1.0.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://Resources/Fonts/norse.bold.otf" type="DynamicFontData" id=2]
 [ext_resource path="res://Scenes/TitleScreen/Buttons/NewGameButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/TitleScreen/Buttons/ContinueButton.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/TitleScreen/Buttons/OptionsButton.tscn" type="PackedScene" id=5]
 [ext_resource path="res://PNG/idleMan.png" type="Texture" id=6]
-[ext_resource path="res://fade_in/FadeIn.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Big-Sale-v1.0.otf" type="DynamicFontData" id=7]
+[ext_resource path="res://fade_in/FadeIn.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=9]
 
-[sub_resource type="DynamicFont" id=1]
-size = 64
+[sub_resource type="DynamicFont" id=3]
+size = 124
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 12
-font_data = ExtResource( 2 )
+font_data = ExtResource( 7 )
 
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
@@ -30,19 +31,19 @@ margin_bottom = 640.0
 
 [node name="Logo" type="Label" parent="Menu"]
 margin_right = 1040.0
-margin_bottom = 60.0
+margin_bottom = 124.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color_shadow = Color( 1, 0.592157, 0, 1 )
 custom_constants/shadow_offset_y = 5
 text = "GLADIATE"
 align = 1
 
 [node name="CenterRow" type="HBoxContainer" parent="Menu"]
-margin_top = 64.0
+margin_top = 128.0
 margin_right = 1040.0
-margin_bottom = 566.0
+margin_bottom = 630.0
 size_flags_vertical = 3
 
 [node name="Buttons" type="VBoxContainer" parent="Menu/CenterRow"]
@@ -83,17 +84,17 @@ size_flags_horizontal = 3
 texture = ExtResource( 6 )
 
 [node name="VersionLabel" type="Label" parent="Menu"]
-margin_top = 570.0
+margin_top = 634.0
 margin_right = 1040.0
-margin_bottom = 612.0
+margin_bottom = 676.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 2 )
 text = "Version 0.0
 
 "
 
-[node name="FadeIn" parent="." instance=ExtResource( 7 )]
+[node name="FadeIn" parent="." instance=ExtResource( 8 )]
 visible = false
 
-[node name="AudioStreamPlayer2D" parent="." instance=ExtResource( 8 )]
+[node name="AudioStreamPlayer2D" parent="." instance=ExtResource( 9 )]
 [connection signal="fade_finished" from="FadeIn" to="." method="_on_FadeIn_fade_finished"]
