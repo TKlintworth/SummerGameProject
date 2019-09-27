@@ -8,3 +8,4 @@ var spear_gone = false # tells if spear has hit enemy or not
 func _ready():
 	spear_pickup = false
 	player_status = get_tree().get_root().get_node("MainRoot/Player").player_status
+
