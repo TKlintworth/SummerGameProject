@@ -96,3 +96,6 @@ position = Vector2( 619.272, 570.454 )
 
 [node name="PickupSpear2" parent="." instance=ExtResource( 4 )]
 position = Vector2( 436.533, 227.807 )
+
+[node name="SpearSpawnTimer" type="Timer" parent="."]
+[connection signal="timeout" from="SpearSpawnTimer" to="." method="_on_SpearSpawnTimer_timeout"]
