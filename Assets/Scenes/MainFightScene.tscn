@@ -95,3 +95,6 @@ shape = SubResource( 3 )
 
 [node name="PickupSpear" parent="." instance=ExtResource( 13 )]
 position = Vector2( 619.272, 570.454 )
+
+[node name="PickupSpear2" parent="." instance=ExtResource( 13 )]
+position = Vector2( 436.533, 227.807 )
