@@ -54,7 +54,7 @@ func choose_attack(attack):
 		$AnimatedSprite.play("redguard_attack")
 		yield(get_node("AnimatedSprite"), "animation_finished")
 		emit_signal("attack_finished")
-		$AnimatedSprite.speed_scale = 1
+		#$AnimatedSprite.speed_scale = 1
 	# Add more attack types ...
 
 func ai_get_direction(target):
@@ -70,9 +70,9 @@ func _process(delta):
 			#print("position fleeing,", position)
 			#print(dir)
 			dir = (Player.position - position).normalized()
-			#print("dir,",dir)
+			print("dir,",dir)
 			var motion = dir * SPEED * delta
-			#print("motion,",motion)
+			print("motion,",motion)
 			$AnimatedSprite.play("redguard_running")
 			#print("MOTION IN COMBAT", motion)
 			position += motion
@@ -98,11 +98,14 @@ func _process(delta):
 			dir = ai_get_direction(runToZone)
 			print(dir)
 			var motion = dir * SPEED * delta
+			print("motion")
+			print(motion)
 			$AnimatedSprite.play("redguard_running")
+			#position += motion
 			move_and_slide(motion) 
 			
 			if isEnemyInMovementZone:
-				print(isEnemyInMovementZone)
+				#print(isEnemyInMovementZone)
 				attacking = false
 				change_state("inCombat")
 				enemyMovementZoneChosen = false
@@ -126,7 +129,7 @@ func _process(delta):
 func chooseMovementZone():
 	var runToIndex = range(0,4)[randi()%range(0,4).size()]
 	var runToZone = enemyMovementZones.zones[runToIndex]
-	print("run to zone returned: ", runToZone)
+	#print("run to zone returned: ", runToZone)
 	return runToZone
 
 
