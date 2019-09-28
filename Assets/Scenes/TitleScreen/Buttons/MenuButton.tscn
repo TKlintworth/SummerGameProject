@@ -11,6 +11,7 @@ font_data = ExtResource( 2 )
 margin_right = 1040.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 360, 60 )
+custom_colors/font_color_hover = Color( 0.615686, 0.0235294, 0.0235294, 1 )
 flat = true
 script = ExtResource( 1 )
 

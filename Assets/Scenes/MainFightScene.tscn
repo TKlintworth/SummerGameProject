@@ -1,18 +1,17 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scenes/MainFightScene.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/EnemyHeavy.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/SpriteAnimation.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Spear.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Art/BigArena.png" type="Texture" id=8]
-[ext_resource path="res://sounds/Music/BattleMusic.wav" type="AudioStream" id=9]
-[ext_resource path="res://Scenes/Music.gd" type="Script" id=10]
-[ext_resource path="res://Scenes/FogScene.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/SpearPickup.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/SpriteAnimation.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Spear.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Art/BigArena.png" type="Texture" id=9]
+[ext_resource path="res://sounds/Music/BattleMusic.wav" type="AudioStream" id=10]
+[ext_resource path="res://Scenes/Music.gd" type="Script" id=11]
 [ext_resource path="res://Scenes/enemyMovementZones.gd" type="Script" id=12]
-[ext_resource path="res://Scenes/SpearPickup.tscn" type="PackedScene" id=13]
 
 [sub_resource type="ShaderMaterial" id=1]
 
@@ -26,19 +25,20 @@ radius = 22.9011
 script = ExtResource( 1 )
 enemy_scene = ExtResource( 2 )
 heavy_enemy_scene = ExtResource( 3 )
+spear_pickup_scene = ExtResource( 4 )
 
-[node name="Player" parent="." instance=ExtResource( 4 )]
+[node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 249.255, 415.444 )
 scale = Vector2( 0.5, 0.5 )
-spear_scene = ExtResource( 5 )
+spear_scene = ExtResource( 6 )
 
-[node name="AudioStreamPlayer2D" parent="Player" instance=ExtResource( 6 )]
+[node name="AudioStreamPlayer2D" parent="Player" instance=ExtResource( 7 )]
 position = Vector2( -191.368, 0 )
 autoplay = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Control" parent="CanvasLayer" instance=ExtResource( 7 )]
+[node name="Control" parent="CanvasLayer" instance=ExtResource( 8 )]
 margin_left = 40.9653
 margin_top = -0.735077
 margin_right = 40.9652
@@ -60,19 +60,17 @@ margin_top = 3.78149
 margin_right = 662.689
 margin_bottom = 323.781
 rect_scale = Vector2( 3, 3.375 )
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 9 )
-script = ExtResource( 10 )
+stream = ExtResource( 10 )
+script = ExtResource( 11 )
 
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1034.62, 426.213 )
-
-[node name="Fog" parent="." instance=ExtResource( 11 )]
 
 [node name="enemyMovementZones" type="Area2D" parent="."]
 script = ExtResource( 12 )
@@ -93,8 +91,8 @@ shape = SubResource( 3 )
 position = Vector2( 1786.08, 998.915 )
 shape = SubResource( 3 )
 
-[node name="PickupSpear" parent="." instance=ExtResource( 13 )]
+[node name="PickupSpear" parent="." instance=ExtResource( 4 )]
 position = Vector2( 619.272, 570.454 )
 
-[node name="PickupSpear2" parent="." instance=ExtResource( 13 )]
+[node name="PickupSpear2" parent="." instance=ExtResource( 4 )]
 position = Vector2( 436.533, 227.807 )

@@ -11,7 +11,7 @@
 [ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Resources/black_background.jpg" type="Texture" id=10]
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=1]
 size = 124
 font_data = ExtResource( 2 )
 
@@ -35,7 +35,7 @@ margin_right = 1040.0
 margin_bottom = 124.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 1 )
 custom_colors/font_color_shadow = Color( 0.615686, 0.0235294, 0.0235294, 1 )
 custom_constants/shadow_offset_y = 5
 text = "GLADIATE"
@@ -59,16 +59,19 @@ alignment = 1
 margin_top = 141.0
 margin_right = 518.0
 margin_bottom = 201.0
+custom_colors/font_color_pressed = Color( 0.615686, 0.0235294, 0.0235294, 1 )
 
 [node name="ContinueButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 4 )]
 margin_top = 221.0
 margin_right = 518.0
 margin_bottom = 281.0
+custom_colors/font_color_pressed = Color( 0.615686, 0.0235294, 0.0235294, 1 )
 
 [node name="OptionsButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 5 )]
 margin_top = 301.0
 margin_right = 518.0
 margin_bottom = 361.0
+custom_colors/font_color_pressed = Color( 0.615686, 0.0235294, 0.0235294, 1 )
 
 [node name="CenterContainer" type="CenterContainer" parent="Menu/CenterRow"]
 margin_left = 522.0

@@ -8,6 +8,7 @@ font_data = ExtResource( 2 )
 
 [node name="NewGameButton" instance=ExtResource( 1 )]
 custom_fonts/font = SubResource( 1 )
+custom_colors/font_color_pressed = Color( 0, 0, 0, 1 )
 scene_to_load = "res://Game/NewGame.tscn"
 
 [node name="Label" parent="." index="0"]
