@@ -21,10 +21,12 @@ var vel = Vector2()
 var state = "inCombat"
 var states = ["idle", "inCombat", "fleeing"]
 
+export (int) var priority_level
+
 func _ready():
 	playerAlive = !Player.player_dead
 	set_process(true)
-
+	$DamageArea.set_priority(priority_level)
 func change_state(var nextState):
 	if nextState == "inCombat":
 		state = "inCombat"
@@ -70,9 +72,9 @@ func _process(delta):
 			#print("position fleeing,", position)
 			#print(dir)
 			dir = (Player.position - position).normalized()
-			print("dir,",dir)
+			#print("dir,",dir)
 			var motion = dir * SPEED * delta
-			print("motion,",motion)
+			#print("motion,",motion)
 			$AnimatedSprite.play("redguard_running")
 			#print("MOTION IN COMBAT", motion)
 			position += motion
@@ -96,10 +98,10 @@ func _process(delta):
 			enemyMovementZoneChosen = true
 		if enemyMovementZoneChosen == true:
 			dir = ai_get_direction(runToZone)
-			print(dir)
+			#print(dir)
 			var motion = dir * SPEED * delta
-			print("motion")
-			print(motion)
+			#print("motion")
+			#print(motion)
 			$AnimatedSprite.play("redguard_running")
 			#position += motion
 			move_and_slide(motion) 
@@ -135,12 +137,11 @@ func chooseMovementZone():
 
 
 func _on_attackZone_area_entered(area: Area2D) -> void:
-	print(area.name)
+	#print(area.name)
 	#if area.name == "attackZone":
 	#	attacking = true
 	if area.name == "SenseArea":
 		attacking = true
-
 
 func _on_enemyMovementZones_area_entered(area: Area2D) -> void:
 	print(area.name)
