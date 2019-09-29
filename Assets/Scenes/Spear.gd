@@ -14,6 +14,7 @@ var spear_distance = 2
 var rotate = true
 var thrown = false
 var on_ground = false
+var enemy_area_array = []
 
 
 func _ready():
@@ -21,8 +22,9 @@ func _ready():
 	thrown = false
 	on_ground = false
 	# do this so that when spear object is made, it does not hit anything until visible
-	self.set_collision_mask(0)
-	self.set_collision_layer(0)
+	#self.set_collision_mask(0)
+	#self.set_collision_layer(0)
+	$Area2D.set_monitoring(false)
 
 func get_input():
 	if Input.is_action_pressed("T") && thrown == false:
@@ -48,8 +50,9 @@ func _process(delta):
 	elif (timer_start == true): #timer starts when "throw" button is pressed
 		if (waited >= delay): #throw spear after 1 second
 			self.show()
-			$Area2D.set_collision_mask(2) #spear can now hit enemy
-			$Area2D.set_collision_layer(2)
+			#$Area2D.set_collision_mask(2) #spear can now hit enemy
+			#$Area2D.set_collision_layer(2)
+			$Area2D.set_monitoring(true)
 			timer_done = true
 		else:
 			waited += delta
@@ -83,10 +86,16 @@ func _process(delta):
 	
 func _on_Area2D_area_entered(area):
 	if(area.name == "DamageArea"):
-		area.get_parent().queue_free()
+		#area.get_parent().queue_free()
 		self.queue_free()
+		enemy_area_array.append(area)
 	if(area.name == "attackZone" && on_ground == true):
 		on_ground = false
 		get_parent().get_tree().get_root().get_node("MainRoot/Player").set_player_status(0)
 		get_parent().get_tree().get_root().get_node("MainRoot/Player").set_thrown(false)
 		self.queue_free()
+
+func _on_Area2D_area_exited(area):
+	if(enemy_area_array.size() > 0):
+		enemy_area_array.min().get_parent().queue_free()
+		enemy_area_array.clear()
