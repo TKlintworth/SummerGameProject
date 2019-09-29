@@ -71,6 +71,8 @@ script = ExtResource( 11 )
 
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1034.62, 426.213 )
+input_pickable = true
+priority_level = 1
 
 [node name="enemyMovementZones" type="Area2D" parent="."]
 script = ExtResource( 12 )
@@ -98,4 +100,8 @@ position = Vector2( 619.272, 570.454 )
 position = Vector2( 436.533, 227.807 )
 
 [node name="SpearSpawnTimer" type="Timer" parent="."]
+
+[node name="Enemy2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 764.269, 421.79 )
+priority_level = 2
 [connection signal="timeout" from="SpearSpawnTimer" to="." method="_on_SpearSpawnTimer_timeout"]

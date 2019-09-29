@@ -20,6 +20,8 @@ var spear_thrown = false
 export var player_status = 0 # int value to decide animation type; 0 = Does have spear; 1 = Does NOT have spear
 var spear_pick
 var game_status = 0 # game is a go
+var enemy_area_array = []
+
 
 onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Health")
 onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Stamina")
@@ -29,6 +31,7 @@ func _ready():
 	player_status = 0 # status of 0 is slave with spear
 	character_direction = 1 # player starts facing right
 	$AnimatedSprite.set_flip_h(true) # make player face right
+	$EnemyDamageArea.set_monitoring(false)
 	#print(get_parent().get_node("ColorRect/AnimationPlayer").play("transition_in"))
 	
 ############## FUNCTIONS ################
@@ -160,8 +163,10 @@ func _physics_process(delta):
 	
 	if $AnimatedSprite.get_animation() == "slave_jab_spear_active":
 		if $AnimatedSprite.frame == 4:
-			$EnemyDamageArea.set_collision_mask(2)
-	
+			$EnemyDamageArea.set_monitoring(true)
+			#$EnemyDamageArea.set_collision_mask(2)
+		if $AnimatedSprite.frame >= 5:
+			$EnemyDamageArea.set_monitoring(false)
 	match game_status: # if player is alive, get input. Otherwise, do not get input
 		0: get_input()
 		1: pass
@@ -176,11 +181,46 @@ func _on_AnimatedSprite_animation_finished(): #ran everytime animation is finish
 		set_player_status(1)
 	else:
 		player_status = 0
-	$EnemyDamageArea.set_collision_mask(0) # set player spear to cannot kill enemy
+	$EnemyDamageArea.set_monitoring(false)
+	#$EnemyDamageArea.set_collision_mask(0) # set player spear to cannot kill enemy
 	# GAME OVER, player has died. Return to menu
 	#if game_status == 1:
 	#	get_node("/root/GameStateManager").getScene("res://Scenes/TitleScreen/TitleScreen.tscn")
 
+#### THESE 2 FUNCTIONS PREVENT KILLING MORE THAN ONE ENEMY IN ONE JAB########
 func _on_EnemyDamageArea_area_entered(area):
 	if area.name == "DamageArea":
-		area.get_parent().queue_free()
+		enemy_area_array.append(area)		
+func _on_EnemyDamageArea_area_exited(area):
+	for enemy in enemy_area_array:
+		#print("enemy in array")
+		print(enemy)
+	print("array complete")
+	if(enemy_area_array.size() > 0):
+		enemy_area_array.min().get_parent().queue_free()
+		enemy_area_array.clear()
+####################################################################
+
+	
+
+
+#func _on_EnemyDamageArea_body_shape_entered(body_id, body, body_shape, area_shape):
+#		print("area id: ")
+#		print(body_id)
+#		print("shape: ")
+#		print(area_shape)
+
+
+#func _on_EnemyDamageArea_area_shape_entered(area_id, area, area_shape, self_shape):
+#	if area.name == "DamageArea":
+#		print("area id: ")
+#		print(area_id)
+#		print("area shape: ")
+#		print(area_shape)
+#		print("self shape: ")
+#		print(self_shape)
+		
+
+
+
+

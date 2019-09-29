@@ -103,6 +103,7 @@ radius = 116.214
 "Player",
 ]]
 position = Vector2( 645.853, 357.943 )
+collision_mask = 2
 script = ExtResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
@@ -117,6 +118,7 @@ scale = Vector2( 5, 9 )
 shape = SubResource( 3 )
 
 [node name="EnemyDamageArea" type="Area2D" parent="."]
+collision_mask = 2
 script = ExtResource( 45 )
 
 [node name="SpearCollisionShape" type="CollisionShape2D" parent="EnemyDamageArea"]
@@ -147,3 +149,6 @@ position = Vector2( -25.2701, -2.70752 )
 shape = SubResource( 5 )
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 [connection signal="area_entered" from="EnemyDamageArea" to="." method="_on_EnemyDamageArea_area_entered"]
+[connection signal="area_exited" from="EnemyDamageArea" to="." method="_on_EnemyDamageArea_area_exited"]
+[connection signal="area_shape_entered" from="EnemyDamageArea" to="." method="_on_EnemyDamageArea_area_shape_entered"]
+[connection signal="body_shape_entered" from="EnemyDamageArea" to="." method="_on_EnemyDamageArea_body_shape_entered"]
