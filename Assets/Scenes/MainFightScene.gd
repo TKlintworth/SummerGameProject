@@ -78,7 +78,7 @@ func _on_SpearSpawnTimer_timeout():
 	rngTimer.randomize()
 	print("added spear")
 	var random_spear_location = rng.randf_range(50, 550)
-	var random_spear_spawn_timer = rng.randf_range(2, 10)
+	var random_spear_spawn_timer = rng.randf_range(15, 50)
 	add_spear(random_spear_location)
 	$SpearSpawnTimer.wait_time = random_spear_spawn_timer
 	$SpearSpawnTimer.start()

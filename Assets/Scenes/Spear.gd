@@ -88,13 +88,14 @@ func _on_Area2D_area_entered(area):
 	if(area.name == "DamageArea"):
 		#area.get_parent().queue_free()
 		self.queue_free()
-		enemy_area_array.append(area)
+		enemy_area_array.append(area) # array to manage enemies area hit
 	if(area.name == "attackZone" && on_ground == true):
 		on_ground = false
 		get_parent().get_tree().get_root().get_node("MainRoot/Player").set_player_status(0)
 		get_parent().get_tree().get_root().get_node("MainRoot/Player").set_thrown(false)
 		self.queue_free()
 
+# Makes sure only one enemy killed per spear throw
 func _on_Area2D_area_exited(area):
 	if(enemy_area_array.size() > 0):
 		enemy_area_array.min().get_parent().queue_free()
