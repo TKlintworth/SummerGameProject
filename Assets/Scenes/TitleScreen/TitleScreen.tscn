@@ -107,7 +107,8 @@ visible = false
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer"]
-margin_right = 1200.0
+margin_left = -4.78333
+margin_right = 1195.22
 margin_bottom = 600.0
 rect_scale = Vector2( 1.07776, 1.23398 )
 texture = ExtResource( 10 )

@@ -125,7 +125,7 @@ func get_input():
 		throw_spear()
 	
 	# Jab action
-	if Input.is_action_pressed("space"):
+	if Input.is_action_pressed("space") && get_thrown() == false:
 		jab()
 	
 	#Sprint action
@@ -151,13 +151,19 @@ func get_input():
 		#sprinting increases speed by 150%
 		velocity = velocity.normalized() * (speed+ (0.5*(speed)))
 
+# Setter for player_status
 func set_player_status(status):
 	match status:
 		0: player_status = 0
 		1: player_status = 1
-		
+	
+# Setter for spear_thrown bool 	
 func set_thrown(spear_thrown):
 	self.spear_thrown = spear_thrown
+
+# Getter for spear_thrown bool
+func get_thrown():
+	return self.spear_thrown
 	
 func _physics_process(delta):
 	
