@@ -8,6 +8,7 @@ export (int) var speed = 360
 export var spear_attack_bool = false
 export var character_direction = 0 # int value to decide direction; 0 = Character is facing LEFT; 1 = Character is facing RIGHT
 export (PackedScene) var spear_scene
+export (PackedScene) var spear_on_ground
 
 #var spear_ready
 var player_dead = false
@@ -19,6 +20,8 @@ var spear_thrown = false
 export var player_status = 0 # int value to decide animation type; 0 = Does have spear; 1 = Does NOT have spear
 var spear_pick
 var game_status = 0 # game is a go
+var enemy_area_array = []
+
 
 onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Health")
 onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Stamina")
@@ -28,6 +31,7 @@ func _ready():
 	player_status = 0 # status of 0 is slave with spear
 	character_direction = 1 # player starts facing right
 	$AnimatedSprite.set_flip_h(true) # make player face right
+	$EnemyDamageArea.set_monitoring(false)
 	#print(get_parent().get_node("ColorRect/AnimationPlayer").play("transition_in"))
 	
 ############## FUNCTIONS ################
@@ -52,7 +56,8 @@ func block():
 	
 # throw spear function	
 func throw_spear():
-	spear_thrown = true
+	#spear_thrown = true
+	set_thrown(true)
 	action = true
 	$AudioStreamPlayer2D.play_attack_noise()
 	spear = spear_scene.instance()
@@ -60,14 +65,15 @@ func throw_spear():
 	spear_pick = get_parent().get_node("Spear/Area2D")
 	print(spear_pick)
 	match character_direction:
-		0: spear.position = Vector2((self.position.x - 120), (self.position.y - 30)) # set starting position of spear when player is facing left
-		1: spear.position = Vector2((self.position.x + 120), (self.position.y - 30)) # set starting postion of spear when player is facing right
+		0: spear.position = Vector2((self.position.x - 50), (self.position.y - 30)) # set starting position of spear when player is facing left
+		1: spear.position = Vector2((self.position.x + 50), (self.position.y - 30)) # set starting postion of spear when player is facing right
 	$AnimatedSprite.play("slave_throw_spear_active")
 
 func jab():
+	print("jab")
 	action = true
 	$AnimatedSprite.play("slave_jab_spear_active")
-	#$EnemyDamageArea.check_if_enemy_hit()
+	$EnemyDamageArea.check_if_enemy_hit()
 
 func get_input():
 	velocity = Vector2()
@@ -75,6 +81,7 @@ func get_input():
 	
 	if (player_health_node.value <=27):
 		player_dead = true
+		#action = true
 		player_die()
 		
 	########### MOVEMENT #################
@@ -117,15 +124,10 @@ func get_input():
 	if Input.is_action_pressed("T") && spear_thrown == false: # player has not thrown spear yet
 		throw_spear()
 	
-	if Input.is_action_pressed("space"):
+	# Jab action
+	if Input.is_action_pressed("space") && get_thrown() == false:
 		jab()
 	
-	#Die action
-	if Input.is_action_pressed("Q"):
-		player_dead = true
-		$AudioStreamPlayer2D.play_noise()
-		$AnimatedSprite.play("slave_dying")
-		
 	#Sprint action
 	if Input.is_action_pressed("shift"):
 		$AnimatedSprite.set_speed_scale(1.5)
@@ -149,20 +151,28 @@ func get_input():
 		#sprinting increases speed by 150%
 		velocity = velocity.normalized() * (speed+ (0.5*(speed)))
 
+# Setter for player_status
+func set_player_status(status):
+	match status:
+		0: player_status = 0
+		1: player_status = 1
+	
+# Setter for spear_thrown bool 	
+func set_thrown(spear_thrown):
+	self.spear_thrown = spear_thrown
+
+# Getter for spear_thrown bool
+func get_thrown():
+	return self.spear_thrown
+	
 func _physics_process(delta):
-	if(spear_thrown == true && spear_pick.spear_pickup == true): # spear has been thrown, and player has entered the Area2D of the spear, spear has not hit enemy
-		get_parent().destroy_spear() # destroys the spear node in the main fight scene
-		spear_thrown = false
-		player_status = 0 # player is now holding the spear
-	elif(spear_thrown == true && spear_pick.spear_gone == true): # spear has been thrown, it has hit the enemy
-		get_parent().destroy_spear() # destroys the spear node in the main fight scene
-		get_parent().destroy_enemy() # destroys the enemy node in the main fight scene
-		player_status = 1 # player is now without the spear
 	
 	if $AnimatedSprite.get_animation() == "slave_jab_spear_active":
-		if $AnimatedSprite.frame == 5:
-			$EnemyDamageArea.check_if_enemy_hit()
-	
+		if $AnimatedSprite.frame == 4:
+			$EnemyDamageArea.set_monitoring(true)
+			#$EnemyDamageArea.set_collision_mask(2)
+		if $AnimatedSprite.frame >= 5:
+			$EnemyDamageArea.set_monitoring(false)
 	match game_status: # if player is alive, get input. Otherwise, do not get input
 		0: get_input()
 		1: pass
@@ -174,14 +184,48 @@ func _on_AnimatedSprite_animation_finished(): #ran everytime animation is finish
 	if !Input.is_action_pressed("E"): #this is needed so player does cannot move when animation plays
 		action = false
 	if spear_thrown == true:
-		player_status = 1
+		set_player_status(1)
 	else:
 		player_status = 0
-	
+	$EnemyDamageArea.set_monitoring(false)
+	#$EnemyDamageArea.set_collision_mask(0) # set player spear to cannot kill enemy
 	# GAME OVER, player has died. Return to menu
-	if game_status == 1:
-		get_node("/root/GameStateManager").getScene("res://Scenes/TitleScreen/TitleScreen.tscn")
+	#if game_status == 1:
+	#	get_node("/root/GameStateManager").getScene("res://Scenes/TitleScreen/TitleScreen.tscn")
 
+#### THESE 2 FUNCTIONS PREVENT KILLING MORE THAN ONE ENEMY IN ONE JAB########
+func _on_EnemyDamageArea_area_entered(area):
+	if area.name == "DamageArea":
+		enemy_area_array.append(area)		
+func _on_EnemyDamageArea_area_exited(area):
+	for enemy in enemy_area_array:
+		#print("enemy in array")
+		print(enemy)
+	print("array complete")
+	if(enemy_area_array.size() > 0):
+		enemy_area_array.min().get_parent().queue_free()
+		enemy_area_array.clear()
+####################################################################
+
+	
+
+
+#func _on_EnemyDamageArea_body_shape_entered(body_id, body, body_shape, area_shape):
+#		print("area id: ")
+#		print(body_id)
+#		print("shape: ")
+#		print(area_shape)
+
+
+#func _on_EnemyDamageArea_area_shape_entered(area_id, area, area_shape, self_shape):
+#	if area.name == "DamageArea":
+#		print("area id: ")
+#		print(area_id)
+#		print("area shape: ")
+#		print(area_shape)
+#		print("self shape: ")
+#		print(self_shape)
+		
 
 
 

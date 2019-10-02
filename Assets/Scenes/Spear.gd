@@ -13,15 +13,18 @@ var delay = 1
 var spear_distance = 2
 var rotate = true
 var thrown = false
+var on_ground = false
+var enemy_area_array = []
 
 
 func _ready():
 	self.hide() # spear is added to scene but don't want it to be visible quite yet (until animation is finished)
 	thrown = false
-	
+	on_ground = false
 	# do this so that when spear object is made, it does not hit anything until visible
-	self.set_collision_mask(0)
-	self.set_collision_layer(0)
+	#self.set_collision_mask(0)
+	#self.set_collision_layer(0)
+	$Area2D.set_monitoring(false)
 
 func get_input():
 	if Input.is_action_pressed("T") && thrown == false:
@@ -41,13 +44,15 @@ func get_input():
 		
 
 func _process(delta):
-	direction = get_parent().get_node("Player").character_direction
+	if(timer_start == false): # this is needed so that spear rotation does not change if character turns the other direction
+		direction = get_parent().get_node("Player").character_direction
 	
-	if (timer_start == true): #timer starts when "throw" button is pressed
+	elif (timer_start == true): #timer starts when "throw" button is pressed
 		if (waited >= delay): #throw spear after 1 second
 			self.show()
-			self.set_collision_mask(1) #spear can now hit enemy
-			self.set_collision_layer(1)
+			#$Area2D.set_collision_mask(2) #spear can now hit enemy
+			#$Area2D.set_collision_layer(2)
+			$Area2D.set_monitoring(true)
 			timer_done = true
 		else:
 			waited += delta
@@ -60,8 +65,10 @@ func _process(delta):
 			match direction: # rotate spear into ground when max distance is reached
 				0: self.rotate(deg2rad(-30))
 				1: self.rotate(deg2rad(30))
-			
+			on_ground = true
 			timer_start = false
+			$Area2D.set_collision_layer(1)
+			$Area2D.set_collision_mask(1)
 		else:
 			waited_spear += delta
 			
@@ -77,3 +84,19 @@ func _process(delta):
 		
 	get_input()
 	
+func _on_Area2D_area_entered(area):
+	if(area.name == "DamageArea"):
+		#area.get_parent().queue_free()
+		self.queue_free()
+		enemy_area_array.append(area) # array to manage enemies area hit
+	if(area.name == "attackZone" && on_ground == true):
+		on_ground = false
+		get_parent().get_tree().get_root().get_node("MainRoot/Player").set_player_status(0)
+		get_parent().get_tree().get_root().get_node("MainRoot/Player").set_thrown(false)
+		self.queue_free()
+
+# Makes sure only one enemy killed per spear throw
+func _on_Area2D_area_exited(area):
+	if(enemy_area_array.size() > 0):
+		enemy_area_array.min().get_parent().queue_free()
+		enemy_area_array.clear()

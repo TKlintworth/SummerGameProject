@@ -22,7 +22,7 @@ animations = [ {
 "Spear",
 ]]
 scale = Vector2( 0.5, 0.5 )
-collision_layer = 2
+collision_layer = 4
 collision_mask = 2
 script = ExtResource( 1 )
 
@@ -38,9 +38,12 @@ animation = "spear_flight"
 frame = 2
 
 [node name="Area2D" type="Area2D" parent="."]
-scale = Vector2( 2, 2 )
+position = Vector2( -34.9169, -12.5701 )
+scale = Vector2( 0.959999, 1.57864 )
 script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 scale = Vector2( 8, 1 )
 shape = SubResource( 3 )
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]
