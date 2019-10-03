@@ -9,7 +9,7 @@
 [ext_resource path="res://Big-Sale-v1.0.otf" type="DynamicFontData" id=7]
 [ext_resource path="res://fade_in/FadeIn.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Resources/black_background.jpg" type="Texture" id=10]
+[ext_resource path="res://blackbackground.tscn" type="PackedScene" id=10]
 
 [sub_resource type="DynamicFont" id=1]
 size = 124
@@ -60,18 +60,24 @@ margin_top = 141.0
 margin_right = 518.0
 margin_bottom = 201.0
 custom_colors/font_color_pressed = Color( 0.615686, 0.0235294, 0.0235294, 1 )
+scene_to_load = ""
 
 [node name="ContinueButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 4 )]
 margin_top = 221.0
 margin_right = 518.0
 margin_bottom = 281.0
 custom_colors/font_color_pressed = Color( 0.615686, 0.0235294, 0.0235294, 1 )
+scene_to_load = ""
 
 [node name="OptionsButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 5 )]
 margin_top = 301.0
 margin_right = 518.0
 margin_bottom = 361.0
 custom_colors/font_color_pressed = Color( 0.615686, 0.0235294, 0.0235294, 1 )
+scene_to_load = "res://Game/Options.tscn"
+
+[node name="Label" parent="Menu/CenterRow/Buttons/OptionsButton" index="0"]
+align = 0
 
 [node name="CenterContainer" type="CenterContainer" parent="Menu/CenterRow"]
 margin_left = 522.0
@@ -102,14 +108,7 @@ visible = false
 
 [node name="AudioStreamPlayer2D" parent="." instance=ExtResource( 9 )]
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-
-[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer"]
-margin_left = -4.78333
-margin_right = 1195.22
-margin_bottom = 600.0
-rect_scale = Vector2( 1.07776, 1.23398 )
-texture = ExtResource( 10 )
+[node name="ParallaxBackground" parent="." instance=ExtResource( 10 )]
 [connection signal="fade_finished" from="FadeIn" to="." method="_on_FadeIn_fade_finished"]
+
+[editable path="Menu/CenterRow/Buttons/OptionsButton"]

@@ -10,7 +10,10 @@ func _ready():
 		#print("hello")
 
 func _on_Button_pressed(scene_to_load):
+	get_tree().change_scene(scene_to_load)
+	#res://Game/Options.tscn
 	scene_path_to_load = "res://Scenes/MainFightScene.tscn"
+	#scene_path_to_load = scene_to_load
 	$FadeIn.show()
 	$FadeIn.fade_in()
 
