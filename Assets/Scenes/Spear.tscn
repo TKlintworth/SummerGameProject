@@ -16,7 +16,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="CapsuleShape2D" id=3]
 
 [node name="Spear" type="KinematicBody2D" groups=[
 "Spear",
@@ -43,7 +43,9 @@ scale = Vector2( 0.959999, 1.57864 )
 script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-scale = Vector2( 8, 1 )
+position = Vector2( 11.638, 0.885443 )
+rotation = 0.0349066
+scale = Vector2( 8, 0.4 )
 shape = SubResource( 3 )
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]
