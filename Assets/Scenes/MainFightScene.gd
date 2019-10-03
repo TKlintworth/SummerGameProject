@@ -14,6 +14,10 @@ var scene_path_to_load
 var rng = RandomNumberGenerator.new()
 var rngTimer = RandomNumberGenerator.new()
 
+func _input(event):
+	if event.is_action_pressed("toggle_fullscreen"):
+    	OS.window_fullscreen = !OS.window_fullscreen
+
 func _ready():
 	$CanvasLayer/Control/Wave_Enemy_Spawn_Timer.wait_time = 2
 	heavy_enemy = heavy_enemy_scene.instance()
