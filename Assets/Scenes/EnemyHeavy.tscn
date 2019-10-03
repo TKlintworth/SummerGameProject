@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/EnemyHeavy.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/enemy_heavy_running/tile000.png" type="Texture" id=2]
@@ -16,6 +16,8 @@ animations = [ {
 
 [sub_resource type="CapsuleShape2D" id=2]
 
+[sub_resource type="CircleShape2D" id=3]
+
 [node name="EnemyHeavy" type="KinematicBody2D"]
 script = ExtResource( 1 )
 
@@ -31,3 +33,11 @@ frame = 2
 position = Vector2( -2.4382, 9.02453 )
 scale = Vector2( 3, 3 )
 shape = SubResource( 2 )
+
+[node name="SenseArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea"]
+position = Vector2( -2.72076, 9.52261 )
+scale = Vector2( 6, 6 )
+shape = SubResource( 3 )
+[connection signal="area_entered" from="SenseArea" to="." method="_on_SenseArea_area_entered"]
