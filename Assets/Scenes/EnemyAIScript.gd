@@ -47,7 +47,7 @@ func _on_Area2D_area_entered(area: Area2D) -> void:
 # Seperating out playing attack animations into chooseable attacks
 func choose_attack(attack):
 	if attack == "light_flurry":
-		#print("ATTACKING")
+		print("ATTACKING")
 		# Light flurry plays individual attack animations faster
 		$AnimatedSprite.speed_scale = 1.85
 		$AnimatedSprite.play("redguard_attack")
@@ -56,7 +56,8 @@ func choose_attack(attack):
 		yield(get_node("AnimatedSprite"), "animation_finished")
 		$AnimatedSprite.play("redguard_attack")
 		yield(get_node("AnimatedSprite"), "animation_finished")
-		emit_signal("attack_finished")
+		#emit_signal("attack_finished")
+		change_state("fleeing")
 		#$AnimatedSprite.speed_scale = 1
 	# Add more attack types ...
 
@@ -73,22 +74,25 @@ func _physics_process(delta):
 		#if Player.position.x > position.x:
 		#	vel.x += SPEED
 		if attacking == false:
+			dir = Player.position
+			position = position.linear_interpolate(Player.position, 0.001)
 			#print("position fleeing,", position)
 			#print(dir)
-			dir = (Player.position - position).normalized()
+			#dir = (Player.position - position).normalized()
 			#print("dir,",dir)
-			var motion = dir * SPEED * delta
+			#var motion = dir * SPEED * delta
 			#print("motion,",motion)
 			$AnimatedSprite.play("redguard_running")
 			#print("MOTION IN COMBAT", motion)
-			position += motion
+			#position += motion
 		if attacking == true:
 			#"light flurry" attack
 			choose_attack("light_flurry")
 			yield(self, "attack_finished")
 			# Change state to flee after attack
-			change_state("fleeing")
 			attacking = false
+			change_state("fleeing")
+			
 		#print(position.normalized(), Player.position.normalized())
 		#print("in combat")
 		
@@ -98,21 +102,22 @@ func _physics_process(delta):
 		#lerp??
 		#var motion = (dir * SPEED * delta)
 		#print("motion,",motion)
-		$AnimatedSprite.play("redguard_running")
+		
 		#position += position.linear_interpolate(Vector2(1,0), 0.5)
 		#move_and_slide(Vector2(-100, 0))
 		
 		#print("fleeing")
 		#Choose corner to run to
 		#print(enemyMovementZones.zones)
-		if enemyMovementZoneChosen == false:
+		#if enemyMovementZoneChosen == false:
 			#runToZone = chooseMovementZone()
 			#print("run to Zone: ", runToZone)
 			#last_position = self.position
-			enemyMovementZoneChosen = true
-		if enemyMovementZoneChosen == true:
+		#	enemyMovementZoneChosen = true
+		#if enemyMovementZoneChosen == true:
 			
-			position = position.linear_interpolate(Vector2(1500, 0), 0.001)
+			position = position.linear_interpolate(Vector2(1500, 450), 0.001)
+			$AnimatedSprite.play("redguard_running")
 			#self.position = last_position.linear_interpolate(Vector2(1500, 0), t)
 			#print("last position: ", last_position)
 			#print("lerp: ")
@@ -136,7 +141,7 @@ func _physics_process(delta):
 		
 	if state == "idle":
 		#print("idle")
-		$AnimatedSprite.play("redguard_idle")
+		#$AnimatedSprite.play("redguard_idle")
 		#print("is player alive?")
 		#print(!playerAlive)
 		#print(abs(Player.position.x - position.x))
@@ -158,12 +163,12 @@ func chooseMovementZone():
 
 
 
-func _on_attackZone_area_entered(area: Area2D) -> void:
+#func _on_attackZone_area_entered(area: Area2D) -> void:
 	#print(area.name)
 	#if area.name == "attackZone":
 	#	attacking = true
-	if area.name == "SenseArea":
-		attacking = true
+#	if area.name == "SenseArea":
+#		attacking = true
 
 func _on_enemyMovementZones_area_entered(area: Area2D) -> void:
 	print(area.name)
