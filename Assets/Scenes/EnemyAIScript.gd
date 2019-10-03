@@ -74,33 +74,33 @@ func _physics_process(delta):
 		#if Player.position.x > position.x:
 		#	vel.x += SPEED
 		if attacking == false:
-			dir = Player.position
-			position = position.linear_interpolate(Player.position, 0.001)
+			#dir = Player.position
+			#position = position.linear_interpolate(Player.position, 0.01)
 			#print("position fleeing,", position)
 			#print(dir)
-			#dir = (Player.position - position).normalized()
+			dir = (Player.position - position).normalized()
 			#print("dir,",dir)
-			#var motion = dir * SPEED * delta
+			var motion = dir * SPEED * delta
 			#print("motion,",motion)
 			$AnimatedSprite.play("redguard_running")
 			#print("MOTION IN COMBAT", motion)
-			#position += motion
+			position += motion
 		if attacking == true:
 			#"light flurry" attack
 			choose_attack("light_flurry")
 			yield(self, "attack_finished")
 			# Change state to flee after attack
 			attacking = false
-			change_state("fleeing")
+			#change_state("fleeing")
 			
 		#print(position.normalized(), Player.position.normalized())
 		#print("in combat")
 		
 	if(state == "fleeing"):
-		#dir = (Player.global_position - self.global_position).normalized()
+		dir = -(Player.global_position - self.global_position).normalized()
 			#print("dir,",dir)
 		#lerp??
-		#var motion = (dir * SPEED * delta)
+		var motion = (dir * SPEED * delta)
 		#print("motion,",motion)
 		
 		#position += position.linear_interpolate(Vector2(1,0), 0.5)
@@ -116,19 +116,19 @@ func _physics_process(delta):
 		#	enemyMovementZoneChosen = true
 		#if enemyMovementZoneChosen == true:
 			
-			position = position.linear_interpolate(Vector2(1500, 450), 0.001)
-			$AnimatedSprite.play("redguard_running")
+			#position = position.linear_interpolate(Vector2(1500, 450), 0.001)
+			#$AnimatedSprite.play("redguard_running")
 			#self.position = last_position.linear_interpolate(Vector2(1500, 0), t)
 			#print("last position: ", last_position)
 			#print("lerp: ")
 			#print(last_position.linear_interpolate(Vector2(1500, 0), t))
 			#dir = ai_get_direction(runToZone)
 			#print(dir)
-			#var motion = dir * SPEED * delta
+		#var motion = dir * SPEED * delta
 			#print("motion")
 			#print(motion)
-			#$AnimatedSprite.play("redguard_running")
-			#position += motion
+		$AnimatedSprite.play("redguard_running")
+		position += motion
 			#move_and_slide(motion) 
 			
 			#if isEnemyInMovementZone:
