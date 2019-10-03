@@ -85,7 +85,7 @@ func _process(delta):
 	get_input()
 	
 func _on_Area2D_area_entered(area):
-	if(area.name == "DamageArea"):
+	if(area.name == "DamageArea") and on_ground == false:
 		#area.get_parent().queue_free()
 		self.queue_free()
 		enemy_area_array.append(area) # array to manage enemies area hit
@@ -97,6 +97,6 @@ func _on_Area2D_area_entered(area):
 
 # Makes sure only one enemy killed per spear throw
 func _on_Area2D_area_exited(area):
-	if(enemy_area_array.size() > 0):
+	if(enemy_area_array.size() > 0) and on_ground == false:
 		enemy_area_array.min().get_parent().queue_free()
 		enemy_area_array.clear()

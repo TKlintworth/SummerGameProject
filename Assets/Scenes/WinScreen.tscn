@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/WinScreen.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Fonts/norse.bold.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://blackbackground.tscn" type="PackedScene" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 300
@@ -44,4 +45,6 @@ custom_colors/font_color_hover = Color( 0.584314, 0.0235294, 0.0235294, 1 )
 custom_colors/font_color_pressed = Color( 0.945098, 0.917647, 0.917647, 1 )
 text = "Menu"
 flat = true
+
+[node name="ParallaxBackground" parent="." instance=ExtResource( 3 )]
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
