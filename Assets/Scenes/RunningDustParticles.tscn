@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=2]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.378571, 1 )
+colors = PoolColorArray( 0.132813, 0.0976963, 0.0145264, 1, 0.601563, 0.473495, 0.0892944, 1, 0.617188, 0.486095, 0.0385742, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+emission_shape = 1
+emission_sphere_radius = 5.3
+flag_disable_z = true
+gravity = Vector3( -30, -5, 0 )
+initial_velocity = -20.0
+angular_velocity = 6.33693e-010
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+color_ramp = SubResource( 2 )
+
+[node name="RunningDust" type="Particles2D"]
+position = Vector2( 32.1425, 15.7561 )
+scale = Vector2( 5, 5 )
+emitting = false
+process_material = SubResource( 3 )

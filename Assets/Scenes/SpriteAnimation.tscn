@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://Scripts/PlayerController.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/slave_spear_running/spear_run_0.png" type="Texture" id=2]
@@ -46,6 +46,7 @@
 [ext_resource path="res://Sprites/slave_dying/tile004.png" type="Texture" id=44]
 [ext_resource path="res://Scenes/EnemyDamageArea.gd" type="Script" id=45]
 [ext_resource path="res://Scenes/CameraPivot.gd" type="Script" id=46]
+[ext_resource path="res://Scenes/RunningDustParticles.tscn" type="PackedScene" id=47]
 
 [sub_resource type="ShaderMaterial" id=1]
 
@@ -148,6 +149,9 @@ editor_draw_drag_margin = true
 [node name="attackZone" type="CollisionShape2D" parent="attackZone"]
 position = Vector2( -25.2701, -2.70752 )
 shape = SubResource( 5 )
+
+[node name="RunningDust" parent="." instance=ExtResource( 47 )]
+position = Vector2( -90, 80 )
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 [connection signal="area_entered" from="EnemyDamageArea" to="." method="_on_EnemyDamageArea_area_entered"]
 [connection signal="area_exited" from="EnemyDamageArea" to="." method="_on_EnemyDamageArea_area_exited"]
