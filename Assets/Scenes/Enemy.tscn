@@ -5,11 +5,11 @@
 [ext_resource path="res://Sprites/enemy_redguard_dagger_active/tile001.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/enemy_redguard_dagger_active/tile002.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/enemy_redguard_dagger_active/tile003.png" type="Texture" id=5]
-[ext_resource path="res://Sprites/enemy_redguard_dagger_running/tile000.png" type="Texture" id=6]
-[ext_resource path="res://Sprites/enemy_redguard_dagger_running/tile001.png" type="Texture" id=7]
-[ext_resource path="res://Sprites/enemy_redguard_dagger_running/tile002.png" type="Texture" id=8]
-[ext_resource path="res://Sprites/enemy_redguard_dagger_idle/tile000.png" type="Texture" id=9]
-[ext_resource path="res://Sprites/enemy_redguard_dagger_idle/tile001.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/enemy_redguard_dagger_idle/tile000.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/enemy_redguard_dagger_idle/tile001.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/enemy_redguard_dagger_running/tile000.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/enemy_redguard_dagger_running/tile001.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/enemy_redguard_dagger_running/tile002.png" type="Texture" id=10]
 [ext_resource path="res://Scenes/EnemyArea2D.gd" type="Script" id=11]
 [ext_resource path="res://Scenes/EnemySenseArea.gd" type="Script" id=12]
 
@@ -22,14 +22,14 @@ animations = [ {
 "name": "redguard_attack",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
-"loop": true,
-"name": "redguard_running",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 9 ), ExtResource( 10 ) ],
+"frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
 "loop": true,
 "name": "redguard_idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "redguard_running",
 "speed": 5.0
 } ]
 
@@ -69,7 +69,5 @@ script = ExtResource( 12 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea"]
 scale = Vector2( 25, 25 )
 shape = SubResource( 4 )
-[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
-[connection signal="animation_finished" from="AnimatedSprite" to="DamageArea" method="_on_AnimatedSprite_animation_finished"]
 [connection signal="area_entered" from="SenseArea" to="." method="_on_SenseArea_area_entered"]
 [connection signal="area_exited" from="SenseArea" to="." method="_on_SenseArea_area_exited"]

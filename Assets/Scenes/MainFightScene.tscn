@@ -77,7 +77,9 @@ script = ExtResource( 12 )
 position = Vector2( 1034.62, 426.213 )
 input_pickable = true
 
-[node name="enemyMovementZones" type="Area2D" parent="."]
+[node name="enemyMovementZones" type="Area2D" parent="." groups=[
+"EnemyMovementZone",
+]]
 script = ExtResource( 13 )
 
 [node name="move1" type="CollisionShape2D" parent="enemyMovementZones"]

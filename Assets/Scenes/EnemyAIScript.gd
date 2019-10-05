@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 signal attack_finished
-signal animation_finished
+#signal animation_finished
 signal enemyInMovementZone
 
 onready var Player = get_parent().get_node("Player")
@@ -57,14 +57,19 @@ func choose_attack(attack):
 		$AnimatedSprite.play("redguard_attack")
 		yield(get_node("AnimatedSprite"), "animation_finished")
 		#emit_signal("attack_finished")
+		print("made it here")
+		attacking = false
 		change_state("fleeing")
 		#$AnimatedSprite.speed_scale = 1
 	# Add more attack types ...
 
 func ai_get_direction(target):
+	print("got movement direction")
 	return (target.position - self.position).normalized()
 
 func _physics_process(delta):
+	#print("state: ", state)
+	#print("enemy zone: ", enemyMovementZoneChosen)
 	#var dis_to_player = Player.global_position - self.global_position
 	#var distance = dis_to_player.length()
 	#var direction = dis_to_player.normalize()
@@ -88,6 +93,7 @@ func _physics_process(delta):
 		if attacking == true:
 			#"light flurry" attack
 			choose_attack("light_flurry")
+			#attacking = false
 			yield(self, "attack_finished")
 			# Change state to flee after attack
 			attacking = false
@@ -97,10 +103,11 @@ func _physics_process(delta):
 		#print("in combat")
 		
 	if(state == "fleeing"):
-		dir = -(Player.global_position - self.global_position).normalized()
+		print("fleeing")
+		#dir = -(Player.global_position - self.global_position).normalized()
 			#print("dir,",dir)
 		#lerp??
-		var motion = (dir * SPEED * delta)
+		
 		#print("motion,",motion)
 		
 		#position += position.linear_interpolate(Vector2(1,0), 0.5)
@@ -109,12 +116,13 @@ func _physics_process(delta):
 		#print("fleeing")
 		#Choose corner to run to
 		#print(enemyMovementZones.zones)
-		#if enemyMovementZoneChosen == false:
-			#runToZone = chooseMovementZone()
+		if enemyMovementZoneChosen == false:
+			print("made to movement zone bool")
+			runToZone = chooseMovementZone()
 			#print("run to Zone: ", runToZone)
 			#last_position = self.position
-		#	enemyMovementZoneChosen = true
-		#if enemyMovementZoneChosen == true:
+			enemyMovementZoneChosen = true
+		if enemyMovementZoneChosen == true:
 			
 			#position = position.linear_interpolate(Vector2(1500, 450), 0.001)
 			#$AnimatedSprite.play("redguard_running")
@@ -122,20 +130,22 @@ func _physics_process(delta):
 			#print("last position: ", last_position)
 			#print("lerp: ")
 			#print(last_position.linear_interpolate(Vector2(1500, 0), t))
-			#dir = ai_get_direction(runToZone)
+			dir = ai_get_direction(runToZone)
+			var motion = (dir * SPEED * delta)
 			#print(dir)
-		#var motion = dir * SPEED * delta
+			#var motion = dir * SPEED * delta
 			#print("motion")
 			#print(motion)
-		$AnimatedSprite.play("redguard_running")
-		position += motion
+			$AnimatedSprite.play("redguard_running")
+			position += motion
 			#move_and_slide(motion) 
 			
-			#if isEnemyInMovementZone:
+			if isEnemyInMovementZone:
 				#print(isEnemyInMovementZone)
 			#	attacking = false
-			#	change_state("inCombat")
-			#	enemyMovementZoneChosen = false
+				enemyMovementZoneChosen = false
+				change_state("inCombat")
+				
 			#enemyMovementZoneChosen = false
 		
 		
@@ -163,12 +173,12 @@ func chooseMovementZone():
 
 
 
-#func _on_attackZone_area_entered(area: Area2D) -> void:
-	#print(area.name)
-	#if area.name == "attackZone":
-	#	attacking = true
-#	if area.name == "SenseArea":
-#		attacking = true
+func _on_attackZone_area_entered(area: Area2D) -> void:
+	print(area.name)
+	if area.name == "attackZone":
+		attacking = true
+	if area.name == "SenseArea":
+		attacking = true
 
 func _on_enemyMovementZones_area_entered(area: Area2D) -> void:
 	print(area.name)
@@ -178,6 +188,7 @@ func _on_enemyMovementZones_area_entered(area: Area2D) -> void:
 
 
 func _on_enemyMovementZones_area_exited(area: Area2D) -> void:
+	print("left movement zone")
 	isEnemyInMovementZone = false
 
 
@@ -185,4 +196,9 @@ func _on_SenseArea_area_entered(area: Area2D):
 	print(area.name)
 	if area.name == "attackZone":
 		attacking = true
+		isEnemyInMovementZone = false
+	if area.is_in_group("EnemyMovementZone"):
+		print("zone entered")
+		isEnemyInMovementZone = true
+		attacking = false
 
