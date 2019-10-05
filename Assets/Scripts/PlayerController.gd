@@ -90,6 +90,11 @@ func get_input():
 		velocity.x -= 1
 		$AnimatedSprite.set_flip_h(false)
 		character_direction = 0 
+		$RunningDust.position = Vector2(90, 80)
+		$RunningDust.process_material.gravity = Vector3(30, -5, 0)
+		$RunningDust.process_material.initial_velocity = 20
+		$RunningDust.emitting = true
+		#$RunningDust.gravity = Vector3(-30, 0, 0)
 		match player_status:
 			0: $AnimatedSprite.play("player_run_spear")
 			1: $AnimatedSprite.play("slave_running")	
@@ -98,6 +103,10 @@ func get_input():
 		velocity.x += 1
 		$AnimatedSprite.set_flip_h(true)
 		character_direction = 1
+		$RunningDust.position = Vector2(-90, 80)
+		$RunningDust.process_material.gravity = Vector3(-30, -5, 0)
+		$RunningDust.process_material.initial_velocity = -20
+		$RunningDust.emitting = true
 		match player_status:
 			0: $AnimatedSprite.play("player_run_spear")
 			1: $AnimatedSprite.play("slave_running")
@@ -188,6 +197,7 @@ func _on_AnimatedSprite_animation_finished(): #ran everytime animation is finish
 	else:
 		player_status = 0
 	$EnemyDamageArea.set_monitoring(false)
+	$RunningDust.emitting = false
 	#$EnemyDamageArea.set_collision_mask(0) # set player spear to cannot kill enemy
 	# GAME OVER, player has died. Return to menu
 	#if game_status == 1:
