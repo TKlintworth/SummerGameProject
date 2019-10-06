@@ -27,4 +27,5 @@ amount = 30
 one_shot = true
 speed_scale = 2.0
 explosiveness = 0.75
+randomness = 0.51
 process_material = SubResource( 3 )

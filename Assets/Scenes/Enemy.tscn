@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scenes/EnemyAIScript.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/enemy_redguard_dagger_running/tile000.png" type="Texture" id=2]
@@ -12,7 +12,8 @@
 [ext_resource path="res://Sprites/enemy_redguard_dagger_active/tile003.png" type="Texture" id=10]
 [ext_resource path="res://Scenes/EnemyArea2D.gd" type="Script" id=11]
 [ext_resource path="res://Scenes/EnemySenseArea.gd" type="Script" id=12]
-[ext_resource path="res://Scenes/BloodParticles.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/BloodSplashParticles.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Scenes/BloodParticles.tscn" type="PackedScene" id=14]
 
 [sub_resource type="CapsuleShape2D" id=1]
 
@@ -71,7 +72,11 @@ script = ExtResource( 12 )
 scale = Vector2( 25, 25 )
 shape = SubResource( 4 )
 
-[node name="BloodParticles" parent="." instance=ExtResource( 13 )]
+[node name="BloodSplashParticles" parent="." instance=ExtResource( 13 )]
+position = Vector2( -25.4408, -31.7006 )
+emitting = false
+
+[node name="BloodParticles" parent="." instance=ExtResource( 14 )]
 position = Vector2( -34.3005, -33.3778 )
 [connection signal="area_entered" from="SenseArea" to="." method="_on_SenseArea_area_entered"]
 [connection signal="area_exited" from="SenseArea" to="." method="_on_SenseArea_area_exited"]
