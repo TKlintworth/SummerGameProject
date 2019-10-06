@@ -44,9 +44,10 @@ func play_blood_flow():
 	print("blood flowing")
 	$BloodParticles.one_shot = false
 	$BloodParticles.emitting = true
-	
-	
 
+func play_blood_splash_one_time():
+	$BloodSplashParticles.emitting = true	
+	
 func change_state(var nextState):
 	if nextState == "inCombat":
 		state = "inCombat"
