@@ -37,6 +37,9 @@ func lose_health_spear_jab():
 	health -= 34
 	return health
 
+func play_blood_one_time():
+	$BloodParticles.emitting = true
+
 func change_state(var nextState):
 	if nextState == "inCombat":
 		state = "inCombat"
