@@ -8,7 +8,7 @@ onready var Player = get_parent().get_node("Player")
 onready var enemyMovementZones = get_parent().get_node("enemyMovementZones")
 
 const SPEED = 320.0
-var health = 32.0
+var health = 100.0
 var playerAlive
 var react_time = 0
 var dir = 1
@@ -157,12 +157,12 @@ func _physics_process(delta):
 				# If enemy is outside of player's attack zone, choose between fleeing and running towards player to attack
 			#	else:
 				rng.randomize()
-				var random_decision = rng.randi_range(0, 1)
+				var random_decision = rng.randi_range(0, 4)
 				match random_decision:
 					0:  # Run to movement zone
 						runToZone = chooseMovementZone()
 						enemyMovementZoneChosen = true
-					1: # Run towards player
+					1,2,3,4: # Run towards player
 						attacking = false
 						change_state("inCombat") 
 			
@@ -193,10 +193,19 @@ func _physics_process(delta):
 			$AnimatedSprite.play("redguard_idle")
 
 func chooseMovementZone():
-	var runToIndex = range(0,4)[randi()%range(0,4).size()]
-	var runToZone = enemyMovementZones.zones[runToIndex]
-	#print("run to zone returned: ", runToZone)
-	return runToZone
+	#var runToIndex = range(0,4)[randi()%range(0,4).size()]
+	#var runToZone = enemyMovementZones.zones[runToIndex]
+	
+	if(Player.position.x - self.position.x > 0):
+		var runToIndex = range(0,2)[randi()%range(0,2).size()]
+		var runToZone = enemyMovementZones.zones[runToIndex]
+		return runToZone
+	else:
+		var runToIndex = range(2,4)[randi()%range(2,4).size()]
+		var runToZone = enemyMovementZones.zones[runToIndex]
+		return runToZone
+	
+	
 
 func _on_enemyMovementZones_area_entered(area: Area2D) -> void:
 	print(area.name)
