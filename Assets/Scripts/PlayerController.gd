@@ -215,10 +215,12 @@ func _on_EnemyDamageArea_area_exited(area):
 	if(enemy_area_array.size() > 0):
 		#enemy_area_array.min().get_parent().queue_free()
 		enemy_area_array.min().get_parent().lose_health_spear_jab()
-		enemy_area_array.min().get_parent().play_blood_one_time()
 		if enemy_area_array.min().get_parent().get_health() <= 0:
 			enemy_area_array.min().get_parent().queue_free()
-		
+		elif enemy_area_array.min().get_parent().get_health() <= 65:
+			enemy_area_array.min().get_parent().play_blood_flow()
+		elif enemy_area_array.min().get_parent().get_health() <= 100:
+			enemy_area_array.min().get_parent().play_blood_one_time()
 		enemy_area_array.clear()
 ####################################################################
 

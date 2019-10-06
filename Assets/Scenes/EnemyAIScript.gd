@@ -40,6 +40,13 @@ func lose_health_spear_jab():
 func play_blood_one_time():
 	$BloodParticles.emitting = true
 
+func play_blood_flow():
+	print("blood flowing")
+	$BloodParticles.one_shot = false
+	$BloodParticles.emitting = true
+	
+	
+
 func change_state(var nextState):
 	if nextState == "inCombat":
 		state = "inCombat"
