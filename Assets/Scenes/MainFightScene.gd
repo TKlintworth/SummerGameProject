@@ -109,9 +109,31 @@ func wave_3():
 	enemy5.position = Vector2(100, 1000)
 	
 func wave_4():
-	pass
+	var heavy_enemy1 = heavy_enemy_scene.instance()
+	add_child(heavy_enemy1)
+	heavy_enemy1.position = Vector2(250, 500)
+	
+	var heavy_enemy2 = heavy_enemy_scene.instance()
+	add_child(heavy_enemy2)
+	heavy_enemy2.position = Vector2(1500, 500)
+	
 func wave_5():
-	pass
+	var heavy_enemy1 = heavy_enemy_scene.instance()
+	add_child(heavy_enemy1)
+	heavy_enemy1.position = Vector2(250, 350)
+	
+	var heavy_enemy2 = heavy_enemy_scene.instance()
+	add_child(heavy_enemy2)
+	heavy_enemy2.position = Vector2(250, 750)
+	
+	var heavy_enemy3 = heavy_enemy_scene.instance()
+	add_child(heavy_enemy3)
+	heavy_enemy3.position = Vector2(1500, 350)
+	
+	var heavy_enemy4 = heavy_enemy_scene.instance()
+	add_child(heavy_enemy4)
+	heavy_enemy2.position = Vector2(1500, 750)
+	
 func _process(delta):
 	
 	if $CanvasLayer/Control/Wave_Enemy_Spawn_Timer.time_left <= 0.1 && start_next_wave == true:
