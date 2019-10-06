@@ -60,13 +60,58 @@ func start_new_wave():
 	$CanvasLayer/Control/NinePatchRect/Wave_Small.progress()
 	print("enemy count")
 	print(enemy_count)
-	for i in range(enemy_count):
-		enemy = enemy_scene.instance()
-		add_child(enemy)
-		enemy.position = Vector2(100 + (i*100), i*100)
+	
+	match wave_num:
+		2: wave_2()
+		3: wave_3()
+		3: wave_4()
+		5: wave_5()
+	#for i in range(enemy_count):
+	#	enemy = enemy_scene.instance()
+	#	add_child(enemy)
+	#	enemy.position = Vector2(100 + (i*100), i*100)
 	new_wave = false
 	start_next_wave = false
 	
+func wave_2():
+	# 3 Enemies in this wave
+	var enemy1 = enemy_scene.instance()
+	add_child(enemy1)
+	enemy1.position = Vector2(250, 350)
+	
+	var enemy2 = enemy_scene.instance()
+	add_child(enemy2)
+	enemy2.position = Vector2(250, 750)
+	
+	var enemy3 = enemy_scene.instance()
+	add_child(enemy3)
+	enemy3.position = Vector2(1500, 500)
+	
+func wave_3():
+	var enemy1 = enemy_scene.instance()
+	add_child(enemy1)
+	enemy1.position = Vector2(250, 350)
+	
+	var enemy2 = enemy_scene.instance()
+	add_child(enemy2)
+	enemy2.position = Vector2(250, 750)
+	
+	var enemy3 = enemy_scene.instance()
+	add_child(enemy3)
+	enemy3.position = Vector2(1500, 500)
+	
+	var enemy4 = enemy_scene.instance()
+	add_child(enemy4)
+	enemy4.position = Vector2(1500, 1000)
+	
+	var enemy5 = enemy_scene.instance()
+	add_child(enemy5)
+	enemy5.position = Vector2(100, 1000)
+	
+func wave_4():
+	pass
+func wave_5():
+	pass
 func _process(delta):
 	
 	if $CanvasLayer/Control/Wave_Enemy_Spawn_Timer.time_left <= 0.1 && start_next_wave == true:
