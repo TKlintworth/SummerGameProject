@@ -30,6 +30,13 @@ func _ready():
 	playerAlive = !Player.player_dead
 	set_process(true)
 	
+func get_health():
+	return health	
+
+func lose_health_spear_jab():
+	health -= 34
+	return health
+
 func change_state(var nextState):
 	if nextState == "inCombat":
 		state = "inCombat"
