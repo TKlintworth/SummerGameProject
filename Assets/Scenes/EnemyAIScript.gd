@@ -62,6 +62,13 @@ func choose_attack(attack):
 		#print("made it here")
 		attacking = false
 		change_state("fleeing")
+		
+	elif attack == "one_time_attack":
+		$AnimatedSprite.speed_scale = 1.85
+		$AnimatedSprite.play("redguard_attack")
+		yield(get_node("AnimatedSprite"), "animation_finished")
+		attacking = false
+		change_state("fleeing")
 		#$AnimatedSprite.speed_scale = 1
 	# Add more attack types ...
 
@@ -89,7 +96,7 @@ func _physics_process(delta):
 			
 		if attacking == true:
 			#"light flurry" attack
-			choose_attack("light_flurry")
+			choose_attack("one_time_attack")
 			#attacking = false
 			yield(self, "attack_finished")
 			# Change state to flee after attack
@@ -100,50 +107,54 @@ func _physics_process(delta):
 		#print("fleeing")
 		#position += position.linear_interpolate(Vector2(1,0), 0.5)
 		#move_and_slide(Vector2(-100, 0))
+		if(in_attack_zone == true):
+			attacking = true
+			change_state("inCombat")
 		
+		else:
 		#Choose corner to run to
-		if enemyMovementZoneChosen == false:
+			if enemyMovementZoneChosen == false:
 			# If enemy is still in players attack zone, chose between fleeing and fighting
-			if(in_attack_zone == true): 
-				rng.randomize()
-				var random_decision = rng.randi_range(0, 1)
-				print("Decision: ")
-				print(random_decision)
-				match random_decision:
-					0: 
-						runToZone = chooseMovementZone()
-						enemyMovementZoneChosen = true
-					1:
-						attacking = true
-						enemyMovementZoneChosen = false
-						change_state("inCombat")
-			# If enemy is outside of player's attack zone, choose between fleeing and running towards player to attack
-			else:
-				rng.randomize()
-				var random_decision = rng.randi_range(0, 1)
-				match random_decision:
-					0:
-						runToZone = chooseMovementZone()
-						enemyMovementZoneChosen = true
-					1: 
-						attacking = false
-						change_state("inCombat") 
+				if(in_attack_zone == true): 
+					rng.randomize()
+					var random_decision = rng.randi_range(0, 1)
+					print("Decision: ")
+					print(random_decision)
+					match random_decision:
+						0: 
+							runToZone = chooseMovementZone()
+							enemyMovementZoneChosen = true
+						1:
+							attacking = true
+							enemyMovementZoneChosen = false
+							change_state("inCombat")
+				# If enemy is outside of player's attack zone, choose between fleeing and running towards player to attack
+				else:
+					rng.randomize()
+					var random_decision = rng.randi_range(0, 1)
+					match random_decision:
+						0:
+							runToZone = chooseMovementZone()
+							enemyMovementZoneChosen = true
+						1: 
+							attacking = false
+							change_state("inCombat") 
 			
-		if enemyMovementZoneChosen == true:	
-			dir = ai_get_direction(runToZone)
-			var motion = (dir * SPEED * delta)
-			if (motion.x > 0):
-				$AnimatedSprite.set_flip_h(true)
-			else:
-				$AnimatedSprite.set_flip_h(false)
-			$AnimatedSprite.play("redguard_running")
-			position += motion
+			if enemyMovementZoneChosen == true:	
+				dir = ai_get_direction(runToZone)
+				var motion = (dir * SPEED * delta)
+				if (motion.x > 0):
+					$AnimatedSprite.set_flip_h(true)
+				else:
+					$AnimatedSprite.set_flip_h(false)
+				$AnimatedSprite.play("redguard_running")
+				position += motion
 			
 			
-			if isEnemyInMovementZone:
+				if isEnemyInMovementZone:
 			#	attacking = false
-				enemyMovementZoneChosen = false
-				change_state("inCombat")
+					enemyMovementZoneChosen = false
+					change_state("inCombat")
 				
 			#enemyMovementZoneChosen = false
 		
