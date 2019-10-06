@@ -100,10 +100,8 @@ func _physics_process(delta):
 
 	if state == "inCombat":
 		if attacking == false:
-			#position = position.linear_interpolate(Player.position, 0.01)
 			dir = (Player.position - position).normalized()
 			var motion = dir * SPEED * delta
-			print("motionx:", motion.x)
 			if (motion.x > 0):
 				$AnimatedSprite.set_flip_h(true)
 			else:
@@ -121,58 +119,44 @@ func _physics_process(delta):
 			#change_state("fleeing")
 		
 	if(state == "fleeing"):
-	
+		#print("fleeing")
 		# If enemy is in player's attack zone, keep attacking
 		if(in_attack_zone == true && health > 33):
 			attacking = true
 			change_state("inCombat")
 		elif(in_attack_zone == true && health <= 33):
-			rng.randomize()
-			var random_decision = rng.randi_range(0, 1)
-			match random_decision:
-				0:  # Run to movement zone
-					runToZone = chooseMovementZone()
-					enemyMovementZoneChosen = true
-				1: # Run towards player
-					attacking = true
-					change_state("inCombat") 
+			if enemyMovementZoneChosen == false:
+				rng.randomize()
+				var random_decision = rng.randi_range(0, 1)
+				match random_decision:
+					0:  # Run to movement zone
+						runToZone = chooseMovementZone()
+						in_attack_zone = false
+						enemyMovementZoneChosen = true
+					1: # Run towards player
+						attacking = true
+						change_state("inCombat") 
 			
-			if enemyMovementZoneChosen == true:	
-				dir = ai_get_direction(runToZone)
-				var motion = (dir * SPEED * delta)
-				if (motion.x > 0):
-					$AnimatedSprite.set_flip_h(true)
-				else:
-					$AnimatedSprite.set_flip_h(false)
-				$AnimatedSprite.play("redguard_running")
-				position += motion
-			
-			
-				if isEnemyInMovementZone:
-			#	attacking = false
-					enemyMovementZoneChosen = false
-					change_state("inCombat")
+				if enemyMovementZoneChosen == true:	
+					dir = ai_get_direction(runToZone)
+					var motion = (dir * SPEED * delta)
+					if (motion.x > 0):
+						$AnimatedSprite.set_flip_h(true)
+					else:
+						$AnimatedSprite.set_flip_h(false)
+					$AnimatedSprite.play("redguard_running")
+					print("running")
+					position += motion
+					
+					if isEnemyInMovementZone:
+						print("in the movement zone")
+						enemyMovementZoneChosen = false
+						change_state("idle")
 				
 		# If enemy is outside player's attack zone, choose to keep attacking or flee
 		elif(in_attack_zone == false):
 		#Choose corner to run to
 			if enemyMovementZoneChosen == false:
-			# If enemy is still in players attack zone, chose between fleeing and fighting
-			#	if(in_attack_zone == true): 
-			#		rng.randomize()
-			#		var random_decision = rng.randi_range(0, 1)
-			#		print("Decision: ")
-			#		print(random_decision)
-			#		match random_decision:
-			#			0: 
-			#				runToZone = chooseMovementZone()
-			#				enemyMovementZoneChosen = true
-			#			1:
-			#				attacking = true
-			#				enemyMovementZoneChosen = false
-			#				change_state("inCombat")
-				# If enemy is outside of player's attack zone, choose between fleeing and running towards player to attack
-			#	else:
 				rng.randomize()
 				var random_decision = rng.randi_range(0, 4)
 				match random_decision:
@@ -197,7 +181,10 @@ func _physics_process(delta):
 				if isEnemyInMovementZone:
 			#	attacking = false
 					enemyMovementZoneChosen = false
-					change_state("inCombat")
+					if(self.health <= 33):
+						change_state("idle")
+					else:
+						change_state("inCombat")
 				
 			#enemyMovementZoneChosen = false
 		
@@ -207,11 +194,14 @@ func _physics_process(delta):
 		if(playerAlive && player_distance < 400):
 			change_state("inCombat")
 		else:
-			$AnimatedSprite.play("redguard_idle")
+			if Player.position.x - self.position.x < 0:
+				$AnimatedSprite.set_flip_h(false)
+				$AnimatedSprite.play("redguard_idle")
+			else:
+				$AnimatedSprite.set_flip_h(true)
+				$AnimatedSprite.play("redguard_idle")
 
 func chooseMovementZone():
-	#var runToIndex = range(0,4)[randi()%range(0,4).size()]
-	#var runToZone = enemyMovementZones.zones[runToIndex]
 	
 	if(Player.position.x - self.position.x > 0):
 		var runToIndex = range(0,2)[randi()%range(0,2).size()]
@@ -227,6 +217,7 @@ func chooseMovementZone():
 func _on_enemyMovementZones_area_entered(area: Area2D) -> void:
 	print(area.name)
 	print("in a movement zone")
+	#if self.health <= 33:
 	isEnemyInMovementZone = true
 	#return isEnemyInMovementZone
 
@@ -238,7 +229,7 @@ func _on_enemyMovementZones_area_exited(area: Area2D) -> void:
 
 func _on_SenseArea_area_entered(area: Area2D):
 	print(area.name)
-	if area.name == "attackZone":
+	if area.name == "attackZone" && state == "inCombat":
 		attacking = true
 		in_attack_zone = true
 		isEnemyInMovementZone = false
