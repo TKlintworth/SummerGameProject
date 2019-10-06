@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="sampleGladiator"
-run/main_scene="res://Scenes/TitleScreen/TitleScreen.tscn"
+run/main_scene="res://Scenes/MainFightScene.tscn"
 config/icon="res://icon.png"
 
 [autoload]
