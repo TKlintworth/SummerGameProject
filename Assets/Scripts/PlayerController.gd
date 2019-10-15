@@ -26,6 +26,14 @@ var enemy_area_array = []
 onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Health")
 onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Stamina")
 
+func set_player_dead(choice):
+	if choice == true:
+		print("Player died")
+		player_dead = true
+		player_die()
+	else:
+		player_dead = false
+
 func _ready():
 	game_status = 0
 	player_status = 0 # status of 0 is slave with spear
@@ -42,6 +50,7 @@ func take_damage():
 # function for player death
 func player_die():
 	if player_dead == true && dead_animation_played == false:
+		$CanvasLayer/Control/NinePatchRect/Health.take_damage(100)
 		$AudioStreamPlayer2D.play_noise()
 		$AnimatedSprite.play("slave_dying")
 		game_status = 1
@@ -79,10 +88,10 @@ func get_input():
 	velocity = Vector2()
 	var sprint = false
 	
-	if (player_health_node.value <=27):
-		player_dead = true
-		#action = true
-		player_die()
+	#if (player_health_node.value <=27):
+	#	player_dead = true
+	#	#action = true
+	#	player_die()
 		
 	########### MOVEMENT #################
 	if Input.is_action_pressed("left") && action == false:

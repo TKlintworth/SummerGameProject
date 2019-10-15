@@ -34,6 +34,10 @@ func _ready():
 func play_win():
 	scene_path_to_load = "res://Scenes/WinScreen.tscn"
 	get_node("/root/GameStateManager").getScene(scene_path_to_load)	
+
+func play_lose():
+	scene_path_to_load = "res://Scenes/LoseScreen.tscn"
+	get_node("/root/GameStateManager").getScene(scene_path_to_load)
 	
 func get_enemy_number():
 	match wave_num:

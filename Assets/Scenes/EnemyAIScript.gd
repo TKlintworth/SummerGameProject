@@ -84,6 +84,8 @@ func choose_attack(attack):
 	elif attack == "one_time_attack":
 		$AnimatedSprite.speed_scale = 1.85
 		$AnimatedSprite.play("redguard_attack")
+		#hile($AnimatedSprite.is_playing()):
+			#print("PLAYING: ", get_node("AnimatedSprite").is_playing())
 		yield(get_node("AnimatedSprite"), "animation_finished")
 		attacking = false
 		change_state("fleeing")

@@ -100,3 +100,5 @@ shape = SubResource( 3 )
 
 [node name="SpearSpawnTimer" type="Timer" parent="."]
 [connection signal="timeout" from="SpearSpawnTimer" to="." method="_on_SpearSpawnTimer_timeout"]
+
+[editable path="CanvasLayer/Control"]
