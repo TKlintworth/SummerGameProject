@@ -50,6 +50,8 @@ func choose_attack(attack):
 		# Light flurry plays individual attack animations faster
 		$AnimatedSprite.speed_scale = 1.85
 		$AnimatedSprite.play("redguard_attack")
+		#Calculate for damage
+		
 		yield(get_node("AnimatedSprite"), "animation_finished")
 		$AnimatedSprite.play("redguard_attack")
 		yield(get_node("AnimatedSprite"), "animation_finished")
