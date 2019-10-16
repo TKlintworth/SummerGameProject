@@ -25,6 +25,7 @@ var enemy_area_array = []
 
 onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Health")
 onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Stamina")
+#onready var mainScene = get_node("MainFightScene")
 
 func set_player_dead(choice):
 	if choice == true:
@@ -44,13 +45,20 @@ func _ready():
 	
 ############## FUNCTIONS ################
 # take damage function
-func take_damage():
-	player_health_node.value -= 2
+func take_damage(amount):
+	#player_health_node.value -= 2
+	if (player_health_node.value - amount) <= 0:
+		#Player dies
+		player_die()
+		player_health_node.set_value(0)
+		get_parent().play_lose()
+	else:
+		player_health_node.set_value(player_health_node.value - amount)
 	
 # function for player death
 func player_die():
 	if player_dead == true && dead_animation_played == false:
-		$CanvasLayer/Control/NinePatchRect/Health.take_damage(100)
+		take_damage(100)
 		$AudioStreamPlayer2D.play_noise()
 		$AnimatedSprite.play("slave_dying")
 		game_status = 1

@@ -15,6 +15,9 @@ var dir = 1
 var attacking = false
 var enemyMovementZoneChosen = false
 var isEnemyInMovementZone = false
+var player_recently_taken_damage = false
+#How long before player can take damage again after receiving damage (in seconds)
+var playerDamageTime = 5
 #Used around line 80 to choose a zone to run to only once
 var runToZone
 var last_position
@@ -84,9 +87,14 @@ func choose_attack(attack):
 	elif attack == "one_time_attack":
 		$AnimatedSprite.speed_scale = 1.85
 		$AnimatedSprite.play("redguard_attack")
-		#hile($AnimatedSprite.is_playing()):
-			#print("PLAYING: ", get_node("AnimatedSprite").is_playing())
 		yield(get_node("AnimatedSprite"), "animation_finished")
+		
+		#IF player isn't blocking and they're in the attack zone at the end of the attack animation, recieve damage
+		if(Player.player_block == false and in_attack_zone == true and not player_recently_taken_damage):
+			print("player take damage")
+			Player.take_damage(45)
+			player_recently_taken_damage = true
+			player_damage_timer()
 		attacking = false
 		change_state("fleeing")
 		#$AnimatedSprite.speed_scale = 1
@@ -95,6 +103,11 @@ func choose_attack(attack):
 func ai_get_direction(target):
 	#print("got movement direction")
 	return (target.position - self.position).normalized()
+
+#Timer for allowing player to take more damage after being damaged
+func player_damage_timer():
+	yield(get_tree().create_timer(playerDamageTime), "timeout")
+	player_recently_taken_damage = false
 
 func _physics_process(delta):
 	#var dis_to_player = Player.global_position - self.global_position

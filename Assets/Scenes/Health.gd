@@ -11,17 +11,17 @@ func _ready() -> void:
 	#Testing purposes
 	pass
 
-func take_damage(amount):
-	if (self.get_value() - amount) <= 0:
+#func take_damage(amount):
+#	if (self.get_value() - amount) <= 0:
 		#Player dies
 		#instance.set_player_dead(true)
 		#print("Script: ", get_node("res://Scripts/PlayerController.gd"))
 		#node.set_player_dead(true)
-		self.set_value(0)
+#		self.set_value(0)
 		#$MainfightScene.play_lose()
 		#instance.play_lose()
-	else:
-		self.set_value(value - amount)
+#	else:
+#		self.set_value(value - amount)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:
 #	pass

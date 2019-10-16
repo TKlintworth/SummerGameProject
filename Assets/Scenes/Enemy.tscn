@@ -43,6 +43,7 @@ radius = 7.42969
 [node name="Enemy" type="KinematicBody2D" groups=[
 "Enemy1",
 ]]
+editor/display_folded = true
 scale = Vector2( 0.3, 0.3 )
 script = ExtResource( 1 )
 
