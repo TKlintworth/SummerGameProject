@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Scenes/EnemyAIScript.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/enemy_redguard_dagger_running/tile000.png" type="Texture" id=2]
@@ -10,10 +10,20 @@
 [ext_resource path="res://Sprites/enemy_redguard_dagger_active/tile003.png" type="Texture" id=8]
 [ext_resource path="res://Sprites/enemy_redguard_dagger_idle/tile000.png" type="Texture" id=9]
 [ext_resource path="res://Sprites/enemy_redguard_dagger_idle/tile001.png" type="Texture" id=10]
-[ext_resource path="res://Scenes/EnemyArea2D.gd" type="Script" id=11]
-[ext_resource path="res://Scenes/EnemySenseArea.gd" type="Script" id=12]
-[ext_resource path="res://Scenes/BloodSplashParticles.tscn" type="PackedScene" id=13]
-[ext_resource path="res://Scenes/BloodParticles.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Sprites/enemy_redguard_dying_head/tile000.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/enemy_redguard_dying_head/tile001.png" type="Texture" id=12]
+[ext_resource path="res://Sprites/enemy_redguard_dying_head/tile002.png" type="Texture" id=13]
+[ext_resource path="res://Sprites/enemy_redguard_dying_head/tile003.png" type="Texture" id=14]
+[ext_resource path="res://Sprites/enemy_redguard_dying_head/tile004.png" type="Texture" id=15]
+[ext_resource path="res://Sprites/enemy_redguard_dying_head/tile005.png" type="Texture" id=16]
+[ext_resource path="res://Sprites/enemy_redguard_dying_head/tile006.png" type="Texture" id=17]
+[ext_resource path="res://Sprites/enemy_redguard_dying_head/tile007.png" type="Texture" id=18]
+[ext_resource path="res://Sprites/enemy_redguard_dying_head/tile008.png" type="Texture" id=19]
+[ext_resource path="res://Sprites/enemy_redguard_dying_head/tile009.png" type="Texture" id=20]
+[ext_resource path="res://Scenes/EnemyArea2D.gd" type="Script" id=21]
+[ext_resource path="res://Scenes/EnemySenseArea.gd" type="Script" id=22]
+[ext_resource path="res://Scenes/BloodSplashParticles.tscn" type="PackedScene" id=23]
+[ext_resource path="res://Scenes/BloodParticles.tscn" type="PackedScene" id=24]
 
 [sub_resource type="CapsuleShape2D" id=1]
 
@@ -33,6 +43,11 @@ animations = [ {
 "loop": true,
 "name": "redguard_idle",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ) ],
+"loop": true,
+"name": "redguard_dying",
+"speed": 5.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=3]
@@ -43,7 +58,6 @@ radius = 7.42969
 [node name="Enemy" type="KinematicBody2D" groups=[
 "Enemy1",
 ]]
-editor/display_folded = true
 scale = Vector2( 0.3, 0.3 )
 script = ExtResource( 1 )
 
@@ -54,29 +68,33 @@ shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
-animation = "redguard_attack"
+animation = "redguard_dying"
+frame = 2
 
 [node name="DamageArea" type="Area2D" parent="."]
 scale = Vector2( 1.2, 1.2 )
 collision_layer = 2
-script = ExtResource( 11 )
+script = ExtResource( 21 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" groups=[
+"Enemy1",
+]]
 position = Vector2( -3.00195, -7.49114 )
 scale = Vector2( 6, 8 )
 shape = SubResource( 3 )
 
 [node name="SenseArea" type="Area2D" parent="."]
-script = ExtResource( 12 )
+script = ExtResource( 22 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SenseArea"]
 scale = Vector2( 25, 25 )
 shape = SubResource( 4 )
 
-[node name="BloodSplashParticles" parent="." instance=ExtResource( 13 )]
+[node name="BloodSplashParticles" parent="." instance=ExtResource( 23 )]
 position = Vector2( -25.4408, -31.7006 )
 
-[node name="BloodParticles" parent="." instance=ExtResource( 14 )]
+[node name="BloodParticles" parent="." instance=ExtResource( 24 )]
 position = Vector2( -34.3005, -33.3778 )
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 [connection signal="area_entered" from="SenseArea" to="." method="_on_SenseArea_area_entered"]
 [connection signal="area_exited" from="SenseArea" to="." method="_on_SenseArea_area_exited"]

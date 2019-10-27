@@ -31,7 +31,7 @@ func set_player_dead(choice):
 	if choice == true:
 		print("Player died")
 		player_dead = true
-		player_die()
+		#player_die()
 	else:
 		player_dead = false
 
@@ -49,7 +49,7 @@ func take_damage(amount):
 	#player_health_node.value -= 2
 	if (player_health_node.value - amount) <= 0:
 		#Player dies
-		player_die()
+		#player_die()
 		player_health_node.set_value(0)
 		get_parent().play_lose()
 	else:
@@ -58,7 +58,7 @@ func take_damage(amount):
 # function for player death
 func player_die():
 	if player_dead == true && dead_animation_played == false:
-		take_damage(100)
+		#take_damage(100)
 		$AudioStreamPlayer2D.play_noise()
 		$AnimatedSprite.play("slave_dying")
 		game_status = 1
@@ -87,7 +87,7 @@ func throw_spear():
 	$AnimatedSprite.play("slave_throw_spear_active")
 
 func jab():
-	print("jab")
+	#print("jab")
 	action = true
 	$AnimatedSprite.play("slave_jab_spear_active")
 	$EnemyDamageArea.check_if_enemy_hit()
@@ -233,12 +233,16 @@ func _on_EnemyDamageArea_area_exited(area):
 		#enemy_area_array.min().get_parent().queue_free()
 		enemy_area_array.min().get_parent().lose_health_spear_jab()
 		if enemy_area_array.min().get_parent().get_health() <= 0:
-			enemy_area_array.min().get_parent().queue_free()
+			enemy_area_array.min().get_parent().play_death()
+			#enemy_area_array.min().get_parent().queue_free()
 		elif enemy_area_array.min().get_parent().get_health() <= 65:
-			enemy_area_array.min().get_parent().play_blood_splash_one_time()
-			enemy_area_array.min().get_parent().play_blood_flow()
+			print(enemy_area_array.min().get_parent().name)
+			if enemy_area_array.min().get_parent().is_in_group("Enemy1"):
+				enemy_area_array.min().get_parent().play_blood_splash_one_time()
+				enemy_area_array.min().get_parent().play_blood_flow()
 		elif enemy_area_array.min().get_parent().get_health() <= 100:
-			enemy_area_array.min().get_parent().play_blood_one_time()
+			if enemy_area_array.min().get_parent().is_in_group("Enemy1"):
+				enemy_area_array.min().get_parent().play_blood_one_time()
 		enemy_area_array.clear()
 ####################################################################
 

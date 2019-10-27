@@ -29,7 +29,7 @@ heavy_enemy_scene = ExtResource( 3 )
 spear_pickup_scene = ExtResource( 4 )
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
-position = Vector2( 249.255, 415.444 )
+position = Vector2( 358.848, 494.214 )
 scale = Vector2( 0.5, 0.5 )
 spear_scene = ExtResource( 6 )
 
