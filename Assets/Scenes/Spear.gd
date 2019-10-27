@@ -98,5 +98,5 @@ func _on_Area2D_area_entered(area):
 # Makes sure only one enemy killed per spear throw
 func _on_Area2D_area_exited(area):
 	if(enemy_area_array.size() > 0) and on_ground == false:
-		enemy_area_array.min().get_parent().queue_free()
+		enemy_area_array.min().get_parent().play_death()
 		enemy_area_array.clear()

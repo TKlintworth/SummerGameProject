@@ -27,7 +27,7 @@ var in_attack_zone = false
 var player_distance
 var vel = Vector2()
 var state = "idle"
-var states = ["idle", "inCombat", "fleeing"]
+var states = ["idle", "inCombat", "fleeing", "dying"]
 
 func _ready():
 	playerAlive = !Player.player_dead
@@ -37,7 +37,7 @@ func get_health():
 	return health	
 
 func lose_health_spear_jab():
-	health -= 34
+	health -= 50
 	return health
 
 func play_blood_one_time():
@@ -50,7 +50,12 @@ func play_blood_flow():
 
 func play_blood_splash_one_time():
 	$BloodSplashParticles.emitting = true	
-	
+
+func play_death():
+	change_state("dying")
+	#print("enemy dying")
+	#$AnimatedSprite.play("redguard_dying")
+
 func change_state(var nextState):
 	if nextState == "inCombat":
 		state = "inCombat"
@@ -58,6 +63,8 @@ func change_state(var nextState):
 		state = "fleeing" #was states[2]?
 	if nextState == "idle":
 		state = "idle"
+	if nextState == "dying":
+		state = "dying"
 
 func _on_Area2D_area_entered(area: Area2D) -> void:
 	pass
@@ -92,7 +99,7 @@ func choose_attack(attack):
 		#IF player isn't blocking and they're in the attack zone at the end of the attack animation, recieve damage
 		if(Player.player_block == false and in_attack_zone == true and not player_recently_taken_damage):
 			print("player take damage")
-			Player.take_damage(45)
+			#Player.take_damage(45)
 			player_recently_taken_damage = true
 			player_damage_timer()
 		attacking = false
@@ -216,7 +223,12 @@ func _physics_process(delta):
 			else:
 				$AnimatedSprite.set_flip_h(true)
 				$AnimatedSprite.play("redguard_idle")
-
+	
+	if state == "dying":
+		$AnimatedSprite.play("redguard_dying")
+		if($AnimatedSprite.frame >= 9):
+			self.queue_free()
+	
 func chooseMovementZone():
 	
 	if(Player.position.x - self.position.x > 0):
@@ -258,3 +270,6 @@ func _on_SenseArea_area_exited(area):
 	if area.name == "attackZone":
 		in_attack_zone = false
 		print("left attack zone")
+
+
+
