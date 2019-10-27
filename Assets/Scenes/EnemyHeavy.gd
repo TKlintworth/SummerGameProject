@@ -46,6 +46,9 @@ func play_death():
 	#print("enemy dying")
 	#$AnimatedSprite.play("redguard_dying")
 
+func disable_collision():
+	$CollisionShape2D.disabled = true
+
 func change_state(var nextState):
 	if nextState == "inCombat":
 		state = "inCombat"
@@ -207,6 +210,7 @@ func _physics_process(delta):
 				$AnimatedSprite.play("heavy_enemy_running")
 	
 	if state == "dying":
+		disable_collision()
 		$AnimatedSprite.play("heavy_enemy_dying")
 		if($AnimatedSprite.frame >= 9):
 			self.queue_free()
