@@ -142,7 +142,7 @@ func get_input():
 			
 	############# ACTIONS ###########################
 	# Block action
-	if Input.is_action_pressed("E"): #block animation
+	if Input.is_action_pressed("E") && spear_thrown == false: #block animation
 		#get_parent().get_node("ColorRect/AnimationPlayer").play("transition_in")
 		block()
 	
