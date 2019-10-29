@@ -29,7 +29,6 @@ onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/Nin
 
 func set_player_dead(choice):
 	if choice == true:
-		print("Player died")
 		player_dead = true
 		#player_die()
 	else:
@@ -80,14 +79,12 @@ func throw_spear():
 	spear = spear_scene.instance()
 	get_parent().add_child(spear) # adds the spear "object" to the scene
 	spear_pick = get_parent().get_node("Spear/Area2D")
-	print(spear_pick)
 	match character_direction:
 		0: spear.position = Vector2((self.position.x - 50), (self.position.y - 30)) # set starting position of spear when player is facing left
 		1: spear.position = Vector2((self.position.x + 50), (self.position.y - 30)) # set starting postion of spear when player is facing right
 	$AnimatedSprite.play("slave_throw_spear_active")
 
 func jab():
-	#print("jab")
 	action = true
 	$AnimatedSprite.play("slave_jab_spear_active")
 	$EnemyDamageArea.check_if_enemy_hit()
@@ -192,7 +189,6 @@ func get_thrown():
 	return self.spear_thrown
 	
 func _physics_process(delta):
-	
 	if $AnimatedSprite.get_animation() == "slave_jab_spear_active":
 		if $AnimatedSprite.frame == 4:
 			$EnemyDamageArea.set_monitoring(true)
@@ -225,19 +221,15 @@ func _on_EnemyDamageArea_area_entered(area):
 	if area.name == "DamageArea":
 		enemy_area_array.append(area)		
 func _on_EnemyDamageArea_area_exited(area):
-	for enemy in enemy_area_array:
-		#print("enemy in array")
-		print(enemy)
-	print("array complete")
+	
 	if(enemy_area_array.size() > 0):
-		#enemy_area_array.min().get_parent().queue_free()
 		enemy_area_array.min().get_parent().lose_health_spear_jab()
 		if enemy_area_array.min().get_parent().get_health() <= 0:
 			enemy_area_array.min().get_parent().play_death()
 			#enemy_area_array.min().get_parent().queue_free()
 		elif enemy_area_array.min().get_parent().get_health() <= 65:
-			print(enemy_area_array.min().get_parent().name)
 			if enemy_area_array.min().get_parent().is_in_group("Enemy1"):
+				enemy_area_array.min().get_parent().set_speed(200)
 				enemy_area_array.min().get_parent().play_blood_splash_one_time()
 				enemy_area_array.min().get_parent().play_blood_flow()
 		elif enemy_area_array.min().get_parent().get_health() <= 100:
