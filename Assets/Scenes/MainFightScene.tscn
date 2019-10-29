@@ -29,7 +29,7 @@ heavy_enemy_scene = ExtResource( 3 )
 spear_pickup_scene = ExtResource( 4 )
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
-position = Vector2( 358.848, 494.214 )
+position = Vector2( 599.611, 481.2 )
 scale = Vector2( 0.5, 0.5 )
 spear_scene = ExtResource( 6 )
 
@@ -74,7 +74,7 @@ stream = ExtResource( 11 )
 script = ExtResource( 12 )
 
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1034.62, 426.213 )
+position = Vector2( 1109.45, 465.256 )
 input_pickable = true
 
 [node name="enemyMovementZones" type="Area2D" parent="." groups=[

@@ -111,7 +111,7 @@ material = SubResource( 1 )
 scale = Vector2( 0.3, 0.3 )
 frames = SubResource( 2 )
 animation = "slave_jab_spear_active"
-frame = 5
+frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -11.6635, -6.99814 )

@@ -7,12 +7,13 @@ signal enemyInMovementZone
 onready var Player = get_parent().get_node("Player")
 onready var enemyMovementZones = get_parent().get_node("enemyMovementZones")
 
-const SPEED = 320.0
+var SPEED = 320.0
 var health = 100.0
 var playerAlive
 var react_time = 0
 var dir = 1
 var attacking = false
+var dead = false
 var enemyMovementZoneChosen = false
 var isEnemyInMovementZone = false
 var player_recently_taken_damage = false
@@ -33,6 +34,9 @@ var states = ["idle", "inCombat", "fleeing", "stopped", "dying"]
 
 func _ready():
 	playerAlive = !Player.player_dead
+	rng.randomize()
+	var random_speed = rng.randi_range(250, 350)
+	set_speed(random_speed)
 	set_process(true)
 	
 func get_health():
@@ -46,7 +50,6 @@ func play_blood_one_time():
 	$BloodParticles.emitting = true
 
 func play_blood_flow():
-	print("blood flowing")
 	$BloodParticles.one_shot = false
 	$BloodParticles.emitting = true
 
@@ -54,9 +57,11 @@ func play_blood_splash_one_time():
 	$BloodSplashParticles.emitting = true	
 
 func play_death():
+	dead = true
 	change_state("dying")
-	#print("enemy dying")
-	#$AnimatedSprite.play("redguard_dying")
+
+func set_speed(speed):
+	SPEED = speed
 
 func disable_collision():
 	$CollisionShape2D.disabled = true
@@ -73,18 +78,10 @@ func change_state(var nextState):
 	if nextState == "dying":
 		state = "dying"
 
-func _on_Area2D_area_entered(area: Area2D) -> void:
-	pass
-	#print(area.name)
-	#if area.name == "attackZone":
-	#	attacking = true
-	#if area.name == "attackZone":
-	#	attacking = true
 		
 # Seperating out playing attack animations into chooseable attacks
 func choose_attack(attack):
 	if attack == "light_flurry":
-		#print("ATTACKING")
 		# Light flurry plays individual attack animations faster
 		$AnimatedSprite.speed_scale = 1.85
 		$AnimatedSprite.play("redguard_attack")
@@ -94,7 +91,6 @@ func choose_attack(attack):
 		$AnimatedSprite.play("redguard_attack")
 		yield(get_node("AnimatedSprite"), "animation_finished")
 		#emit_signal("attack_finished")
-		#print("made it here")
 		attacking = false
 		change_state("fleeing")
 		
@@ -128,9 +124,14 @@ func _physics_process(delta):
 	#var dis_to_player = Player.global_position - self.global_position
 	#var distance = dis_to_player.length()
 	#var direction = dis_to_player.normalize()
-
-	if state == "inCombat":
+	if state == "inCombat" && dead == false:
 		if attacking == false:
+			var player_distance_x = abs(Player.position.x - position.x)
+			var player_distance_y = abs(Player.position.y - position.y)
+			
+			if (player_distance_x > 350 or player_distance_y > 350):
+				change_state("idle")
+			
 			dir = (Player.position - position).normalized()
 			var motion = dir * SPEED * delta
 			if (motion.x > 0):
@@ -149,8 +150,8 @@ func _physics_process(delta):
 			attacking = false
 			#change_state("fleeing")
 		
-	if(state == "fleeing"):
-		#print("fleeing")
+	if(state == "fleeing" && dead == false):
+		
 		# If enemy is in player's attack zone, keep attacking
 		if(in_attack_zone == true && health > 61):
 			attacking = true
@@ -167,8 +168,9 @@ func _physics_process(delta):
 					#1: # Run towards player
 					#	attacking = true
 					#	change_state("inCombat") 
-					1:
-						change_state("stopped")
+					1,2:
+						attacking = true
+						change_state("inCombat")
 						
 				if enemyMovementZoneChosen == true:	
 					dir = ai_get_direction(runToZone)
@@ -178,11 +180,11 @@ func _physics_process(delta):
 					else:
 						$AnimatedSprite.set_flip_h(false)
 					$AnimatedSprite.play("redguard_running")
-					print("running")
+					
 					position += motion
 					
 					if isEnemyInMovementZone:
-						print("in the movement zone")
+						
 						enemyMovementZoneChosen = false
 						change_state("idle")
 				
@@ -193,13 +195,13 @@ func _physics_process(delta):
 				rng.randomize()
 				var random_decision = rng.randi_range(0, 4)
 				match random_decision:
-					0:  # Run to movement zone
+					0,1:  # Run to movement zone
 						if(health <= 51):
 							runToZone = chooseMovementZone()
 							enemyMovementZoneChosen = true
 						else:
 							change_state("idle")
-					1,2,3,4: # Run towards player
+					2,3,4: # Run towards player
 						attacking = false
 						change_state("inCombat") 
 			
@@ -225,9 +227,9 @@ func _physics_process(delta):
 			#enemyMovementZoneChosen = false
 		
 		
-	if state == "idle":		
+	if state == "idle" && dead == false:		
 			player_distance = abs(Player.position.x - position.x)
-			if(playerAlive && player_distance < 400):
+			if(playerAlive && player_distance < 200):
 				change_state("inCombat")
 			else:
 				if Player.position.x - self.position.x < 0:
@@ -237,12 +239,15 @@ func _physics_process(delta):
 					$AnimatedSprite.set_flip_h(true)
 					$AnimatedSprite.play("redguard_idle")		
 	
-	if state == "stopped":
+	if state == "stopped" && dead == false:
+		player_distance = abs(Player.position.x - position.x)
+		if(player_distance < 50):
+			change_state("inCombat")
 		$AnimatedSprite.play("redguard_idle")
 		if(idle_timer_start == false):
 			$IdleWaitTimer.start()
 			idle_timer_start = true
-		print($IdleWaitTimer.time_left)
+			
 	
 	if state == "dying":
 		disable_collision()
@@ -264,7 +269,7 @@ func chooseMovementZone():
 	
 
 func _on_enemyMovementZones_area_entered(area: Area2D) -> void:
-	print(area.name)
+	
 	print("in a movement zone")
 	#if self.health <= 33:
 	isEnemyInMovementZone = true
