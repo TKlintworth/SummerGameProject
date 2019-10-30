@@ -230,8 +230,10 @@ func _on_EnemyDamageArea_area_exited(area):
 		elif enemy_area_array.min().get_parent().get_health() <= 65:
 			if enemy_area_array.min().get_parent().is_in_group("Enemy1"):
 				enemy_area_array.min().get_parent().set_speed(200)
-				enemy_area_array.min().get_parent().play_blood_splash_one_time()
-				enemy_area_array.min().get_parent().play_blood_flow()
+			elif enemy_area_array.min().get_parent().is_in_group("Enemy2"):
+				enemy_area_array.min().get_parent().set_speed(100)
+			enemy_area_array.min().get_parent().play_blood_splash_one_time()
+			enemy_area_array.min().get_parent().play_blood_flow()
 		elif enemy_area_array.min().get_parent().get_health() <= 100:
 			if enemy_area_array.min().get_parent().is_in_group("Enemy1"):
 				enemy_area_array.min().get_parent().play_blood_one_time()
