@@ -67,6 +67,9 @@ func set_speed(speed):
 
 func disable_collision():
 	$CollisionShape2D.disabled = true
+	
+func enable_collision():
+	$CollisionShape2D.disabled = false
 
 func change_state(var nextState):
 	if nextState == "inCombat":
@@ -163,6 +166,17 @@ func _physics_process(delta):
 		if(in_attack_zone == true && health > 61):
 			attacking = true
 			change_state("inCombat")
+			
+		elif(in_attack_zone == false && health > 61):		
+			rng.randomize()
+			var random_decision = rng.randi_range(0, 2)
+			match random_decision:
+				0:
+					attacking = true
+					change_state("inCombat")
+				1:
+					change_state("idle")
+						
 		elif(in_attack_zone == true && health <= 60):
 			if enemyMovementZoneChosen == false:
 				rng.randomize()
@@ -180,6 +194,7 @@ func _physics_process(delta):
 						change_state("inCombat")
 						
 				if enemyMovementZoneChosen == true:	
+					disable_collision()
 					dir = ai_get_direction(runToZone)
 					var motion = (dir * SPEED * delta)
 					if (motion.x > 0):
@@ -191,28 +206,29 @@ func _physics_process(delta):
 					position += motion
 					
 					if isEnemyInMovementZone:
-						
+						enable_collision()
 						enemyMovementZoneChosen = false
 						change_state("idle")
 				
 		# If enemy is outside player's attack zone, choose to keep attacking or flee
-		elif(in_attack_zone == false):
+		elif(in_attack_zone == false && health <= 51):
 		#Choose corner to run to
 			if enemyMovementZoneChosen == false:
 				rng.randomize()
 				var random_decision = rng.randi_range(0, 4)
 				match random_decision:
 					0,1:  # Run to movement zone
-						if(health <= 51):
-							runToZone = chooseMovementZone()
-							enemyMovementZoneChosen = true
-						else:
-							change_state("idle")
+						#if(health <= 51):
+						runToZone = chooseMovementZone()
+						enemyMovementZoneChosen = true
+						#else:
+						#	change_state("idle")
 					2,3,4: # Run towards player
 						attacking = false
 						change_state("inCombat") 
 			
 			if enemyMovementZoneChosen == true:	
+				disable_collision()
 				dir = ai_get_direction(runToZone)
 				var motion = (dir * SPEED * delta)
 				if (motion.x > 0):
@@ -225,11 +241,12 @@ func _physics_process(delta):
 			
 				if isEnemyInMovementZone:
 			#	attacking = false
+					enable_collision()
 					enemyMovementZoneChosen = false
-					if(self.health <= 33):
-						change_state("idle")
-					else:
-						change_state("inCombat")
+					#if(self.health <= 33):
+					change_state("idle")
+					#else:
+					#	change_state("inCombat")
 				
 			#enemyMovementZoneChosen = false
 		
