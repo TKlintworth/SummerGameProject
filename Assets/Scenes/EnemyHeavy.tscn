@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Scenes/EnemyHeavy.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/enemy_heavy_dying/tile000.png" type="Texture" id=2]
@@ -15,6 +15,8 @@
 [ext_resource path="res://Sprites/enemy_heavy_running/tile001.png" type="Texture" id=13]
 [ext_resource path="res://Sprites/enemy_heavy_running/tile002.png" type="Texture" id=14]
 [ext_resource path="res://Sprites/enemy_heavy_running/tile003.png" type="Texture" id=15]
+[ext_resource path="res://Scenes/BloodSplashParticles.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Scenes/BloodParticles.tscn" type="PackedScene" id=17]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -35,7 +37,9 @@ animations = [ {
 
 [sub_resource type="CircleShape2D" id=3]
 
-[node name="EnemyHeavy" type="KinematicBody2D"]
+[node name="EnemyHeavy" type="KinematicBody2D" groups=[
+"Enemy2",
+]]
 script = ExtResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="." groups=[
@@ -43,8 +47,7 @@ script = ExtResource( 1 )
 ]]
 scale = Vector2( 0.2, 0.2 )
 frames = SubResource( 1 )
-animation = "heavy_enemy_dying"
-frame = 4
+animation = "heavy_enemy_running"
 speed_scale = 0.9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -67,5 +70,13 @@ shape = SubResource( 4 )
 position = Vector2( -2.72076, 9.52261 )
 scale = Vector2( 6, 6 )
 shape = SubResource( 3 )
+
+[node name="BloodSplashParticles" parent="." instance=ExtResource( 16 )]
+position = Vector2( -2.46683, -0.803535 )
+scale = Vector2( 0.3, 0.3 )
+
+[node name="BloodParticles" parent="." instance=ExtResource( 17 )]
+position = Vector2( -9.81334, 3.52226 )
+scale = Vector2( 0.3, 0.3 )
 [connection signal="area_entered" from="SenseArea" to="." method="_on_SenseArea_area_entered"]
 [connection signal="area_exited" from="SenseArea" to="." method="_on_SenseArea_area_exited"]

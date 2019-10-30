@@ -5,7 +5,9 @@
 
 [sub_resource type="CapsuleShape2D" id=1]
 
-[node name="Area2D" type="Area2D"]
+[node name="Area2D" type="Area2D" groups=[
+"Spear",
+]]
 position = Vector2( 0, -1.39668 )
 script = ExtResource( 1 )
 

@@ -13,6 +13,7 @@ var spear_pickup
 var scene_path_to_load
 var rng = RandomNumberGenerator.new()
 var rngTimer = RandomNumberGenerator.new()
+var spear_count_array = []
 
 func _input(event):
 	if event.is_action_pressed("toggle_fullscreen"):
@@ -26,9 +27,9 @@ func _ready():
 	#rng.randomize()
 	rngTimer.randomize()
 	#var random_spear_location = rng.randf_range(0, 1000)
-	var random_spear_spawn_timer = rng.randf_range(1, 20)
+	#var random_spear_spawn_timer = rng.randf_range(1, 20)
 	#add_spear(random_spear_location)
-	$SpearSpawnTimer.wait_time = random_spear_spawn_timer
+	#$SpearSpawnTimer.wait_time = random_spear_spawn_timer
 	$SpearSpawnTimer.start()
 	
 func play_win():
@@ -50,10 +51,22 @@ func play_battle_music():
 	$Music.play_battle_music()
 
 # Add spear to random location on map
-func add_spear(ran_num):
-	spear_pickup = spear_pickup_scene.instance()
-	self.add_child(spear_pickup)
-	spear_pickup.position = Vector2(ran_num,ran_num)
+func add_spear(ran_num_x, ran_num_y):
+	# Make sure the spear pickups are always X or less. Dont want to many spears on map
+	if(get_spear_count_on_ground() <= 2):
+		spear_pickup = spear_pickup_scene.instance()
+		self.add_child(spear_pickup)
+		spear_pickup.position = Vector2(ran_num_x,ran_num_y)
+		spear_count_array.append(spear_pickup)
+
+# Remove spear from the spear count array
+func remove_spear_from_array():
+	print("removing spear")
+	spear_count_array.remove(0)
+
+# Get the spear pickup count on map
+func get_spear_count_on_ground():
+	return spear_count_array.size()
 
 func start_new_wave():
 	wave_num += 1
@@ -140,6 +153,8 @@ func wave_5():
 	
 func _process(delta):
 	
+	print("spear count:")
+	print(get_spear_count_on_ground())
 	if $CanvasLayer/Control/Wave_Enemy_Spawn_Timer.time_left <= 0.1 && start_next_wave == true:
 		start_new_wave()
 	if get_tree().get_nodes_in_group("Enemy1").size() <= 0 && new_wave == false:
@@ -152,8 +167,9 @@ func _on_SpearSpawnTimer_timeout():
 	rng.randomize()
 	rngTimer.randomize()
 	print("added spear")
-	var random_spear_location = rng.randf_range(50, 550)
+	var random_spear_location_x = rng.randf_range(75, 1750)
+	var random_spear_location_y = rng.randf_range(75, 800)
 	var random_spear_spawn_timer = rng.randf_range(15, 50)
-	add_spear(random_spear_location)
+	add_spear(random_spear_location_x, random_spear_location_y)
 	$SpearSpawnTimer.wait_time = random_spear_spawn_timer
 	$SpearSpawnTimer.start()

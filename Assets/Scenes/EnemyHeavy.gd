@@ -7,7 +7,7 @@ signal enemyInMovementZone
 onready var Player = get_parent().get_node("Player")
 onready var enemyMovementZones = get_parent().get_node("enemyMovementZones")
 
-const SPEED = 320.0
+var SPEED = 120.0
 var health = 100.0
 var playerAlive
 var react_time = 0
@@ -40,6 +40,15 @@ func lose_health_spear_jab():
 	health -= 50
 	return health
 
+func play_blood_one_time():
+	$BloodParticles.emitting = true
+
+func play_blood_flow():
+	$BloodParticles.one_shot = false
+	$BloodParticles.emitting = true
+
+func play_blood_splash_one_time():
+	$BloodSplashParticles.emitting = true	
 
 func play_death():
 	change_state("dying")
@@ -48,6 +57,9 @@ func play_death():
 
 func disable_collision():
 	$CollisionShape2D.disabled = true
+
+func set_speed(speed):
+	SPEED = speed
 
 func change_state(var nextState):
 	if nextState == "inCombat":

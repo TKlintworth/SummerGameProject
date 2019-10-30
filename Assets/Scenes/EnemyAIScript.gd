@@ -17,8 +17,10 @@ var dead = false
 var enemyMovementZoneChosen = false
 var isEnemyInMovementZone = false
 var player_recently_taken_damage = false
+var enemy_recently_attacked = false
 #How long before player can take damage again after receiving damage (in seconds)
 var playerDamageTime = 5
+var enemyAttackDelay = 1
 #Used around line 80 to choose a zone to run to only once
 var runToZone
 var last_position
@@ -95,6 +97,7 @@ func choose_attack(attack):
 		change_state("fleeing")
 		
 	elif attack == "one_time_attack":
+		
 		$AnimatedSprite.speed_scale = 1.85
 		$AnimatedSprite.play("redguard_attack")
 		yield(get_node("AnimatedSprite"), "animation_finished")
@@ -118,6 +121,10 @@ func ai_get_direction(target):
 func player_damage_timer():
 	yield(get_tree().create_timer(playerDamageTime), "timeout")
 	player_recently_taken_damage = false
+
+func enemy_delay_timer():
+	yield(get_tree().create_timer(enemyAttackDelay), "timeout")
+	enemy_recently_attacked = false
 
 func _physics_process(delta):
 	
