@@ -73,7 +73,6 @@ func add_health(ran_num_x, ran_num_y):
 
 # Remove spear from the spear count array
 func remove_spear_from_array():
-	print("removing spear")
 	spear_count_array.remove(0)
 
 # Remove health from the health count array
@@ -171,8 +170,6 @@ func wave_5():
 	
 func _process(delta):
 	
-	print("health count:")
-	print(get_health_count_on_ground())
 	if $CanvasLayer/Control/Wave_Enemy_Spawn_Timer.time_left <= 0.1 && start_next_wave == true:
 		start_new_wave()
 	if get_tree().get_nodes_in_group("Enemy1").size() <= 0 && new_wave == false:
@@ -183,7 +180,6 @@ func _process(delta):
 ### Timer for randomizing spear location / spawn time
 func _on_SpearSpawnTimer_timeout():
 	rng.randomize()
-	print("added spear")
 	var random_spear_location_x = rng.randf_range(75, 1750)
 	var random_spear_location_y = rng.randf_range(75, 800)
 	var random_spear_spawn_timer = rng.randf_range(15, 50)
