@@ -7,8 +7,9 @@
 [node name="ParallaxLayer" type="ParallaxLayer" parent="."]
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxLayer"]
-margin_left = -4.78333
-margin_right = 1195.22
-margin_bottom = 600.0
-rect_scale = Vector2( 1.07776, 1.23398 )
+margin_left = -243.949
+margin_top = -263.082
+margin_right = 956.054
+margin_bottom = 336.918
+rect_scale = Vector2( 4, 4 )
 texture = ExtResource( 1 )

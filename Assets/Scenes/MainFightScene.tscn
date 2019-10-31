@@ -1,18 +1,19 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scenes/MainFightScene.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/EnemyHeavy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/SpearPickup.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/SpriteAnimation.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/Spear.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Pause.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Art/BigArena.png" type="Texture" id=10]
-[ext_resource path="res://sounds/Music/BattleMusic.wav" type="AudioStream" id=11]
-[ext_resource path="res://Scenes/Music.gd" type="Script" id=12]
-[ext_resource path="res://Scenes/enemyMovementZones.gd" type="Script" id=13]
+[ext_resource path="res://Scenes/HealthPickup.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/SpriteAnimation.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Spear.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Pause.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Art/BigArena.png" type="Texture" id=11]
+[ext_resource path="res://sounds/Music/BattleMusic.wav" type="AudioStream" id=12]
+[ext_resource path="res://Scenes/Music.gd" type="Script" id=13]
+[ext_resource path="res://Scenes/enemyMovementZones.gd" type="Script" id=14]
 
 [sub_resource type="ShaderMaterial" id=1]
 
@@ -27,31 +28,35 @@ script = ExtResource( 1 )
 enemy_scene = ExtResource( 2 )
 heavy_enemy_scene = ExtResource( 3 )
 spear_pickup_scene = ExtResource( 4 )
+health_pickup_scene = ExtResource( 5 )
 
-[node name="Player" parent="." instance=ExtResource( 5 )]
+[node name="Player" parent="." instance=ExtResource( 6 )]
 position = Vector2( 599.611, 481.2 )
 scale = Vector2( 0.5, 0.5 )
-spear_scene = ExtResource( 6 )
+spear_scene = ExtResource( 7 )
 
-[node name="AudioStreamPlayer2D" parent="Player" instance=ExtResource( 7 )]
+[node name="AudioStreamPlayer2D" parent="Player" instance=ExtResource( 8 )]
 position = Vector2( -191.368, 0 )
 autoplay = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 100
 
-[node name="Control" parent="CanvasLayer" instance=ExtResource( 8 )]
+[node name="Control" parent="CanvasLayer" instance=ExtResource( 9 )]
 margin_left = 40.9653
 margin_top = -0.735077
 margin_right = 40.9652
 margin_bottom = -0.735107
+
+[node name="Health" parent="CanvasLayer/Control/NinePatchRect" index="0"]
+value = 50.0
 
 [node name="Timer" type="Timer" parent="CanvasLayer/Control"]
 autostart = true
 
 [node name="Wave_Enemy_Spawn_Timer" type="Timer" parent="CanvasLayer/Control"]
 
-[node name="Pause" parent="CanvasLayer" instance=ExtResource( 9 )]
+[node name="Pause" parent="CanvasLayer" instance=ExtResource( 10 )]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -64,14 +69,14 @@ margin_top = 3.78149
 margin_right = 662.689
 margin_bottom = 323.781
 rect_scale = Vector2( 3, 3.375 )
-texture = ExtResource( 10 )
+texture = ExtResource( 11 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 11 )
-script = ExtResource( 12 )
+stream = ExtResource( 12 )
+script = ExtResource( 13 )
 
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1109.45, 465.256 )
@@ -80,7 +85,7 @@ input_pickable = true
 [node name="enemyMovementZones" type="Area2D" parent="." groups=[
 "EnemyMovementZone",
 ]]
-script = ExtResource( 13 )
+script = ExtResource( 14 )
 
 [node name="move1" type="CollisionShape2D" parent="enemyMovementZones"]
 position = Vector2( 131.001, 197.001 )
@@ -99,6 +104,9 @@ position = Vector2( 1786.08, 998.915 )
 shape = SubResource( 3 )
 
 [node name="SpearSpawnTimer" type="Timer" parent="."]
+
+[node name="HealthSpawnTimer" type="Timer" parent="."]
 [connection signal="timeout" from="SpearSpawnTimer" to="." method="_on_SpearSpawnTimer_timeout"]
+[connection signal="timeout" from="HealthSpawnTimer" to="." method="_on_HealthSpawnTimer_timeout"]
 
 [editable path="CanvasLayer/Control"]
