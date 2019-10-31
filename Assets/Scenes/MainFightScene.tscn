@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scenes/MainFightScene.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://sounds/Music/BattleMusic.wav" type="AudioStream" id=12]
 [ext_resource path="res://Scenes/Music.gd" type="Script" id=13]
 [ext_resource path="res://Scenes/enemyMovementZones.gd" type="Script" id=14]
+[ext_resource path="res://PNG/icon.png" type="Texture" id=15]
 
 [sub_resource type="ShaderMaterial" id=1]
 
@@ -22,6 +23,10 @@ radius = 24.0215
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 22.9011
+
+[sub_resource type="RectangleShape2D" id=4]
+
+[sub_resource type="RectangleShape2D" id=5]
 
 [node name="MainRoot" type="Node2D"]
 script = ExtResource( 1 )
@@ -85,6 +90,7 @@ input_pickable = true
 [node name="enemyMovementZones" type="Area2D" parent="." groups=[
 "EnemyMovementZone",
 ]]
+editor/display_folded = true
 script = ExtResource( 14 )
 
 [node name="move1" type="CollisionShape2D" parent="enemyMovementZones"]
@@ -106,6 +112,24 @@ shape = SubResource( 3 )
 [node name="SpearSpawnTimer" type="Timer" parent="."]
 
 [node name="HealthSpawnTimer" type="Timer" parent="."]
+
+[node name="StaticBody2D" type="KinematicBody2D" parent="." groups=[
+"Wall",
+]]
+position = Vector2( 233.203, 355.105 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+scale = Vector2( 3, 3 )
+shape = SubResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="StaticBody2D"]
+texture = ExtResource( 15 )
+
+[node name="Wall" type="Area2D" parent="StaticBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D/Wall"]
+scale = Vector2( 5, 5 )
+shape = SubResource( 5 )
 [connection signal="timeout" from="SpearSpawnTimer" to="." method="_on_SpearSpawnTimer_timeout"]
 [connection signal="timeout" from="HealthSpawnTimer" to="." method="_on_HealthSpawnTimer_timeout"]
 
