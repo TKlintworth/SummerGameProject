@@ -53,6 +53,12 @@ func take_damage(amount):
 		get_parent().play_lose()
 	else:
 		player_health_node.set_value(player_health_node.value - amount)
+
+func increase_health(amount):
+	if(player_health_node.value + amount >= 100):
+		player_health_node.set_value(100)
+	else:
+		player_health_node.set_value(player_health_node.value + amount)
 	
 # function for player death
 func player_die():
