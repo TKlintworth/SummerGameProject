@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Scenes/MainFightScene.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=2]
@@ -15,7 +15,6 @@
 [ext_resource path="res://sounds/Music/BattleMusic.wav" type="AudioStream" id=13]
 [ext_resource path="res://Scenes/Music.gd" type="Script" id=14]
 [ext_resource path="res://Scenes/enemyMovementZones.gd" type="Script" id=15]
-[ext_resource path="res://PNG/icon.png" type="Texture" id=16]
 
 [sub_resource type="DynamicFont" id=1]
 size = 42
@@ -37,8 +36,10 @@ radius = 24.0215
 radius = 22.9011
 
 [sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 10, 16.5445 )
 
 [sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 15.9881, 10 )
 
 [node name="MainRoot" type="Node2D"]
 script = ExtResource( 1 )
@@ -135,22 +136,59 @@ shape = SubResource( 4 )
 
 [node name="HealthSpawnTimer" type="Timer" parent="."]
 
-[node name="StaticBody2D" type="KinematicBody2D" parent="." groups=[
+[node name="WallSegment1" type="KinematicBody2D" parent="." groups=[
 "Wall",
 ]]
-position = Vector2( 233.203, 355.105 )
+editor/display_folded = true
+position = Vector2( 13.7365, 585.68 )
+scale = Vector2( 1, 10 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallSegment1"]
 scale = Vector2( 3, 3 )
 shape = SubResource( 5 )
 
-[node name="Sprite" type="Sprite" parent="StaticBody2D"]
-texture = ExtResource( 16 )
+[node name="Wall" type="Area2D" parent="WallSegment1"]
 
-[node name="Wall" type="Area2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallSegment1/Wall"]
+position = Vector2( 10.2744, 0 )
+scale = Vector2( 3, 5 )
+shape = SubResource( 6 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D/Wall"]
-scale = Vector2( 5, 5 )
+[node name="WallSegment2" type="KinematicBody2D" parent="." groups=[
+"Wall",
+]]
+position = Vector2( 1900, 585.68 )
+scale = Vector2( 1, 10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallSegment2"]
+position = Vector2( 36, 0 )
+scale = Vector2( 2, 3 )
+shape = SubResource( 5 )
+
+[node name="Wall" type="Area2D" parent="WallSegment2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallSegment2/Wall"]
+position = Vector2( 16.5032, 0.229233 )
+scale = Vector2( 2, 5 )
+shape = SubResource( 6 )
+
+[node name="WallSegment3" type="KinematicBody2D" parent="." groups=[
+"Wall",
+]]
+editor/display_folded = true
+position = Vector2( 980, 60 )
+rotation = 1.5708
+scale = Vector2( 1, 20.1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallSegment3"]
+scale = Vector2( 3, 3 )
+shape = SubResource( 5 )
+
+[node name="Wall" type="Area2D" parent="WallSegment3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallSegment3/Wall"]
+position = Vector2( 10.2744, 0 )
+scale = Vector2( 3, 5 )
 shape = SubResource( 6 )
 [connection signal="timeout" from="SpearSpawnTimer" to="." method="_on_SpearSpawnTimer_timeout"]
 [connection signal="timeout" from="HealthSpawnTimer" to="." method="_on_HealthSpawnTimer_timeout"]

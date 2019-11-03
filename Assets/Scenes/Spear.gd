@@ -16,6 +16,7 @@ var thrown = false
 var on_ground = false
 var hit_wall = false
 var enemy_area_array = []
+var spear_destruction_position = -119
 
 
 func _ready():
@@ -40,11 +41,13 @@ func get_input():
 				$AnimatedSprite.play("spear_flight")
 				vel.x = -speed_x
 				vel.y = speed_y
+				$SpearDestruction.position.x = spear_destruction_position
 			1: # player facing right, so throw spear right
 				$AnimatedSprite.set_flip_h(true)
 				$AnimatedSprite.play("spear_flight")
 				vel.x = speed_x
 				vel.y = speed_y
+				$SpearDestruction.position.x = -spear_destruction_position
 		
 
 func _process(delta):
