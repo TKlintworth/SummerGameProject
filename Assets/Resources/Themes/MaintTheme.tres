@@ -1,0 +1,21 @@
+[gd_resource type="Theme" load_steps=5 format=2]
+
+[ext_resource path="res://Resources/Fonts/yoster.ttf" type="DynamicFontData" id=1]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://Resources/Fonts/yoster.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+font_data = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 64
+font_data = ExtResource( 1 )
+
+[resource]
+default_font = SubResource( 3 )
+Button/colors/font_color = Color( 0.741176, 0.0666667, 0.0666667, 1 )
+Fonts/fonts/normal = SubResource( 2 )
+Label/colors/font_color = Color( 0.952941, 0.913725, 0.913725, 1 )
+Label/colors/font_color_shadow = Color( 0.4, 0.223529, 0.0509804, 1 )
+Label/constants/shadow_offset_x = 5
