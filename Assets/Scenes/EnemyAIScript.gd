@@ -19,7 +19,7 @@ var isEnemyInMovementZone = false
 var player_recently_taken_damage = false
 var enemy_recently_attacked = false
 #How long before player can take damage again after receiving damage (in seconds)
-var playerDamageTime = 5
+var playerDamageTime = 3
 var enemyAttackDelay = 1
 #Used around line 80 to choose a zone to run to only once
 var runToZone
@@ -122,6 +122,7 @@ func ai_get_direction(target):
 
 #Timer for allowing player to take more damage after being damaged
 func player_damage_timer():
+	get_tree().get_root().get_node("MainRoot/Player/AnimationPlayer").play("blink")
 	yield(get_tree().create_timer(playerDamageTime), "timeout")
 	player_recently_taken_damage = false
 
