@@ -35,6 +35,8 @@ func set_player_dead(choice):
 		player_dead = false
 
 func _ready():
+	#for i in 5:
+	#	$AnimationPlayer.play("blink")
 	game_status = 0
 	player_status = 0 # status of 0 is slave with spear
 	character_direction = 1 # player starts facing right
@@ -148,6 +150,7 @@ func get_input():
 	if Input.is_action_pressed("E") && spear_thrown == false: #block animation
 		#get_parent().get_node("ColorRect/AnimationPlayer").play("transition_in")
 		block()
+		
 	
 	# Throw spear action
 	if Input.is_action_pressed("T") && spear_thrown == false: # player has not thrown spear yet
@@ -197,6 +200,7 @@ func get_thrown():
 	return self.spear_thrown
 	
 func _physics_process(delta):
+	
 	if $AnimatedSprite.get_animation() == "slave_jab_spear_active":
 		if $AnimatedSprite.frame == 4:
 			$EnemyDamageArea.set_monitoring(true)
