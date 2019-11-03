@@ -49,6 +49,8 @@ func get_enemy_number():
 		1: enemy_count = 1
 		2: enemy_count = 3
 		3: enemy_count = 5
+		4: enemy_count = 2
+		5: enemy_count = 4
 	return enemy_count
 
 func play_battle_music():
@@ -89,7 +91,7 @@ func get_health_count_on_ground():
 
 func start_new_wave():
 	wave_num += 1
-	if(wave_num >= 4):
+	if(wave_num >= 6):
 		play_win()
 	get_enemy_number()
 	$CanvasLayer/Control/NinePatchRect/Wave_Large.change_wave()
@@ -98,7 +100,7 @@ func start_new_wave():
 	match wave_num:
 		2: wave_2()
 		3: wave_3()
-		3: wave_4()
+		4: wave_4()
 		5: wave_5()
 	#for i in range(enemy_count):
 	#	enemy = enemy_scene.instance()
@@ -172,7 +174,7 @@ func _process(delta):
 	
 	if $CanvasLayer/Control/Wave_Enemy_Spawn_Timer.time_left <= 0.1 && start_next_wave == true:
 		start_new_wave()
-	if get_tree().get_nodes_in_group("Enemy1").size() <= 0 && new_wave == false:
+	if get_tree().get_nodes_in_group("Enemy1").size() <= 0 && get_tree().get_nodes_in_group("Enemy2").size() <= 0 && new_wave == false:
 		new_wave = true
 		start_next_wave = true
 		$CanvasLayer/Control/Wave_Enemy_Spawn_Timer.start()

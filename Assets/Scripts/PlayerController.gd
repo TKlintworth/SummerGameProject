@@ -158,9 +158,11 @@ func get_input():
 		jab()
 	
 	#Sprint action
-	if Input.is_action_pressed("shift"):
+	if Input.is_action_pressed("shift") && action == false:
 		$AnimatedSprite.set_speed_scale(1.5)
-		$AnimatedSprite.play("player_run_spear")
+		match player_status:
+			0: $AnimatedSprite.play("player_run_spear")
+			1: $AnimatedSprite.play("slave_running")		
 		sprint = true
 	else:
 		sprint = false

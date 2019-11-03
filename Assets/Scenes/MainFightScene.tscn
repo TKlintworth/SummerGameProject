@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Scenes/MainFightScene.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=2]
@@ -9,24 +9,36 @@
 [ext_resource path="res://Scenes/Spear.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Pause.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Art/BigArena.png" type="Texture" id=11]
-[ext_resource path="res://sounds/Music/BattleMusic.wav" type="AudioStream" id=12]
-[ext_resource path="res://Scenes/Music.gd" type="Script" id=13]
-[ext_resource path="res://Scenes/enemyMovementZones.gd" type="Script" id=14]
-[ext_resource path="res://PNG/icon.png" type="Texture" id=15]
+[ext_resource path="res://Resources/Fonts/yoster.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://Pause.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Art/BigArena.png" type="Texture" id=12]
+[ext_resource path="res://sounds/Music/BattleMusic.wav" type="AudioStream" id=13]
+[ext_resource path="res://Scenes/Music.gd" type="Script" id=14]
+[ext_resource path="res://Scenes/enemyMovementZones.gd" type="Script" id=15]
+[ext_resource path="res://PNG/icon.png" type="Texture" id=16]
 
-[sub_resource type="ShaderMaterial" id=1]
+[sub_resource type="DynamicFont" id=1]
+size = 42
+font_data = ExtResource( 10 )
 
-[sub_resource type="CircleShape2D" id=2]
-radius = 24.0215
+[sub_resource type="DynamicFontData" id=7]
+font_path = "res://Resources/Fonts/yoster.ttf"
+
+[sub_resource type="DynamicFont" id=8]
+size = 100
+font_data = SubResource( 7 )
+
+[sub_resource type="ShaderMaterial" id=2]
 
 [sub_resource type="CircleShape2D" id=3]
+radius = 24.0215
+
+[sub_resource type="CircleShape2D" id=4]
 radius = 22.9011
 
-[sub_resource type="RectangleShape2D" id=4]
-
 [sub_resource type="RectangleShape2D" id=5]
+
+[sub_resource type="RectangleShape2D" id=6]
 
 [node name="MainRoot" type="Node2D"]
 script = ExtResource( 1 )
@@ -56,32 +68,42 @@ margin_bottom = -0.735107
 [node name="Health" parent="CanvasLayer/Control/NinePatchRect" index="0"]
 value = 50.0
 
+[node name="Wave_Small" parent="CanvasLayer/Control/NinePatchRect" index="2"]
+margin_top = 58.4406
+margin_right = -99.839
+margin_bottom = 100.441
+custom_fonts/font = SubResource( 1 )
+
+[node name="Wave_Large" parent="CanvasLayer/Control/NinePatchRect" index="3"]
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_color_shadow = Color( 0.4, 0.223529, 0.0509804, 1 )
+
 [node name="Timer" type="Timer" parent="CanvasLayer/Control"]
 autostart = true
 
 [node name="Wave_Enemy_Spawn_Timer" type="Timer" parent="CanvasLayer/Control"]
 
-[node name="Pause" parent="CanvasLayer" instance=ExtResource( 10 )]
+[node name="Pause" parent="CanvasLayer" instance=ExtResource( 11 )]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer"]
-material = SubResource( 1 )
+material = SubResource( 2 )
 margin_left = 22.689
 margin_top = 3.78149
 margin_right = 662.689
 margin_bottom = 323.781
 rect_scale = Vector2( 3, 3.375 )
-texture = ExtResource( 11 )
+texture = ExtResource( 12 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 12 )
-script = ExtResource( 13 )
+stream = ExtResource( 13 )
+script = ExtResource( 14 )
 
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1109.45, 465.256 )
@@ -91,23 +113,23 @@ input_pickable = true
 "EnemyMovementZone",
 ]]
 editor/display_folded = true
-script = ExtResource( 14 )
+script = ExtResource( 15 )
 
 [node name="move1" type="CollisionShape2D" parent="enemyMovementZones"]
 position = Vector2( 131.001, 197.001 )
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="move2" type="CollisionShape2D" parent="enemyMovementZones"]
 position = Vector2( 137.002, 953.191 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="move3" type="CollisionShape2D" parent="enemyMovementZones"]
 position = Vector2( 1783.13, 177.7 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="move4" type="CollisionShape2D" parent="enemyMovementZones"]
 position = Vector2( 1786.08, 998.915 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="SpearSpawnTimer" type="Timer" parent="."]
 
@@ -120,16 +142,16 @@ position = Vector2( 233.203, 355.105 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 scale = Vector2( 3, 3 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="Sprite" type="Sprite" parent="StaticBody2D"]
-texture = ExtResource( 15 )
+texture = ExtResource( 16 )
 
 [node name="Wall" type="Area2D" parent="StaticBody2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D/Wall"]
 scale = Vector2( 5, 5 )
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 [connection signal="timeout" from="SpearSpawnTimer" to="." method="_on_SpearSpawnTimer_timeout"]
 [connection signal="timeout" from="HealthSpawnTimer" to="." method="_on_HealthSpawnTimer_timeout"]
 
