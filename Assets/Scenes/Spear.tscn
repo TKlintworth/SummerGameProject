@@ -50,6 +50,6 @@ scale = Vector2( 8, 0.4 )
 shape = SubResource( 3 )
 
 [node name="SpearDestruction" parent="." instance=ExtResource( 6 )]
-position = Vector2( -118.718, -16.7601 )
+position = Vector2( -119, -16.76 )
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]
