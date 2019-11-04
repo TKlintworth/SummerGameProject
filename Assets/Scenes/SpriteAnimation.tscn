@@ -176,6 +176,7 @@ scale = Vector2( 0.3, 0.3 )
 frames = SubResource( 2 )
 animation = "slave_jab_spear_active"
 frame = 1
+speed_scale = 2.0
 script = ExtResource( 45 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
