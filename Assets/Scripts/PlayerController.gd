@@ -21,7 +21,9 @@ export var player_status = 0 # int value to decide animation type; 0 = Does have
 var spear_pick
 var game_status = 0 # game is a go
 var enemy_area_array = []
-
+# How much stamina should the player regenerate per second
+var stamina_regen_value = 1
+var sprint
 
 onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Health")
 onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Stamina")
@@ -42,9 +44,30 @@ func _ready():
 	character_direction = 1 # player starts facing right
 	$AnimatedSprite.set_flip_h(true) # make player face right
 	$EnemyDamageArea.set_monitoring(false)
+	
+	#Create a timer to handle stamina regeneration
+	var timer = Timer.new()
+	timer.connect("timeout",self,"_on_stamina_timer_timeout") 
+	#timeout is what says in docs, in signals
+	#self is who respond to the callback
+	#_on_timer_timeout is the callback, can have any name
+	add_child(timer) #to process
+	timer.start() #to start
+	
 	#print(get_parent().get_node("ColorRect/AnimationPlayer").play("transition_in"))
 	
 ############## FUNCTIONS ################
+
+# Stamina regeneration if the players alive and stamina is less than max
+func stamina_regen():
+	if player_dead == false and player_stamina_node.value < 100 and sprint == false:
+		print("Regen stamina")
+		player_stamina_node.value += stamina_regen_value
+		
+		
+func _on_stamina_timer_timeout():
+   stamina_regen()
+
 # take damage function
 func take_damage(amount):
 	#player_health_node.value -= 2
@@ -72,11 +95,15 @@ func player_die():
 		dead_animation_played = true # prevents audio stream from playing sounds more than once
 		
 # player block function
+# Enemy functions directly decrease Player stamina rather than being handled in the block function
 func block():
-	player_block = true
-	action = true
-	player_stamina_node.value -= 2
-	$AnimatedSprite.play("slave_block")
+	# If the player has a spear (status 0) allow blocking ability. If no spear, disallow blocking.
+	if player_status == 0:
+		player_block = true
+		action = true
+		$AnimatedSprite.play("slave_block")
+	else:
+		print("Unable to block / no weapon")
 	
 # throw spear function	
 func throw_spear():
@@ -100,7 +127,8 @@ func jab():
 
 func get_input():
 	velocity = Vector2()
-	var sprint = false
+	#var sprint = false
+	sprint = false
 	
 	#if (player_health_node.value <=27):
 	#	player_dead = true
@@ -150,6 +178,7 @@ func get_input():
 	# Block action
 	if Input.is_action_pressed("E") && spear_thrown == false: #block animation
 		#get_parent().get_node("ColorRect/AnimationPlayer").play("transition_in")
+		#print("Player Blocking")
 		block()
 		
 	
@@ -211,6 +240,7 @@ func _physics_process(delta):
 	match game_status: # if player is alive, get input. Otherwise, do not get input
 		0: get_input()
 		1: pass
+	
 	velocity = move_and_slide(velocity)
 
 ######### Plays after each animation finished ############

@@ -21,6 +21,8 @@ var vel = Vector2()
 var state = "inCombat"
 var states = ["idle", "inCombat", "fleeing"]
 
+
+
 export (int) var priority_level
 
 func _ready():
