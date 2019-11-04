@@ -34,6 +34,9 @@ var idle_timer_start = false
 var state = "idle"
 var states = ["idle", "inCombat", "fleeing", "stopped", "dying"]
 
+#Amount of damage the one_time_attack inflicts
+var oneTimeAttackDamage = 20
+
 func _ready():
 	playerAlive = !Player.player_dead
 	rng.randomize()
@@ -111,6 +114,12 @@ func choose_attack(attack):
 			#Player.take_damage(45)
 			player_recently_taken_damage = true
 			player_damage_timer()
+		elif(Player.player_block == true and in_attack_zone == true and not player_recently_taken_damage):
+			print("player blocked damage")
+			player_recently_taken_damage = true
+			player_damage_timer()
+			#Decrease player stamina by half the value of the potential damage inflicted
+			Player.player_stamina_node.value -= oneTimeAttackDamage/2
 		attacking = false
 		change_state("fleeing")
 		#$AnimatedSprite.speed_scale = 1
