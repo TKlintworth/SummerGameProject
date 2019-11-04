@@ -94,6 +94,7 @@ func throw_spear():
 
 func jab():
 	action = true
+	$AnimatedSprite.set_speed_scale(3)
 	$AnimatedSprite.play("slave_jab_spear_active")
 	$EnemyDamageArea.check_if_enemy_hit()
 
@@ -169,7 +170,7 @@ func get_input():
 		sprint = true
 	else:
 		sprint = false
-		$AnimatedSprite.set_speed_scale(1)
+		#$AnimatedSprite.set_speed_scale(1)
 		
 	# Standing player
 	if Input.is_action_pressed("left") == false && Input.is_action_pressed("down") == false && Input.is_action_pressed("right") == false && Input.is_action_pressed("up") == false && player_dead == false && player_block == false && action == false:
@@ -223,6 +224,7 @@ func _on_AnimatedSprite_animation_finished(): #ran everytime animation is finish
 		player_status = 0
 	$EnemyDamageArea.set_monitoring(false)
 	$RunningDust.emitting = false
+	$AnimatedSprite.set_speed_scale(1)
 	#$EnemyDamageArea.set_collision_mask(0) # set player spear to cannot kill enemy
 	# GAME OVER, player has died. Return to menu
 	#if game_status == 1:

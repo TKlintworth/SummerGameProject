@@ -1,9 +1,30 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/SpearPickup.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/spear_flight/tile000.png" type="Texture" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
+
+[sub_resource type="Animation" id=2]
+resource_name = "GlowUp"
+length = 0.6
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "blink_on"
+}, {
+"args": [  ],
+"method": "blink_off"
+} ]
+}
 
 [node name="Area2D" type="Area2D" groups=[
 "Spear",
@@ -20,3 +41,7 @@ shape = SubResource( 1 )
 position = Vector2( 0, 3.49168 )
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/GlowUp = SubResource( 2 )
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
