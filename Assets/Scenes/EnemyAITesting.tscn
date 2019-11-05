@@ -8,7 +8,7 @@ radius = 24.0215
 [sub_resource type="CircleShape2D" id=2]
 radius = 22.9011
 
-[node name="Node2D" instance=ExtResource( 1 )]
+[node name="Node2D" index="0" instance=ExtResource( 1 )]
 
 [node name="enemyMovementZones" parent="." index="5"]
 editor/display_folded = false
