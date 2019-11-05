@@ -22,7 +22,9 @@ var spear_pick
 var game_status = 0 # game is a go
 var enemy_area_array = []
 # How much stamina should the player regenerate per second
-var stamina_regen_value = 1
+var stamina_regen_value = 2
+# How much stamina should sprinting cost per second
+var stamina_sprint_value = 3
 var sprint
 
 onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Health")
@@ -60,11 +62,14 @@ func _ready():
 
 # Stamina regeneration if the players alive and stamina is less than max
 func stamina_regen():
+	# Decrease stamina if sprinting
+	if sprint == true:
+		player_stamina_node.value -= stamina_sprint_value
 	if player_dead == false and player_stamina_node.value < 100 and sprint == false:
-		print("Regen stamina")
+		#print("Regen stamina")
 		player_stamina_node.value += stamina_regen_value
-		
-		
+
+
 func _on_stamina_timer_timeout():
    stamina_regen()
 
@@ -191,7 +196,7 @@ func get_input():
 		jab()
 	
 	#Sprint action
-	if Input.is_action_pressed("shift") && action == false:
+	if Input.is_action_pressed("shift") && action == false && player_stamina_node.value > 3:
 		$AnimatedSprite.set_speed_scale(1.5)
 		match player_status:
 			0: $AnimatedSprite.play("player_run_spear")
