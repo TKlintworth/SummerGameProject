@@ -66,16 +66,13 @@ margin_top = -0.735077
 margin_right = 40.9652
 margin_bottom = -0.735107
 
-[node name="Health" parent="CanvasLayer/Control/NinePatchRect" index="0"]
-value = 50.0
-
-[node name="Wave_Small" parent="CanvasLayer/Control/NinePatchRect" index="2"]
+[node name="Wave_Small" parent="CanvasLayer/Control/NinePatchRect" index="0"]
 margin_top = 58.4406
 margin_right = -99.839
 margin_bottom = 100.441
 custom_fonts/font = SubResource( 1 )
 
-[node name="Wave_Large" parent="CanvasLayer/Control/NinePatchRect" index="3"]
+[node name="Wave_Large" parent="CanvasLayer/Control/NinePatchRect" index="1"]
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color_shadow = Color( 0.4, 0.223529, 0.0509804, 1 )
 
