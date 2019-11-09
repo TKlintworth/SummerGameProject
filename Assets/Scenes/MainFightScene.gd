@@ -34,7 +34,7 @@ func _ready():
 	#add_spear(random_spear_location)
 	#$SpearSpawnTimer.wait_time = random_spear_spawn_timer
 	$SpearSpawnTimer.start()
-	$HealthSpawnTimer.start()
+	#$HealthSpawnTimer.start()
 	
 func play_win():
 	scene_path_to_load = "res://Scenes/WinScreen.tscn"
@@ -72,6 +72,11 @@ func add_health(ran_num_x, ran_num_y):
 		self.add_child(health_pickup)
 		health_pickup.position = Vector2(ran_num_x,ran_num_y)
 		health_count_array.append(health_pickup)
+
+func add_health_enemy_drop(x_pos, y_pos):
+	health_pickup = health_pickup_scene.instance()
+	self.add_child(health_pickup)
+	health_pickup.position = Vector2(x_pos, y_pos)
 
 # Remove spear from the spear count array
 func remove_spear_from_array():
@@ -190,11 +195,11 @@ func _on_SpearSpawnTimer_timeout():
 	$SpearSpawnTimer.start()
 
 
-func _on_HealthSpawnTimer_timeout():
-	rngTimer.randomize()
-	var random_health_location_x = rngTimer.randf_range(75, 1750)
-	var random_health_location_y = rngTimer.randf_range(75, 800)
-	var random_health_spawn_timer = rngTimer.randf_range(15, 30)
-	add_health(random_health_location_x, random_health_location_y)
-	$HealthSpawnTimer.wait_time = random_health_spawn_timer
-	$HealthSpawnTimer.start()
+#func _on_HealthSpawnTimer_timeout():
+#	rngTimer.randomize()
+#	var random_health_location_x = rngTimer.randf_range(75, 1750)
+#	var random_health_location_y = rngTimer.randf_range(75, 800)
+#	var random_health_spawn_timer = rngTimer.randf_range(15, 30)
+#	add_health(random_health_location_x, random_health_location_y)
+#	$HealthSpawnTimer.wait_time = random_health_spawn_timer
+#	$HealthSpawnTimer.start()
