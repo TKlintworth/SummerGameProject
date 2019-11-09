@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/UI/HealthProgressBar.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/UI/StaminaProgressBar.tscn" type="PackedScene" id=2]
+
+[node name="ProgressBar" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="TextureProgress" parent="." instance=ExtResource( 1 )]
+margin_right = 500.0
+margin_bottom = 500.0
+
+[node name="TextureProgress2" parent="." instance=ExtResource( 2 )]
+margin_right = 500.0
+margin_bottom = 500.0
