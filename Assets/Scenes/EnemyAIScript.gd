@@ -298,7 +298,13 @@ func _physics_process(delta):
 		disable_collision()
 		$AnimatedSprite.play("redguard_dying")
 		if($AnimatedSprite.frame >= 9):
-			get_tree().get_root().get_node("MainRoot").add_health_enemy_drop(x_pos, y_pos)
+			rng.randomize()
+			var random_decision = rng.randi_range(0, 1)
+			match random_decision:
+				0:
+					get_tree().get_root().get_node("MainRoot").add_health_enemy_drop(x_pos, y_pos)
+				1:
+					pass	
 			self.queue_free()
 	
 func chooseMovementZone():
