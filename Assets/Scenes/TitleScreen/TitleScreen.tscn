@@ -68,9 +68,9 @@ margin_right = 438.0
 margin_bottom = 60.0
 grow_vertical = 0
 theme = ExtResource( 2 )
-scene_to_load = ""
+scene_to_load = "res://Scenes/MapSelect.tscn"
 
-[node name="ContinueButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 5 )]
+[node name="OptionsButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 5 )]
 margin_top = 110.0
 margin_right = 438.0
 margin_bottom = 181.0
