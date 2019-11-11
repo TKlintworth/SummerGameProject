@@ -14,7 +14,7 @@ export (PackedScene) var spear_on_ground
 var player_dead = false
 var dead_animation_played = false
 var player_block = false # boolean for if player is blocking
-var action = false # boolean for if player is performing an action. E.G. blocking, attacking
+var action = true # boolean for if player is performing an action. E.G. blocking, attacking
 var spear
 var spear_thrown = false
 export var player_status = 0 # int value to decide animation type; 0 = Does have spear; 1 = Does NOT have spear
@@ -46,6 +46,7 @@ func _ready():
 	character_direction = 1 # player starts facing right
 	$AnimatedSprite.set_flip_h(true) # make player face right
 	$EnemyDamageArea.set_monitoring(false)
+	action = true
 	
 	#Create a timer to handle stamina regeneration
 	var timer = Timer.new()

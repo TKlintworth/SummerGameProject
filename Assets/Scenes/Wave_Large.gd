@@ -23,6 +23,8 @@ func _process(delta):
 		self.set_percent_visible(percent)
 
 	elif percent > 2:
+		if(wave_num_large == 1):
+			get_tree().get_root().get_node("MainRoot").start_game()
 		new_wave = false
 		percent = 0
 		self.set_percent_visible(percent)
