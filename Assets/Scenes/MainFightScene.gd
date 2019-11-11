@@ -1,5 +1,6 @@
 extends Node2D
 var enemy_count = 1
+var start_game = false
 var wave_num = 1
 var new_wave = false
 var start_next_wave = false
@@ -35,6 +36,9 @@ func _ready():
 	#$SpearSpawnTimer.wait_time = random_spear_spawn_timer
 	$SpearSpawnTimer.start()
 	#$HealthSpawnTimer.start()
+
+func start_game():
+	$Player.action = false
 	
 func play_win():
 	scene_path_to_load = "res://Scenes/WinScreen.tscn"
