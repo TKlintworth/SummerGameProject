@@ -14,16 +14,22 @@ func _on_Button_pressed(scene):
 	#Fixed Main Menu...
 	#If you press one of the main menu buttons and it has scene_to_load, set scene_to_load to this scene. Fade to that scene
 	if scene:
-		scene_to_load = scene
-		$FadeIn.show()
-		$FadeIn.fade_in()
+		# If you press the Exit To Desktop button
+		if scene == "Quit":
+			_on_Exit_pressed()
+		else:
+			scene_to_load = scene
+			$FadeIn.show()
+			$FadeIn.fade_in()
 	else:
 		print("Null scene to load")
 	#res://Game/Options.tscn
 	#scene_path_to_load = "res://Scenes/MainFightScene.tscn"
 	#scene_path_to_load = scene_to_load
 	
-
+# Quit the game
+func _on_Exit_pressed():
+	get_tree().quit()
 
 func _on_FadeIn_fade_finished():
 	#get_node("/root/GameStateManager").getScene(scene_path_to_load)
