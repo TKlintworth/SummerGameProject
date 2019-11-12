@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/death7gargle.wav-dc3e2cfbd414416435e51bb9ba1d97fa.sample"
+path="res://.import/death1.wav-9fe9495df2506d01e90532e23e17f550.sample"
 
 [deps]
 
-source_file="res://sounds/death7gargle.wav"
-dest_files=[ "res://.import/death7gargle.wav-dc3e2cfbd414416435e51bb9ba1d97fa.sample" ]
+source_file="res://sounds/Enemy/death1.wav"
+dest_files=[ "res://.import/death1.wav-9fe9495df2506d01e90532e23e17f550.sample" ]
 
 [params]
 

@@ -1,16 +1,16 @@
 extends AudioStreamPlayer2D
 
 
-func play_noise():
+func play_enemy_death_noise():
 	var sounds
-	sounds = list_files_in_directory("res://sounds") # all sounds in directory, list
+	sounds = list_files_in_directory("res://sounds/Enemy") # all sounds in directory, list
 	print(len(sounds))
 	randomize()
 	var randIndex = randi() % len(sounds) # int value
 	print(randIndex)
 	print(sounds)
-	print("res://sounds/"+sounds[randIndex])
-	stream = load("res://sounds/"+sounds[randIndex])
+	print("res://sounds/Enemy/"+sounds[randIndex])
+	stream = load("res://sounds/Enemy/"+sounds[randIndex])
 	print(stream)
 	play(0)
 
