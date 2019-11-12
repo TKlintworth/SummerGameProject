@@ -34,13 +34,14 @@ func _ready():
 	#var random_spear_spawn_timer = rng.randf_range(1, 20)
 	#add_spear(random_spear_location)
 	#$SpearSpawnTimer.wait_time = random_spear_spawn_timer
-	$SpearSpawnTimer.start()
-	wave_1()
+	
+	#wave_1()
 	$AudioStreamPlayer2D.play_wave_noise()
 	#$HealthSpawnTimer.start()
 
 func start_game():
 	$Player.action = false
+	$SpearSpawnTimer.start()
 	
 func play_win():
 	scene_path_to_load = "res://Scenes/WinScreen.tscn"
@@ -109,7 +110,7 @@ func start_new_wave():
 	$CanvasLayer/Control/NinePatchRect/Wave_Small.progress()
 	
 	match wave_num:
-		1: wave_1()
+		#1: wave_1()
 		2: wave_2()
 		3: wave_3()
 		4: wave_4()
