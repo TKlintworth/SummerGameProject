@@ -49,7 +49,7 @@ spear_pickup_scene = ExtResource( 4 )
 health_pickup_scene = ExtResource( 5 )
 
 [node name="Player" parent="." instance=ExtResource( 6 )]
-position = Vector2( 599.611, 481.2 )
+position = Vector2( 599.611, 550 )
 scale = Vector2( 0.5, 0.5 )
 spear_scene = ExtResource( 7 )
 
@@ -59,7 +59,6 @@ scale = Vector2( 0.5, 0.5 )
 autoplay = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-editor/display_folded = true
 layer = 100
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource( 9 )]
@@ -111,14 +110,9 @@ __meta__ = {
 stream = ExtResource( 13 )
 script = ExtResource( 14 )
 
-[node name="Enemy" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1109.45, 465.256 )
-input_pickable = true
-
 [node name="enemyMovementZones" type="Area2D" parent="." groups=[
 "EnemyMovementZone",
 ]]
-editor/display_folded = true
 script = ExtResource( 15 )
 
 [node name="move1" type="CollisionShape2D" parent="enemyMovementZones"]
@@ -126,7 +120,7 @@ position = Vector2( 131.001, 197.001 )
 shape = SubResource( 5 )
 
 [node name="move2" type="CollisionShape2D" parent="enemyMovementZones"]
-position = Vector2( 137.002, 953.191 )
+position = Vector2( 137.002, 900 )
 shape = SubResource( 6 )
 
 [node name="move3" type="CollisionShape2D" parent="enemyMovementZones"]
@@ -134,7 +128,7 @@ position = Vector2( 1783.13, 177.7 )
 shape = SubResource( 6 )
 
 [node name="move4" type="CollisionShape2D" parent="enemyMovementZones"]
-position = Vector2( 1786.08, 998.915 )
+position = Vector2( 1786.08, 900 )
 shape = SubResource( 6 )
 
 [node name="SpearSpawnTimer" type="Timer" parent="."]
@@ -194,6 +188,25 @@ shape = SubResource( 7 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallSegment3/Wall"]
 position = Vector2( 10.2744, 0 )
+scale = Vector2( 3, 5 )
+shape = SubResource( 8 )
+
+[node name="WallSegment4" type="KinematicBody2D" parent="." groups=[
+"Wall",
+]]
+position = Vector2( 980, 1000 )
+rotation = 4.71239
+scale = Vector2( 1, 20.1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallSegment4"]
+position = Vector2( 18.0492, 0 )
+scale = Vector2( 3, 3 )
+shape = SubResource( 7 )
+
+[node name="Wall" type="Area2D" parent="WallSegment4"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallSegment4/Wall"]
+position = Vector2( -18.3898, 0.601202 )
 scale = Vector2( 3, 5 )
 shape = SubResource( 8 )
 [connection signal="timeout" from="SpearSpawnTimer" to="." method="_on_SpearSpawnTimer_timeout"]
