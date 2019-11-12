@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/Death13echo.wav-bf0c6c4fe9b32f33d59b089ce236ceb8.sample"
+path="res://.import/death5gargle.wav-e3bd21e17c06ab1e6ee45f0a41a3c0e8.sample"
 
 [deps]
 
-source_file="res://sounds/Death13echo.wav"
-dest_files=[ "res://.import/Death13echo.wav-bf0c6c4fe9b32f33d59b089ce236ceb8.sample" ]
+source_file="res://sounds/Enemy/death5gargle.wav"
+dest_files=[ "res://.import/death5gargle.wav-e3bd21e17c06ab1e6ee45f0a41a3c0e8.sample" ]
 
 [params]
 

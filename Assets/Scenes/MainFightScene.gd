@@ -25,9 +25,9 @@ func _input(event):
 
 func _ready():
 	$CanvasLayer/Control/Wave_Enemy_Spawn_Timer.wait_time = 2
-	heavy_enemy = heavy_enemy_scene.instance()
-	self.add_child(heavy_enemy)
-	heavy_enemy.position = Vector2(500, 500)
+	#heavy_enemy = heavy_enemy_scene.instance()
+	#self.add_child(heavy_enemy)
+	#heavy_enemy.position = Vector2(500, 500)
 	#rng.randomize()
 	rngTimer.randomize()
 	#var random_spear_location = rng.randf_range(0, 1000)
@@ -35,6 +35,8 @@ func _ready():
 	#add_spear(random_spear_location)
 	#$SpearSpawnTimer.wait_time = random_spear_spawn_timer
 	$SpearSpawnTimer.start()
+	wave_1()
+	$AudioStreamPlayer2D.play_wave_noise()
 	#$HealthSpawnTimer.start()
 
 func start_game():
@@ -107,6 +109,7 @@ func start_new_wave():
 	$CanvasLayer/Control/NinePatchRect/Wave_Small.progress()
 	
 	match wave_num:
+		1: wave_1()
 		2: wave_2()
 		3: wave_3()
 		4: wave_4()
@@ -117,6 +120,11 @@ func start_new_wave():
 	#	enemy.position = Vector2(100 + (i*100), i*100)
 	new_wave = false
 	start_next_wave = false
+
+func wave_1():
+	var enemy1 = enemy_scene.instance()
+	add_child(enemy1)
+	enemy1.position = Vector2(1200, 550)
 	
 func wave_2():
 	# 3 Enemies in this wave

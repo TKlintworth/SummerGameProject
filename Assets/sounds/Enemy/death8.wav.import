@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/death10.wav-311cd2ca8a35b9f8f24c11442f922316.sample"
+path="res://.import/death8.wav-36d8a7e5cff8cc1017f2856413bbfd2b.sample"
 
 [deps]
 
-source_file="res://sounds/death10.wav"
-dest_files=[ "res://.import/death10.wav-311cd2ca8a35b9f8f24c11442f922316.sample" ]
+source_file="res://sounds/Enemy/death8.wav"
+dest_files=[ "res://.import/death8.wav-36d8a7e5cff8cc1017f2856413bbfd2b.sample" ]
 
 [params]
 

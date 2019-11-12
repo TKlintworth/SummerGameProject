@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/death7gargle.wav-dc3e2cfbd414416435e51bb9ba1d97fa.sample"
+path="res://.import/1A_Colosseum.wav-2e62ae1609f858d3e1dacaa37241578d.sample"
 
 [deps]
 
-source_file="res://sounds/death7gargle.wav"
-dest_files=[ "res://.import/death7gargle.wav-dc3e2cfbd414416435e51bb9ba1d97fa.sample" ]
+source_file="res://sounds/Misc/1A_Colosseum.wav"
+dest_files=[ "res://.import/1A_Colosseum.wav-2e62ae1609f858d3e1dacaa37241578d.sample" ]
 
 [params]
 

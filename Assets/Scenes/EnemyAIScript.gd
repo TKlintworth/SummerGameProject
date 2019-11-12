@@ -298,7 +298,7 @@ func _physics_process(delta):
 		var y_pos = self.position.y
 		if !noise_played:
 			noise_played = true
-			get_tree().get_root().get_node("MainRoot/AudioStreamPlayer2D").play_noise()
+			get_tree().get_root().get_node("MainRoot/AudioStreamPlayer2D").play_enemy_death_noise()
 		disable_collision()
 		$AnimatedSprite.play("redguard_dying")
 		if($AnimatedSprite.frame >= 9):
