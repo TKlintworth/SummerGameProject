@@ -15,6 +15,7 @@ var player_dead = false
 var dead_animation_played = false
 var player_block = false # boolean for if player is blocking
 var action = true # boolean for if player is performing an action. E.G. blocking, attacking
+var game_started = false
 var spear
 var spear_thrown = false
 export var player_status = 0 # int value to decide animation type; 0 = Does have spear; 1 = Does NOT have spear
@@ -39,8 +40,10 @@ func set_player_dead(choice):
 		player_dead = false
 
 func _ready():
+	$AnimatedSprite.play("player_idle_spear")
 	#for i in 5:
 	#	$AnimationPlayer.play("blink")
+	$AnimatedSprite.set_speed_scale(1)
 	game_status = 0
 	player_status = 0 # status of 0 is slave with spear
 	character_direction = 1 # player starts facing right
@@ -189,7 +192,7 @@ func get_input():
 		
 	
 	# Throw spear action
-	if Input.is_action_pressed("T") && spear_thrown == false: # player has not thrown spear yet
+	if Input.is_action_pressed("T") && spear_thrown == false && action == false: # player has not thrown spear yet
 		throw_spear()
 	
 	# Jab action
