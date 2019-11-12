@@ -12,6 +12,7 @@ var health = 100.0
 var playerAlive
 var react_time = 0
 var dir = 1
+var noise_played = false
 var attacking = false
 var dead = false
 var enemyMovementZoneChosen = false
@@ -295,6 +296,9 @@ func _physics_process(delta):
 	if state == "dying":
 		var x_pos = self.position.x
 		var y_pos = self.position.y
+		if !noise_played:
+			noise_played = true
+			get_tree().get_root().get_node("MainRoot/AudioStreamPlayer2D").play_noise()
 		disable_collision()
 		$AnimatedSprite.play("redguard_dying")
 		if($AnimatedSprite.frame >= 9):

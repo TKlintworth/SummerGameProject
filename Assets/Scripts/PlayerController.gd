@@ -116,7 +116,7 @@ func throw_spear():
 	#spear_thrown = true
 	set_thrown(true)
 	action = true
-	$AudioStreamPlayer2D.play_attack_noise()
+	get_parent().get_node("AudioStreamPlayer2D").play_attack_noise()
 	spear = spear_scene.instance()
 	get_parent().add_child(spear) # adds the spear "object" to the scene
 	spear_pick = get_parent().get_node("Spear/Area2D")

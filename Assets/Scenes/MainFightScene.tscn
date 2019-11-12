@@ -53,11 +53,13 @@ position = Vector2( 599.611, 481.2 )
 scale = Vector2( 0.5, 0.5 )
 spear_scene = ExtResource( 7 )
 
-[node name="AudioStreamPlayer2D" parent="Player" instance=ExtResource( 8 )]
-position = Vector2( -191.368, 0 )
+[node name="AudioStreamPlayer2D" parent="." instance=ExtResource( 8 )]
+position = Vector2( 503.927, 481.2 )
+scale = Vector2( 0.5, 0.5 )
 autoplay = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+editor/display_folded = true
 layer = 100
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource( 9 )]
@@ -89,6 +91,7 @@ autostart = true
 [node name="Pause" parent="CanvasLayer" instance=ExtResource( 11 )]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+editor/display_folded = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 
@@ -159,6 +162,7 @@ shape = SubResource( 8 )
 [node name="WallSegment2" type="KinematicBody2D" parent="." groups=[
 "Wall",
 ]]
+editor/display_folded = true
 position = Vector2( 1900, 585.68 )
 scale = Vector2( 1, 10 )
 
