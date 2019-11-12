@@ -194,6 +194,7 @@ shape = SubResource( 8 )
 [node name="WallSegment4" type="KinematicBody2D" parent="." groups=[
 "Wall",
 ]]
+editor/display_folded = true
 position = Vector2( 980, 1000 )
 rotation = 4.71239
 scale = Vector2( 1, 20.1 )

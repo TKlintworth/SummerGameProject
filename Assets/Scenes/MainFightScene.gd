@@ -36,6 +36,7 @@ func _ready():
 	#$SpearSpawnTimer.wait_time = random_spear_spawn_timer
 	$SpearSpawnTimer.start()
 	wave_1()
+	$AudioStreamPlayer2D.play_wave_noise()
 	#$HealthSpawnTimer.start()
 
 func start_game():
