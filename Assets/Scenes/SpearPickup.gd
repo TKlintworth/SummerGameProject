@@ -4,7 +4,7 @@ func _ready():
 	$AnimationPlayer.play("GlowUp")
 
 func blink_on():
-	$Sprite.modulate = Color( 1, 0, 0, 1).linear_interpolate(Color(1,1,1,1),0.5)
+	$Sprite.modulate = Color(0.992188, 0.992188, 0.992188, 0).linear_interpolate(Color(1,1,1,1),0.5)
 
 func blink_off():
 	$Sprite.modulate = Color(1,1,1,1)
