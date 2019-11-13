@@ -112,7 +112,7 @@ func choose_attack(attack):
 		#IF player isn't blocking and they're in the attack zone at the end of the attack animation, recieve damage
 		if(Player.player_block == false and in_attack_zone == true and not player_recently_taken_damage):
 			print("player take damage")
-			#Player.take_damage(45)
+			Player.take_damage(45)
 			player_recently_taken_damage = true
 			player_damage_timer()
 		elif(Player.player_block == true and in_attack_zone == true and not player_recently_taken_damage):
@@ -272,6 +272,7 @@ func _physics_process(delta):
 		
 		
 	if state == "idle" && dead == false:		
+			$AnimatedSprite.speed_scale = 1
 			player_distance = abs(Player.position.x - position.x)
 			if(playerAlive && player_distance < 200):
 				change_state("inCombat")
