@@ -82,9 +82,11 @@ func take_damage(amount):
 	#player_health_node.value -= 2
 	if (player_health_node.value - amount) <= 0:
 		#Player dies
-		#player_die()
-		player_health_node.set_value(0)
-		get_parent().play_lose()
+		player_dead = true
+		player_health_node.set_value(0)	
+		player_die()
+			
+			
 	else:
 		player_health_node.set_value(player_health_node.value - amount)
 
@@ -98,7 +100,7 @@ func increase_health(amount):
 func player_die():
 	if player_dead == true && dead_animation_played == false:
 		#take_damage(100)
-		$AudioStreamPlayer2D.play_noise()
+		#$AudioStreamPlayer2D.play_noise()
 		$AnimatedSprite.play("slave_dying")
 		game_status = 1
 		dead_animation_played = true # prevents audio stream from playing sounds more than once
@@ -264,6 +266,8 @@ func _on_AnimatedSprite_animation_finished(): #ran everytime animation is finish
 	$EnemyDamageArea.set_monitoring(false)
 	$RunningDust.emitting = false
 	$AnimatedSprite.set_speed_scale(1)
+	if player_dead == true:
+		get_parent().play_lose()
 	#$EnemyDamageArea.set_collision_mask(0) # set player spear to cannot kill enemy
 	# GAME OVER, player has died. Return to menu
 	#if game_status == 1:
