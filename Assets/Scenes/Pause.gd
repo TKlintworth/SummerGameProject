@@ -12,6 +12,7 @@ func _input(event):
 		get_tree().paused = new_pause_state
 		visible = new_pause_state
 
+
 func _on_Main_Menu_pressed():
 	#visible = false
 	#Unpause the game and move to main menu
@@ -19,7 +20,6 @@ func _on_Main_Menu_pressed():
 	GameStateManager.getScene("res://Scenes/TitleScreen/TitleScreen.tscn")
 	
 	#get_tree().change_scene("res://Scenes/TitleScreen/TitleScreen.tscn")
-	
 
 # Quit the game
 func _on_Exit_pressed():
@@ -31,3 +31,11 @@ func _on_Resume_pressed():
 	a.action = "pause"
 	a.pressed = true
 	Input.parse_input_event(a)
+
+func _on_Controls_pressed():
+	$ControlsScreen.visible = true
+	$VBoxContainer.visible = false
+
+func _on_Back_pressed() -> void:
+	$ControlsScreen.visible = false
+	$VBoxContainer.visible = true

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/Pause.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Fonts/yoster.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Scenes/ControlsScreenInGame.tscn" type="PackedScene" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 24
@@ -35,9 +36,9 @@ rect_scale = Vector2( 1.97341, 2.86762 )
 alignment = 1
 
 [node name="Resume" type="Button" parent="VBoxContainer"]
-margin_top = 76.0
+margin_top = 59.0
 margin_right = 649.0
-margin_bottom = 106.0
+margin_bottom = 89.0
 grow_vertical = 0
 focus_mode = 0
 custom_fonts/font = SubResource( 1 )
@@ -45,21 +46,38 @@ enabled_focus_mode = 0
 text = "Resume"
 flat = true
 
-[node name="Main Menu" type="Button" parent="VBoxContainer"]
-margin_top = 110.0
+[node name="Controls" type="Button" parent="VBoxContainer"]
+margin_top = 93.0
 margin_right = 649.0
-margin_bottom = 140.0
+margin_bottom = 123.0
+grow_vertical = 0
+focus_mode = 0
+custom_fonts/font = SubResource( 1 )
+enabled_focus_mode = 0
+text = "Controls"
+flat = true
+
+[node name="Main Menu" type="Button" parent="VBoxContainer"]
+margin_top = 127.0
+margin_right = 649.0
+margin_bottom = 157.0
 custom_fonts/font = SubResource( 2 )
 text = "Main Menu"
 flat = true
 
 [node name="Exit" type="Button" parent="VBoxContainer"]
-margin_top = 144.0
+margin_top = 161.0
 margin_right = 649.0
-margin_bottom = 174.0
+margin_bottom = 191.0
 custom_fonts/font = SubResource( 3 )
 text = "Quit to Desktop"
 flat = true
+
+[node name="ControlsScreen" parent="." instance=ExtResource( 3 )]
 [connection signal="pressed" from="VBoxContainer/Resume" to="." method="_on_Resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/Controls" to="." method="_on_Controls_pressed"]
 [connection signal="pressed" from="VBoxContainer/Main Menu" to="." method="_on_Main_Menu_pressed"]
 [connection signal="pressed" from="VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="pressed" from="ControlsScreen/Menu/Back" to="." method="_on_Back_pressed"]
+
+[editable path="ControlsScreen"]

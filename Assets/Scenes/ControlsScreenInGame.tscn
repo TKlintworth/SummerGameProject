@@ -1,12 +1,8 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Scenes/ControlsScreen.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/ControlsScreenInGame.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Themes/MaintTheme.tres" type="Theme" id=2]
 [ext_resource path="res://Resources/Fonts/yoster.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://fade_in/FadeIn.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=5]
-[ext_resource path="res://sounds/Music/MenuMusic.wav" type="AudioStream" id=6]
-[ext_resource path="res://blackbackground.tscn" type="PackedScene" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 124
@@ -24,11 +20,8 @@ font_data = ExtResource( 3 )
 size = 32
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=5]
-size = 24
-font_data = ExtResource( 3 )
-
 [node name="ControlsScreen" type="Control"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = -1280.0
@@ -58,7 +51,7 @@ align = 1
 margin_left = 170.0
 margin_top = 204.0
 margin_right = 1106.0
-margin_bottom = 755.0
+margin_bottom = 837.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -68,7 +61,7 @@ alignment = 1
 
 [node name="ControlLabels" type="VBoxContainer" parent="Menu/CenterRow"]
 margin_right = 360.0
-margin_bottom = 551.0
+margin_bottom = 633.0
 grow_vertical = 2
 rect_min_size = Vector2( 0, 50 )
 size_flags_horizontal = 3
@@ -117,7 +110,7 @@ text = "Block : E"
 [node name="ControlLabels2" type="VBoxContainer" parent="Menu/CenterRow"]
 margin_left = 510.0
 margin_right = 936.0
-margin_bottom = 551.0
+margin_bottom = 633.0
 grow_vertical = 2
 rect_min_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
@@ -163,38 +156,16 @@ rect_min_size = Vector2( 360, 60 )
 custom_fonts/font = SubResource( 3 )
 text = "Option : Option"
 
-[node name="MainMenu" type="Button" parent="Menu"]
-margin_top = 759.0
+[node name="Back" type="Button" parent="Menu"]
+margin_top = 841.0
 margin_right = 360.0
-margin_bottom = 819.0
+margin_bottom = 901.0
 grow_horizontal = 0
 rect_min_size = Vector2( 360, 60 )
 size_flags_horizontal = 0
 size_flags_vertical = 8
 custom_fonts/font = SubResource( 4 )
-text = "Back to Main Menu"
+text = "Back"
 flat = true
 align = 0
-
-[node name="VersionLabel" type="Label" parent="Menu"]
-margin_top = 823.0
-margin_right = 148.0
-margin_bottom = 901.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-custom_fonts/font = SubResource( 5 )
-text = "Version 0.0
-
-"
-
-[node name="FadeIn" parent="." instance=ExtResource( 4 )]
-visible = false
-
-[node name="AudioStreamPlayer2D" parent="." instance=ExtResource( 5 )]
-stream = ExtResource( 6 )
-
-[node name="ParallaxBackground" parent="." instance=ExtResource( 7 )]
-scale = Vector2( 2, 2 )
-transform = Transform2D( 2, 0, 0, 2, 0, 0 )
-[connection signal="pressed" from="Menu/MainMenu" to="." method="_on_MainMenu_pressed"]
-[connection signal="fade_finished" from="FadeIn" to="." method="_on_FadeIn_fade_finished"]
+[connection signal="pressed" from="Menu/Back" to="." method="_on_Back_pressed"]
