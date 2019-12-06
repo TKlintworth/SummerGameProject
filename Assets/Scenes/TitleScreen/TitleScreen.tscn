@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/TitleScreen/title_screen.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Themes/MaintTheme.tres" type="Theme" id=2]
@@ -14,6 +14,8 @@
 [sub_resource type="DynamicFont" id=1]
 size = 124
 font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxEmpty" id=3]
 
 [sub_resource type="DynamicFont" id=2]
 size = 24
@@ -74,12 +76,14 @@ scene_to_load = "res://Scenes/MapSelect.tscn"
 margin_top = 110.0
 margin_right = 438.0
 margin_bottom = 181.0
+custom_styles/hover = SubResource( 3 )
 scene_to_load = "res://Scenes/ControlsScreen.tscn"
 
 [node name="ExitToDesktopButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 6 )]
 margin_top = 231.0
 margin_right = 438.0
 margin_bottom = 302.0
+custom_styles/hover = SubResource( 3 )
 scene_to_load = "Quit"
 
 [node name="CenterContainer" type="CenterContainer" parent="Menu/CenterRow"]
