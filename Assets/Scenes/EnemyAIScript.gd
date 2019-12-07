@@ -11,6 +11,7 @@ var SPEED = 320.0
 var health = 100.0
 var playerAlive
 var react_time = 0
+var stunned = false
 var dir = 1
 var noise_played = false
 var attacking = false
@@ -33,7 +34,7 @@ var vel = Vector2()
 var idle_timer = false
 var idle_timer_start = false
 var state = "idle"
-var states = ["idle", "inCombat", "fleeing", "stopped", "dying"]
+var states = ["idle", "inCombat", "fleeing", "stunned", "stopped", "dying"]
 
 #Amount of damage the one_time_attack inflicts
 var oneTimeAttackDamage = 20
@@ -82,6 +83,8 @@ func change_state(var nextState):
 		state = "fleeing" #was states[2]?
 	if nextState == "idle":
 		state = "idle"
+	if nextState == "stunned":
+		state = "stunned"
 	if nextState == "stopped":
 		state = "stopped"
 	if nextState == "dying":
@@ -114,6 +117,7 @@ func choose_attack(attack):
 			print("player take damage")
 			Player.take_damage(45)
 			player_recently_taken_damage = true
+			print("player did not block")
 			player_damage_timer()
 		elif(Player.player_block == true and in_attack_zone == true and not player_recently_taken_damage):
 			if oneTimeAttackDamage/2 > Player.player_stamina_node.value:
@@ -123,13 +127,19 @@ func choose_attack(attack):
 				var damageTaken = Player.player_stamina_node.value - oneTimeAttackDamage/2
 				#Player.take_damage(45)
 				player_recently_taken_damage = true
+				stunned = true
+				print("player did block")
 				player_damage_timer()
+				change_state("stunned")
 			else:
 				print("player blocked damage")
 				player_recently_taken_damage = true
+				stunned = true
+				change_state("stunned")
 				player_damage_timer()
 				#Decrease player stamina by half the value of the potential damage inflicted
 				Player.player_stamina_node.value -= oneTimeAttackDamage/2
+				
 		attacking = false
 		change_state("fleeing")
 		#$AnimatedSprite.speed_scale = 1
@@ -183,7 +193,10 @@ func _physics_process(delta):
 	if(state == "fleeing" && dead == false):
 		
 		# If enemy is in player's attack zone, keep attacking
-		if(in_attack_zone == true && health > 61):
+		if(stunned == true):
+			change_state("stunned")
+		
+		elif(in_attack_zone == true && health > 61):
 			attacking = true
 			change_state("inCombat")
 			
@@ -283,6 +296,13 @@ func _physics_process(delta):
 				else:
 					$AnimatedSprite.set_flip_h(true)
 					$AnimatedSprite.play("redguard_idle")		
+	
+	if state == "stunned" && dead == false:
+		$AnimatedSprite.play("redguard_stun")
+		if $AnimatedSprite.frame >= 4:
+			change_state("idle")
+	
+	
 	
 	if state == "stopped" && dead == false:
 		player_distance = abs(Player.position.x - position.x)
