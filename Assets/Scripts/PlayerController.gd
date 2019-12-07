@@ -199,7 +199,7 @@ func get_input():
 		throw_spear()
 	
 	# Jab action
-	if Input.is_action_pressed("space") && get_thrown() == false:
+	if Input.is_action_just_pressed("space") && get_thrown() == false:
 		jab()
 	
 	#Sprint action
