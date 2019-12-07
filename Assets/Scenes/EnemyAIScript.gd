@@ -11,6 +11,7 @@ var SPEED = 320.0
 var health = 100.0
 var playerAlive
 var react_time = 0
+var stunned = false
 var dir = 1
 var noise_played = false
 var attacking = false
@@ -126,12 +127,14 @@ func choose_attack(attack):
 				var damageTaken = Player.player_stamina_node.value - oneTimeAttackDamage/2
 				#Player.take_damage(45)
 				player_recently_taken_damage = true
+				stunned = true
 				print("player did block")
 				player_damage_timer()
 				change_state("stunned")
 			else:
 				print("player blocked damage")
 				player_recently_taken_damage = true
+				stunned = true
 				change_state("stunned")
 				player_damage_timer()
 				#Decrease player stamina by half the value of the potential damage inflicted
@@ -190,7 +193,10 @@ func _physics_process(delta):
 	if(state == "fleeing" && dead == false):
 		
 		# If enemy is in player's attack zone, keep attacking
-		if(in_attack_zone == true && health > 61):
+		if(stunned == true):
+			change_state("stunned")
+		
+		elif(in_attack_zone == true && health > 61):
 			attacking = true
 			change_state("inCombat")
 			
