@@ -51,6 +51,7 @@ func get_health():
 
 func lose_health_spear_jab():
 	health -= 50
+	knockback()
 	return health
 
 func play_blood_one_time():
@@ -295,7 +296,7 @@ func _physics_process(delta):
 					$AnimatedSprite.play("redguard_idle")
 				else:
 					$AnimatedSprite.set_flip_h(true)
-					$AnimatedSprite.play("redguard_idle")		
+					$AnimatedSprite.play("redguard_idle")
 	
 	if state == "stunned" && dead == false:
 		$AnimatedSprite.play("redguard_stun")
@@ -372,13 +373,20 @@ func _on_SenseArea_area_entered(area: Area2D):
 func _on_SenseArea_area_exited(area):
 	if area.name == "attackZone":
 		in_attack_zone = false
-		print("left attack zone")
-
-
-
+		#print("left attack zone")
 
 
 func _on_IdleWaitTimer_timeout():
 	print("timer done")
 	$IdleWaitTimer.wait_time = 5
 	change_state("inCombat")
+
+# Function to move the enemy backwards slightly after receiving a hit from the player
+# TO ADD: no knockback if that specific hit will kill the enemy, no knockback if the enemy is stunned maybe
+func knockback():
+	dir = (Player.position - position).normalized()
+	print("direction " , dir)
+	var knockbackDistance = 50
+	#position += knockbackDistance * -dir
+	move_and_collide(knockbackDistance * -dir)
+	print("enemy knock back position", position)
