@@ -101,6 +101,7 @@ func player_die():
 	if player_dead == true && dead_animation_played == false:
 		#take_damage(100)
 		#$AudioStreamPlayer2D.play_noise()
+		get_tree().get_root().get_node("MainRoot/AudioStreamPlayer2D").play_enemy_death_noise()
 		$AnimatedSprite.play("slave_dying")
 		game_status = 1
 		dead_animation_played = true # prevents audio stream from playing sounds more than once
