@@ -50,7 +50,6 @@ margin_top = 120.0
 margin_right = 1280.0
 margin_bottom = 720.0
 grow_horizontal = 2
-mouse_filter = 2
 size_flags_horizontal = 0
 custom_constants/separation = 50
 
@@ -61,7 +60,6 @@ margin_bottom = 600.0
 margin_left = 50.0
 margin_right = 540.0
 margin_bottom = 600.0
-mouse_filter = 2
 size_flags_horizontal = 3
 custom_constants/separation = 10
 
@@ -70,12 +68,10 @@ margin_right = 490.0
 margin_bottom = 39.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 2 )
-button_mask = 7
 text = "Map 1"
 flat = true
 align = 0
 script = ExtResource( 3 )
-mapPath = "res://Scenes/MainFightScene.tscn"
 nameOfMap = "Sandy Arena"
 
 [node name="Panel" type="Panel" parent="HBoxContainer/Maps/Map1"]
@@ -83,7 +79,6 @@ modulate = Color( 1, 1, 1, 0.431373 )
 show_behind_parent = true
 margin_right = 490.0
 margin_bottom = 43.0
-mouse_filter = 1
 size_flags_horizontal = 3
 
 [node name="Map2" type="Button" parent="HBoxContainer/Maps"]
@@ -104,7 +99,6 @@ show_behind_parent = true
 margin_top = 2.0
 margin_right = 490.0
 margin_bottom = 43.0
-mouse_filter = 1
 size_flags_horizontal = 3
 
 [node name="MapDetails" type="VBoxContainer" parent="HBoxContainer"]
@@ -156,8 +150,9 @@ margin_bottom = 600.0
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_right = 40.0
+margin_bottom = 40.0
+[connection signal="pressed" from="HBoxContainer/Maps/Map1" to="." method="_on_Map1_pressed"]
 [connection signal="mouse_entered" from="HBoxContainer/Maps/Map1/Panel" to="." method="_on_Panel_mouse_entered"]
 [connection signal="mouse_exited" from="HBoxContainer/Maps/Map1/Panel" to="." method="_on_Panel_mouse_exited"]
 [connection signal="mouse_entered" from="HBoxContainer/Maps/Map2/Panel2" to="." method="_on_Panel2_mouse_entered"]
