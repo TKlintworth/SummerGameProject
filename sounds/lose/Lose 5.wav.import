@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Lose 5.wav-55e74e71410063709039a78268fe4916.sample"
+
+[deps]
+
+source_file="res://sounds/lose/Lose 5.wav"
+dest_files=[ "res://.import/Lose 5.wav-55e74e71410063709039a78268fe4916.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
