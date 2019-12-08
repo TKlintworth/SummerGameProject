@@ -22,7 +22,9 @@ var player_recently_taken_damage = false
 var enemy_recently_attacked = false
 #How long before player can take damage again after receiving damage (in seconds)
 var playerDamageTime = 3
+var enemyStunTime = 3
 var enemyAttackDelay = 1
+var stunTimerStart = false
 #Used around line 80 to choose a zone to run to only once
 var runToZone
 var last_position
@@ -127,19 +129,17 @@ func choose_attack(attack):
 				# Damage equal to whatever the stamina/block didnt absorb
 				var damageTaken = Player.player_stamina_node.value - oneTimeAttackDamage/2
 				#Player.take_damage(45)
-				player_recently_taken_damage = true
 				stunned = true
-				print("player did block")
-				player_damage_timer()
 				change_state("stunned")
 			else:
 				print("player blocked damage")
-				player_recently_taken_damage = true
 				stunned = true
-				change_state("stunned")
-				player_damage_timer()
 				#Decrease player stamina by half the value of the potential damage inflicted
 				Player.player_stamina_node.value -= oneTimeAttackDamage/2
+				change_state("stunned")
+				
+				
+				
 				
 		attacking = false
 		change_state("fleeing")
@@ -156,12 +156,18 @@ func player_damage_timer():
 	yield(get_tree().create_timer(playerDamageTime), "timeout")
 	player_recently_taken_damage = false
 
+func enemy_stun_timer():
+	knockback()
+	yield(get_tree().create_timer(enemyStunTime), "timeout")
+	stunned = false
+	stunTimerStart = false
+	change_state("idle")
+
 func enemy_delay_timer():
 	yield(get_tree().create_timer(enemyAttackDelay), "timeout")
 	enemy_recently_attacked = false
 
 func _physics_process(delta):
-	
 	#var dis_to_player = Player.global_position - self.global_position
 	#var distance = dis_to_player.length()
 	#var direction = dis_to_player.normalize()
@@ -193,10 +199,11 @@ func _physics_process(delta):
 		
 	if(state == "fleeing" && dead == false):
 		
-		# If enemy is in player's attack zone, keep attacking
+		
 		if(stunned == true):
 			change_state("stunned")
 		
+		# If enemy is in player's attack zone, keep attacking
 		elif(in_attack_zone == true && health > 61):
 			attacking = true
 			change_state("inCombat")
@@ -300,8 +307,10 @@ func _physics_process(delta):
 	
 	if state == "stunned" && dead == false:
 		$AnimatedSprite.play("redguard_stun")
-		if $AnimatedSprite.frame >= 4:
-			change_state("idle")
+		if !stunTimerStart:
+			stunTimerStart = true
+			enemy_stun_timer()
+			
 	
 	
 	
