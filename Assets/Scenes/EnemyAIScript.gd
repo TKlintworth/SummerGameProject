@@ -11,6 +11,7 @@ var SPEED = 320.0
 var health = 100.0
 var playerAlive
 var react_time = 0
+var stunned = false
 var dir = 1
 var noise_played = false
 var attacking = false
@@ -21,7 +22,9 @@ var player_recently_taken_damage = false
 var enemy_recently_attacked = false
 #How long before player can take damage again after receiving damage (in seconds)
 var playerDamageTime = 3
+var enemyStunTime = 3
 var enemyAttackDelay = 1
+var stunTimerStart = false
 #Used around line 80 to choose a zone to run to only once
 var runToZone
 var last_position
@@ -33,7 +36,7 @@ var vel = Vector2()
 var idle_timer = false
 var idle_timer_start = false
 var state = "idle"
-var states = ["idle", "inCombat", "fleeing", "stopped", "dying"]
+var states = ["idle", "inCombat", "fleeing", "stunned", "stopped", "dying"]
 
 #Amount of damage the one_time_attack inflicts
 var oneTimeAttackDamage = 20
@@ -50,6 +53,7 @@ func get_health():
 
 func lose_health_spear_jab():
 	health -= 50
+	knockback()
 	return health
 
 func play_blood_one_time():
@@ -82,6 +86,8 @@ func change_state(var nextState):
 		state = "fleeing" #was states[2]?
 	if nextState == "idle":
 		state = "idle"
+	if nextState == "stunned":
+		state = "stunned"
 	if nextState == "stopped":
 		state = "stopped"
 	if nextState == "dying":
@@ -114,6 +120,7 @@ func choose_attack(attack):
 			print("player take damage")
 			Player.take_damage(45)
 			player_recently_taken_damage = true
+			print("player did not block")
 			player_damage_timer()
 		elif(Player.player_block == true and in_attack_zone == true and not player_recently_taken_damage):
 			if oneTimeAttackDamage/2 > Player.player_stamina_node.value:
@@ -122,14 +129,18 @@ func choose_attack(attack):
 				# Damage equal to whatever the stamina/block didnt absorb
 				var damageTaken = Player.player_stamina_node.value - oneTimeAttackDamage/2
 				#Player.take_damage(45)
-				player_recently_taken_damage = true
-				player_damage_timer()
+				stunned = true
+				change_state("stunned")
 			else:
 				print("player blocked damage")
-				player_recently_taken_damage = true
-				player_damage_timer()
+				stunned = true
 				#Decrease player stamina by half the value of the potential damage inflicted
 				Player.player_stamina_node.value -= oneTimeAttackDamage/2
+				change_state("stunned")
+				
+				
+				
+				
 		attacking = false
 		change_state("fleeing")
 		#$AnimatedSprite.speed_scale = 1
@@ -145,12 +156,18 @@ func player_damage_timer():
 	yield(get_tree().create_timer(playerDamageTime), "timeout")
 	player_recently_taken_damage = false
 
+func enemy_stun_timer():
+	knockback()
+	yield(get_tree().create_timer(enemyStunTime), "timeout")
+	stunned = false
+	stunTimerStart = false
+	change_state("idle")
+
 func enemy_delay_timer():
 	yield(get_tree().create_timer(enemyAttackDelay), "timeout")
 	enemy_recently_attacked = false
 
 func _physics_process(delta):
-	
 	#var dis_to_player = Player.global_position - self.global_position
 	#var distance = dis_to_player.length()
 	#var direction = dis_to_player.normalize()
@@ -182,8 +199,12 @@ func _physics_process(delta):
 		
 	if(state == "fleeing" && dead == false):
 		
+		
+		if(stunned == true):
+			change_state("stunned")
+		
 		# If enemy is in player's attack zone, keep attacking
-		if(in_attack_zone == true && health > 61):
+		elif(in_attack_zone == true && health > 61):
 			attacking = true
 			change_state("inCombat")
 			
@@ -282,7 +303,16 @@ func _physics_process(delta):
 					$AnimatedSprite.play("redguard_idle")
 				else:
 					$AnimatedSprite.set_flip_h(true)
-					$AnimatedSprite.play("redguard_idle")		
+					$AnimatedSprite.play("redguard_idle")
+	
+	if state == "stunned" && dead == false:
+		$AnimatedSprite.play("redguard_stun")
+		if !stunTimerStart:
+			stunTimerStart = true
+			enemy_stun_timer()
+			
+	
+	
 	
 	if state == "stopped" && dead == false:
 		player_distance = abs(Player.position.x - position.x)
@@ -352,13 +382,20 @@ func _on_SenseArea_area_entered(area: Area2D):
 func _on_SenseArea_area_exited(area):
 	if area.name == "attackZone":
 		in_attack_zone = false
-		print("left attack zone")
-
-
-
+		#print("left attack zone")
 
 
 func _on_IdleWaitTimer_timeout():
 	print("timer done")
 	$IdleWaitTimer.wait_time = 5
 	change_state("inCombat")
+
+# Function to move the enemy backwards slightly after receiving a hit from the player
+# TO ADD: no knockback if that specific hit will kill the enemy, no knockback if the enemy is stunned maybe
+func knockback():
+	dir = (Player.position - position).normalized()
+	print("direction " , dir)
+	var knockbackDistance = 50
+	#position += knockbackDistance * -dir
+	move_and_collide(knockbackDistance * -dir)
+	print("enemy knock back position", position)

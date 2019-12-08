@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Scenes/MainFightScene.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=2]
@@ -11,10 +11,11 @@
 [ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Resources/Fonts/yoster.ttf" type="DynamicFontData" id=10]
 [ext_resource path="res://Pause.tscn" type="PackedScene" id=11]
-[ext_resource path="res://spritesheets/items&UI/BigAreanaFinished.png" type="Texture" id=12]
-[ext_resource path="res://sounds/Music/BattleMusic.wav" type="AudioStream" id=13]
-[ext_resource path="res://Scenes/Music.gd" type="Script" id=14]
-[ext_resource path="res://Scenes/enemyMovementZones.gd" type="Script" id=15]
+[ext_resource path="res://Scenes/ScreenFlash.tscn" type="PackedScene" id=12]
+[ext_resource path="res://spritesheets/items&UI/BigAreanaFinished.png" type="Texture" id=13]
+[ext_resource path="res://sounds/Music/BattleMusic.wav" type="AudioStream" id=14]
+[ext_resource path="res://Scenes/Music.gd" type="Script" id=15]
+[ext_resource path="res://Scenes/enemyMovementZones.gd" type="Script" id=16]
 
 [sub_resource type="DynamicFont" id=1]
 size = 42
@@ -89,6 +90,12 @@ autostart = true
 
 [node name="Pause" parent="CanvasLayer" instance=ExtResource( 11 )]
 
+[node name="ScreenFlash" parent="CanvasLayer" instance=ExtResource( 12 )]
+visible = false
+margin_top = -2.0
+margin_right = 668.0
+margin_bottom = 371.0
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 editor/display_folded = true
 
@@ -101,19 +108,20 @@ margin_top = 3.78149
 margin_right = 662.689
 margin_bottom = 323.781
 rect_scale = Vector2( 3, 3.375 )
-texture = ExtResource( 12 )
+texture = ExtResource( 13 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 13 )
-script = ExtResource( 14 )
+stream = ExtResource( 14 )
+script = ExtResource( 15 )
 
 [node name="enemyMovementZones" type="Area2D" parent="." groups=[
 "EnemyMovementZone",
 ]]
-script = ExtResource( 15 )
+editor/display_folded = true
+script = ExtResource( 16 )
 
 [node name="move1" type="CollisionShape2D" parent="enemyMovementZones"]
 position = Vector2( 131.001, 197.001 )
@@ -210,6 +218,9 @@ shape = SubResource( 7 )
 position = Vector2( -18.3898, 0.601202 )
 scale = Vector2( 3, 5 )
 shape = SubResource( 8 )
+
+[node name="EnemyHeavy" parent="." instance=ExtResource( 3 )]
+position = Vector2( 743.176, 541.114 )
 [connection signal="timeout" from="SpearSpawnTimer" to="." method="_on_SpearSpawnTimer_timeout"]
 [connection signal="timeout" from="HealthSpawnTimer" to="." method="_on_HealthSpawnTimer_timeout"]
 

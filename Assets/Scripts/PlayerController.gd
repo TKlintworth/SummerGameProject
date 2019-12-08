@@ -30,6 +30,7 @@ var sprint
 
 onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Health")
 onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Stamina")
+onready var screen_flash = get_parent().get_node("CanvasLayer/ScreenFlash")
 #onready var mainScene = get_node("MainFightScene")
 
 func set_player_dead(choice):
@@ -88,6 +89,7 @@ func take_damage(amount):
 			
 			
 	else:
+		screenFlash()
 		player_health_node.set_value(player_health_node.value - amount)
 
 func increase_health(amount):
@@ -101,6 +103,7 @@ func player_die():
 	if player_dead == true && dead_animation_played == false:
 		#take_damage(100)
 		#$AudioStreamPlayer2D.play_noise()
+		get_tree().get_root().get_node("MainRoot/AudioStreamPlayer2D").play_enemy_death_noise()
 		$AnimatedSprite.play("slave_dying")
 		game_status = 1
 		dead_animation_played = true # prevents audio stream from playing sounds more than once
@@ -198,7 +201,7 @@ func get_input():
 		throw_spear()
 	
 	# Jab action
-	if Input.is_action_pressed("space") && get_thrown() == false:
+	if Input.is_action_just_pressed("space") && get_thrown() == false:
 		jab()
 	
 	#Sprint action
@@ -272,6 +275,12 @@ func _on_AnimatedSprite_animation_finished(): #ran everytime animation is finish
 	# GAME OVER, player has died. Return to menu
 	#if game_status == 1:
 	#	get_node("/root/GameStateManager").getScene("res://Scenes/TitleScreen/TitleScreen.tscn")
+
+func screenFlash():
+	screen_flash.visible = true
+	yield(get_tree().create_timer(0.1), "timeout")
+	screen_flash.visible = false
+	
 
 #### THESE 2 FUNCTIONS PREVENT KILLING MORE THAN ONE ENEMY IN ONE JAB########
 func _on_EnemyDamageArea_area_entered(area):

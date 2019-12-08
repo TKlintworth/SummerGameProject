@@ -1,17 +1,16 @@
-extends Control
+extends "res://Scenes/WinScreen.gd"
 
-var scene_path_to_load
 
 func _ready() -> void:
 	var sounds
-	sounds = list_files_in_directory("res://sounds/Win") # all sounds in directory, list
+	sounds = list_files_in_directory("res://sounds/Lose") # all sounds in directory, list
 	print(len(sounds))
 	randomize()
 	var randIndex = randi() % len(sounds) # int value
 	print(randIndex)
 	print(sounds)
-	print("res://sounds/Win/"+sounds[randIndex])
-	var stream = load("res://sounds/Win/"+sounds[randIndex])
+	print("res://sounds/Lose/"+sounds[randIndex])
+	var stream = load("res://sounds/Lose/"+sounds[randIndex])
 	$AudioStreamPlayer2D.set_stream(stream)
 	$AudioStreamPlayer2D.play(0)
 

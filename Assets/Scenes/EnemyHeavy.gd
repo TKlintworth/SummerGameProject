@@ -88,12 +88,12 @@ func choose_attack(attack):
 	if attack == "light_flurry":
 		#print("ATTACKING")
 		# Light flurry plays individual attack animations faster
-		$AnimatedSprite.speed_scale = 1.85
-		$AnimatedSprite.play("heavy_enemy_running")
+		$AnimatedSprite.speed_scale = 1
+		$AnimatedSprite.play("heavy_enemy_attack")
 		yield(get_node("AnimatedSprite"), "animation_finished")
-		$AnimatedSprite.play("heavy_enemy_running")
+		$AnimatedSprite.play("heavy_enemy_attack")
 		yield(get_node("AnimatedSprite"), "animation_finished")
-		$AnimatedSprite.play("heavy_enemy_running")
+		$AnimatedSprite.play("heavy_enemy_attack")
 		yield(get_node("AnimatedSprite"), "animation_finished")
 		#emit_signal("attack_finished")
 		#print("made it here")
@@ -101,14 +101,14 @@ func choose_attack(attack):
 		change_state("fleeing")
 		
 	elif attack == "one_time_attack":
-		$AnimatedSprite.speed_scale = 1.85
-		$AnimatedSprite.play("heavy_enemy_running")
+		$AnimatedSprite.speed_scale = 1
+		$AnimatedSprite.play("heavy_enemy_attack")
 		yield(get_node("AnimatedSprite"), "animation_finished")
 		
 		#IF player isn't blocking and they're in the attack zone at the end of the attack animation, recieve damage
 		if(Player.player_block == false and in_attack_zone == true and not player_recently_taken_damage):
 			print("player take damage")
-			#Player.take_damage(45)
+			Player.take_damage(45)
 			player_recently_taken_damage = true
 			player_damage_timer()
 		elif(Player.player_block == true and in_attack_zone == true and not player_recently_taken_damage):
@@ -163,9 +163,9 @@ func _physics_process(delta):
 			dir = (Player.position - position).normalized()
 			var motion = dir * SPEED * delta
 			if (motion.x > 0):
-				$AnimatedSprite.set_flip_h(true)
-			else:
 				$AnimatedSprite.set_flip_h(false)
+			else:
+				$AnimatedSprite.set_flip_h(true)
 			$AnimatedSprite.play("heavy_enemy_running")
 			position += motion
 			

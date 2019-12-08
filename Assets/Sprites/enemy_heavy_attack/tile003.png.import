@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/idleMan.png-c214fc6702b5e4f5951f7daec1e70105.stex"
+path="res://.import/tile003.png-dff64e39ea7270d03ac80dce3d444ce1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://PNG/idleMan.png"
-dest_files=[ "res://.import/idleMan.png-c214fc6702b5e4f5951f7daec1e70105.stex" ]
+source_file="res://Sprites/enemy_heavy_attack/tile003.png"
+dest_files=[ "res://.import/tile003.png-dff64e39ea7270d03ac80dce3d444ce1.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
