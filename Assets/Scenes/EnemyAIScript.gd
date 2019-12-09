@@ -399,6 +399,8 @@ func _on_IdleWaitTimer_timeout():
 # Function to move the enemy backwards slightly after receiving a hit from the player
 # TO ADD: no knockback if that specific hit will kill the enemy, no knockback if the enemy is stunned maybe
 func knockback():
+	flashRed()
+	
 	dir = (Player.position - position).normalized()
 	var newPos = position + (knockbackDistance * -dir)
 	
@@ -410,3 +412,9 @@ func knockback():
 	#position += knockbackDistance * -dir
 	#move_and_collide(knockbackDistance * -dir)
 	print("enemy knock back position", position)
+
+#Quickly modulate the enemy red to show damage
+func flashRed():
+	self.modulate = Color(1,0,0,1)
+	yield(get_tree().create_timer(0.1), "timeout")
+	self.modulate = Color(1,1,1,1)

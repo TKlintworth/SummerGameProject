@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scenes/MainFightScene.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=2]
@@ -8,25 +8,11 @@
 [ext_resource path="res://Scenes/SpriteAnimation.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Spear.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Resources/Fonts/yoster.ttf" type="DynamicFontData" id=10]
-[ext_resource path="res://Pause.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Scenes/ScreenFlash.tscn" type="PackedScene" id=12]
-[ext_resource path="res://spritesheets/items&UI/BigAreanaFinished.png" type="Texture" id=13]
-[ext_resource path="res://sounds/Music/BattleMusic.wav" type="AudioStream" id=14]
-[ext_resource path="res://Scenes/Music.gd" type="Script" id=15]
-[ext_resource path="res://Scenes/enemyMovementZones.gd" type="Script" id=16]
-
-[sub_resource type="DynamicFont" id=1]
-size = 42
-font_data = ExtResource( 10 )
-
-[sub_resource type="DynamicFontData" id=2]
-font_path = "res://Resources/Fonts/yoster.ttf"
-
-[sub_resource type="DynamicFont" id=3]
-size = 100
-font_data = SubResource( 2 )
+[ext_resource path="res://Scenes/MainGUI.tscn" type="PackedScene" id=9]
+[ext_resource path="res://spritesheets/items&UI/BigAreanaFinished.png" type="Texture" id=10]
+[ext_resource path="res://sounds/Music/BattleMusic.wav" type="AudioStream" id=11]
+[ext_resource path="res://Scenes/Music.gd" type="Script" id=12]
+[ext_resource path="res://Scenes/enemyMovementZones.gd" type="Script" id=13]
 
 [sub_resource type="ShaderMaterial" id=4]
 
@@ -59,42 +45,8 @@ position = Vector2( 503.927, 481.2 )
 scale = Vector2( 0.5, 0.5 )
 autoplay = false
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 100
-
-[node name="Control" parent="CanvasLayer" instance=ExtResource( 9 )]
-margin_left = 40.9653
-margin_top = -0.735077
-margin_right = 40.9652
-margin_bottom = -0.735107
-
-[node name="Wave_Small" parent="CanvasLayer/Control/NinePatchRect" index="0"]
-margin_top = 58.4406
-margin_right = -99.839
-margin_bottom = 100.441
-custom_fonts/font = SubResource( 1 )
-
-[node name="Wave_Large" parent="CanvasLayer/Control/NinePatchRect" index="1"]
-custom_fonts/font = SubResource( 3 )
-custom_colors/font_color_shadow = Color( 0.4, 0.223529, 0.0509804, 1 )
-
-[node name="Stamina" parent="CanvasLayer/Control/NinePatchRect" index="2"]
-min_value = 25.0
-max_value = 90.0
-value = 90.0
-
-[node name="Timer" type="Timer" parent="CanvasLayer/Control"]
-autostart = true
-
-[node name="Wave_Enemy_Spawn_Timer" type="Timer" parent="CanvasLayer/Control"]
-
-[node name="Pause" parent="CanvasLayer" instance=ExtResource( 11 )]
-
-[node name="ScreenFlash" parent="CanvasLayer" instance=ExtResource( 12 )]
-visible = false
-margin_top = -2.0
-margin_right = 668.0
-margin_bottom = 371.0
+[node name="CanvasLayer" parent="." instance=ExtResource( 9 )]
+editor/display_folded = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -107,20 +59,20 @@ margin_top = 3.78149
 margin_right = 662.689
 margin_bottom = 323.781
 rect_scale = Vector2( 3, 3.375 )
-texture = ExtResource( 13 )
+texture = ExtResource( 10 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 14 )
-script = ExtResource( 15 )
+stream = ExtResource( 11 )
+script = ExtResource( 12 )
 
 [node name="enemyMovementZones" type="Area2D" parent="." groups=[
 "EnemyMovementZone",
 ]]
 editor/display_folded = true
-script = ExtResource( 16 )
+script = ExtResource( 13 )
 
 [node name="move1" type="CollisionShape2D" parent="enemyMovementZones"]
 position = Vector2( 131.001, 197.001 )
@@ -222,5 +174,7 @@ shape = SubResource( 8 )
 position = Vector2( 743.176, 541.114 )
 [connection signal="timeout" from="SpearSpawnTimer" to="." method="_on_SpearSpawnTimer_timeout"]
 [connection signal="timeout" from="HealthSpawnTimer" to="." method="_on_HealthSpawnTimer_timeout"]
+
+[editable path="CanvasLayer"]
 
 [editable path="CanvasLayer/Control"]
