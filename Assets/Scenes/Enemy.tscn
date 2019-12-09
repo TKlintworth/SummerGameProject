@@ -80,6 +80,9 @@ frames = SubResource( 2 )
 animation = "redguard_stun"
 frame = 1
 
+[node name="knockbackEffect" type="Tween" parent="."]
+playback_process_mode = 0
+
 [node name="DamageArea" type="Area2D" parent="."]
 scale = Vector2( 1.2, 1.2 )
 collision_layer = 2
@@ -108,6 +111,7 @@ position = Vector2( -34.3005, -33.3778 )
 [node name="IdleWaitTimer" type="Timer" parent="."]
 wait_time = 5.0
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
+[connection signal="tween_started" from="knockbackEffect" to="." method="_on_knockbackEffect_tween_started"]
 [connection signal="area_entered" from="SenseArea" to="." method="_on_SenseArea_area_entered"]
 [connection signal="area_exited" from="SenseArea" to="." method="_on_SenseArea_area_exited"]
 [connection signal="timeout" from="IdleWaitTimer" to="." method="_on_IdleWaitTimer_timeout"]
