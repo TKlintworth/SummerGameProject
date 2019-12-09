@@ -97,7 +97,6 @@ margin_right = 668.0
 margin_bottom = 371.0
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-editor/display_folded = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 

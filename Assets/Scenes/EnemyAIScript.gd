@@ -3,9 +3,13 @@ extends KinematicBody2D
 signal attack_finished
 #signal animation_finished
 signal enemyInMovementZone
+#signal enemy hit by spear
+signal enemy_hit
 
 onready var Player = get_parent().get_node("Player")
 onready var enemyMovementZones = get_parent().get_node("enemyMovementZones")
+onready var knockbackEffect = get_node("knockbackEffect")
+onready var enemy = self
 
 var SPEED = 320.0
 var health = 100.0
@@ -37,6 +41,7 @@ var idle_timer = false
 var idle_timer_start = false
 var state = "idle"
 var states = ["idle", "inCombat", "fleeing", "stunned", "stopped", "dying"]
+var knockbackDistance = 50
 
 #Amount of damage the one_time_attack inflicts
 var oneTimeAttackDamage = 20
@@ -52,6 +57,7 @@ func get_health():
 	return health	
 
 func lose_health_spear_jab():
+	emit_signal("enemy_hit")
 	health -= 50
 	knockback()
 	return health
@@ -394,8 +400,13 @@ func _on_IdleWaitTimer_timeout():
 # TO ADD: no knockback if that specific hit will kill the enemy, no knockback if the enemy is stunned maybe
 func knockback():
 	dir = (Player.position - position).normalized()
-	print("direction " , dir)
-	var knockbackDistance = 50
+	var newPos = position + (knockbackDistance * -dir)
+	
+	knockbackEffect.interpolate_property(self, "position", null, newPos, 0.5, Tween.TRANS_EXPO, Tween.EASE_OUT)
+	knockbackEffect.start()
+	
+	#print("direction " , dir)
+	#var knockbackDistance = 50
 	#position += knockbackDistance * -dir
-	move_and_collide(knockbackDistance * -dir)
+	#move_and_collide(knockbackDistance * -dir)
 	print("enemy knock back position", position)
