@@ -5,6 +5,8 @@ func play_enemy_death_noise():
 	var sounds
 	sounds = list_files_in_directory("res://sounds/Enemy") # all sounds in directory, list
 	print(len(sounds))
+	var soundsPrune = [sounds[0],sounds[3]]
+	sounds = soundsPrune
 	randomize()
 	var randIndex = randi() % len(sounds) # int value
 	print(randIndex)
