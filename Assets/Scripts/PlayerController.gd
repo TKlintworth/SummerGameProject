@@ -135,7 +135,8 @@ func throw_spear():
 
 func jab():
 	action = true
-	$AnimatedSprite.set_speed_scale(3)
+	get_parent().get_node("AudioStreamPlayer2D").play_attack_noise()
+	$AnimatedSprite.set_speed_scale(3.5)
 	$AnimatedSprite.play("slave_jab_spear_active")
 	$EnemyDamageArea.check_if_enemy_hit()
 
