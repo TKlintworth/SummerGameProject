@@ -28,8 +28,8 @@ var stamina_regen_value = 2
 var stamina_sprint_value = 3
 var sprint
 
-onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Health")
-onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Stamina")
+onready var player_health_node = get_parent().get_node("CanvasLayer/health")
+onready var player_stamina_node = get_parent().get_node("CanvasLayer/stamina")
 onready var screen_flash = get_parent().get_node("CanvasLayer/ScreenFlash")
 #onready var mainScene = get_node("MainFightScene")
 
