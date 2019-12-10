@@ -28,8 +28,8 @@ var stamina_regen_value = 2
 var stamina_sprint_value = 3
 var sprint
 
-onready var player_health_node = get_parent().get_node("CanvasLayer/health")
-onready var player_stamina_node = get_parent().get_node("CanvasLayer/stamina")
+onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Health")
+onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Stamina")
 onready var screen_flash = get_parent().get_node("CanvasLayer/ScreenFlash")
 #onready var mainScene = get_node("MainFightScene")
 
@@ -135,7 +135,8 @@ func throw_spear():
 
 func jab():
 	action = true
-	$AnimatedSprite.set_speed_scale(3)
+	get_parent().get_node("AudioStreamPlayer2D").play_attack_noise()
+	$AnimatedSprite.set_speed_scale(3.5)
 	$AnimatedSprite.play("slave_jab_spear_active")
 	$EnemyDamageArea.check_if_enemy_hit()
 

@@ -1,10 +1,12 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://MapSelect2.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Fonts/yoster.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Map1.gd" type="Script" id=3]
 [ext_resource path="res://Map2.gd" type="Script" id=4]
-[ext_resource path="res://Art/BigArena.png" type="Texture" id=5]
+[ext_resource path="res://Scenes/MapDetails.gd" type="Script" id=5]
+[ext_resource path="res://Art/BigArena.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/menuNoise.gd" type="Script" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 64
@@ -113,6 +115,7 @@ margin_right = 1230.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 custom_constants/separation = 30
+script = ExtResource( 5 )
 
 [node name="NameOfMap" type="Label" parent="HBoxContainer/MapDetails"]
 margin_right = 640.0
@@ -124,7 +127,7 @@ text = "Name Of Map"
 margin_top = 95.0
 margin_right = 640.0
 margin_bottom = 415.0
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 
 [node name="MapDescrip" type="RichTextLabel" parent="HBoxContainer/MapDetails"]
 margin_top = 445.0
@@ -146,6 +149,8 @@ margin_top = 600.0
 margin_right = 640.0
 margin_bottom = 600.0
 
+[node name="Tween" type="Tween" parent="HBoxContainer/MapDetails"]
+
 [node name="Padding2" type="VBoxContainer" parent="HBoxContainer"]
 margin_left = 1280.0
 margin_right = 1280.0
@@ -158,6 +163,10 @@ margin_bottom = 600.0
 [node name="TextureRect" type="TextureRect" parent="ParallaxBackground/ParallaxLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="menuNoise" type="AudioStreamPlayer" parent="."]
+volume_db = -15.0
+script = ExtResource( 7 )
 [connection signal="mouse_entered" from="HBoxContainer/Maps/Map1/Panel" to="." method="_on_Panel_mouse_entered"]
 [connection signal="mouse_exited" from="HBoxContainer/Maps/Map1/Panel" to="." method="_on_Panel_mouse_exited"]
 [connection signal="mouse_entered" from="HBoxContainer/Maps/Map2/Panel2" to="." method="_on_Panel2_mouse_entered"]

@@ -18,6 +18,7 @@ onready var panel2 = get_node("HBoxContainer/Maps/Map2/Panel2")
 onready var map1Button = get_node("HBoxContainer/Maps/Map1")
 onready var map2Button = get_node("HBoxContainer/Maps/Map2")
 onready var mapDetails = get_node("HBoxContainer/MapDetails")
+onready var menuNoisePlayer = get_node("menuNoise")
 
 var sandyArenaPNG = preload("res://Art/BigArena.png")
 var brazierArenaPNG = preload("res://arena/environment/tilesets/wall/walloverview.png")
@@ -43,6 +44,7 @@ func _ready() -> void:
 
 
 func _on_Panel_mouse_entered() -> void:
+	menuNoisePlayer.play(0)
 	panel.set("custom_styles/panel", panelStyle)
 	map1Button.set("custom_colors/font_color", Color( 0, 0, 0, 1 ))
 	
@@ -57,6 +59,7 @@ func _on_Panel_mouse_entered() -> void:
 
 
 func _on_Panel2_mouse_entered() -> void:
+	menuNoisePlayer.play(0)
 	panel2.set("custom_styles/panel", panelStyle)
 	map2Button.set("custom_colors/font_color", Color( 0, 0, 0, 1 ))
 	
