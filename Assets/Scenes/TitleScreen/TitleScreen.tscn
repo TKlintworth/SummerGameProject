@@ -77,7 +77,7 @@ scene_to_load = "res://Scenes/MapSelect.tscn"
 margin_top = 110.0
 margin_right = 438.0
 margin_bottom = 181.0
-scene_to_load = "res://Scenes/EndlessScene1.tscn"
+scene_to_load = "res://Scenes/EndlessScene.tscn"
 
 [node name="ControlsButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 6 )]
 margin_top = 231.0
