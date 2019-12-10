@@ -129,19 +129,10 @@ func choose_attack(attack):
 			print("player did not block")
 			player_damage_timer()
 		elif(Player.player_block == true and in_attack_zone == true and not player_recently_taken_damage):
-			if oneTimeAttackDamage/2 > Player.player_stamina_node.value:
-				print("player take damage")
-				Player.player_stamina_node.value -= oneTimeAttackDamage/2
-				# Damage equal to whatever the stamina/block didnt absorb
-				var damageTaken = Player.player_stamina_node.value - oneTimeAttackDamage/2
-				#Player.take_damage(45)
-				stunned = true
-				change_state("stunned")
-			else:
 				print("player blocked damage")
 				stunned = true
 				#Decrease player stamina by half the value of the potential damage inflicted
-				Player.player_stamina_node.value -= oneTimeAttackDamage/2
+				Player.lose_stamina(oneTimeAttackDamage/2)
 				change_state("stunned")
 				
 				
@@ -168,6 +159,8 @@ func enemy_stun_timer():
 	stunned = false
 	stunTimerStart = false
 	change_state("idle")
+
+
 
 func enemy_delay_timer():
 	yield(get_tree().create_timer(enemyAttackDelay), "timeout")
