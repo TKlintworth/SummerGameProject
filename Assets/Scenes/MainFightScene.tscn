@@ -51,6 +51,7 @@ autoplay = false
 layer = 100
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource( 9 )]
+editor/display_folded = true
 margin_left = 40.9653
 margin_top = -0.735077
 margin_right = 40.9652
@@ -190,6 +191,9 @@ shape = SubResource( 4 )
 position = Vector2( -18.3898, 0.601202 )
 scale = Vector2( 3, 5 )
 shape = SubResource( 5 )
+
+[node name="EnemyHeavy" parent="." instance=ExtResource( 3 )]
+position = Vector2( 743.176, 541.114 )
 [connection signal="timeout" from="SpearSpawnTimer" to="." method="_on_SpearSpawnTimer_timeout"]
 [connection signal="timeout" from="HealthSpawnTimer" to="." method="_on_HealthSpawnTimer_timeout"]
 

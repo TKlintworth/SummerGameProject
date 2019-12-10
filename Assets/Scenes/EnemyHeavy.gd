@@ -6,9 +6,11 @@ signal enemyInMovementZone
 
 onready var Player = get_parent().get_node("Player")
 onready var enemyMovementZones = get_parent().get_node("enemyMovementZones")
+onready var knockbackEffect = get_node("knockbackEffect")
+onready var enemy = self
 
 var SPEED = 120.0
-var health = 100.0
+var health = 300.0
 var playerAlive
 var react_time = 0
 var dir = 1
@@ -32,9 +34,10 @@ var vel = Vector2()
 var idle_timer_start = false
 var state = "idle"
 var states = ["idle", "inCombat", "fleeing", "stopped", "dying"]
+var knockbackDistance = 15
 
 #Amount of damage the one_time_attack inflicts
-var oneTimeAttackDamage = 50
+var oneTimeAttackDamage = 100
 
 func _ready():
 	playerAlive = !Player.player_dead
@@ -44,6 +47,7 @@ func get_health():
 	return health	
 
 func lose_health_spear_jab():
+	knockback()
 	health -= 50
 	return health
 
@@ -108,7 +112,7 @@ func choose_attack(attack):
 		#IF player isn't blocking and they're in the attack zone at the end of the attack animation, recieve damage
 		if(Player.player_block == false and in_attack_zone == true and not player_recently_taken_damage):
 			print("player take damage")
-			Player.take_damage(45)
+			Player.take_damage(oneTimeAttackDamage)
 			player_recently_taken_damage = true
 			player_damage_timer()
 		elif(Player.player_block == true and in_attack_zone == true and not player_recently_taken_damage):
@@ -344,3 +348,26 @@ func _on_SenseArea_area_exited(area):
 	if area.name == "attackZone":
 		in_attack_zone = false
 		print("left attack zone")
+
+# Function to move the enemy backwards slightly after receiving a hit from the player
+# TO ADD: no knockback if that specific hit will kill the enemy, no knockback if the enemy is stunned maybe
+func knockback():
+	flashRed()
+	
+	dir = (Player.position - position).normalized()
+	var newPos = position + (knockbackDistance * -dir)
+	
+	knockbackEffect.interpolate_property(self, "position", null, newPos, 0.5, Tween.TRANS_EXPO, Tween.EASE_OUT)
+	knockbackEffect.start()
+	
+	#print("direction " , dir)
+	#var knockbackDistance = 50
+	#position += knockbackDistance * -dir
+	#move_and_collide(knockbackDistance * -dir)
+	print("enemy knock back position", position)
+
+#Quickly modulate the enemy red to show damage
+func flashRed():
+	self.modulate = Color(1,0,0,1)
+	yield(get_tree().create_timer(0.1), "timeout")
+	self.modulate = Color(1,1,1,1)
