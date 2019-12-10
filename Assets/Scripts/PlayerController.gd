@@ -155,6 +155,8 @@ func jab():
 	$AnimatedSprite.set_speed_scale(3.5)
 	$AnimatedSprite.play("slave_jab_spear_active")
 	$EnemyDamageArea.check_if_enemy_hit()
+	yield(get_node("AnimatedSprite"), "animation_finished")
+	
 
 func get_input():
 	velocity = Vector2()
@@ -214,15 +216,15 @@ func get_input():
 		
 	
 	# Throw spear action
-	if Input.is_action_pressed("T") && spear_thrown == false && action == false: # player has not thrown spear yet
+	if Input.is_action_pressed("T") and !spear_thrown and !action: # player has not thrown spear yet
 		throw_spear()
 	
 	# Jab action
-	if Input.is_action_just_pressed("space") && get_thrown() == false:
+	if Input.is_action_just_pressed("space") and !get_thrown() and !action:
 		jab()
 	
 	#Sprint action
-	if Input.is_action_pressed("shift") && action == false && player_stamina_node.value > 3:
+	if Input.is_action_pressed("shift") and !action and player_stamina_node.value > 3:
 		$AnimatedSprite.set_speed_scale(1.5)
 		match player_status:
 			0: $AnimatedSprite.play("player_run_spear")
@@ -233,7 +235,7 @@ func get_input():
 		#$AnimatedSprite.set_speed_scale(1)
 		
 	# Standing player
-	if Input.is_action_pressed("left") == false && Input.is_action_pressed("down") == false && Input.is_action_pressed("right") == false && Input.is_action_pressed("up") == false && player_dead == false && player_block == false && action == false:
+	if !Input.is_action_pressed("left") and !Input.is_action_pressed("down") and !Input.is_action_pressed("right") and !Input.is_action_pressed("up") and !player_dead and !player_block and !action:
 		match player_status:
 			0: $AnimatedSprite.play("player_idle_spear") # player has not thrown spear yet
 			1: $AnimatedSprite.play("slave_idle") # player has thrown spear
@@ -249,8 +251,8 @@ func get_input():
 # Setter for player_status
 func set_player_status(status):
 	match status:
-		0: player_status = 0
-		1: player_status = 1
+		0: player_status = 0 # has spear
+		1: player_status = 1 # no spear
 	
 # Setter for spear_thrown bool 	
 func set_thrown(spear_thrown):
@@ -321,27 +323,7 @@ func _on_EnemyDamageArea_area_exited(area):
 			if enemy_area_array.min().get_parent().is_in_group("Enemy1"):
 				enemy_area_array.min().get_parent().play_blood_one_time()
 		enemy_area_array.clear()
-####################################################################
 
-	
-
-
-#func _on_EnemyDamageArea_body_shape_entered(body_id, body, body_shape, area_shape):
-#		print("area id: ")
-#		print(body_id)
-#		print("shape: ")
-#		print(area_shape)
-
-
-#func _on_EnemyDamageArea_area_shape_entered(area_id, area, area_shape, self_shape):
-#	if area.name == "DamageArea":
-#		print("area id: ")
-#		print(area_id)
-#		print("area shape: ")
-#		print(area_shape)
-#		print("self shape: ")
-#		print(self_shape)
-		
 
 
 
