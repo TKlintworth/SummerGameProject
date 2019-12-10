@@ -48,7 +48,6 @@ scale = Vector2( 0.5, 0.5 )
 autoplay = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-editor/display_folded = true
 layer = 100
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource( 9 )]
