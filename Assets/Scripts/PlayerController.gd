@@ -23,10 +23,12 @@ var spear_pick
 var game_status = 0 # game is a go
 var enemy_area_array = []
 # How much stamina should the player regenerate per second
-var stamina_regen_value = 2
+var stamina_regen_value = 4
 # How much stamina should sprinting cost per second
-var stamina_sprint_value = 3
+var stamina_sprint_value = 4
 var sprint
+var stamina_depleted = false # Bool to tell if player has used up all stamina
+var staminaStopRegenTime = 2 # penalty for having 0 stamina
 
 onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Health")
 onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Stamina")
@@ -61,6 +63,7 @@ func _ready():
 	add_child(timer) #to process
 	timer.start() #to start
 	
+	
 	#print(get_parent().get_node("ColorRect/AnimationPlayer").play("transition_in"))
 	
 ############## FUNCTIONS ################
@@ -69,8 +72,8 @@ func _ready():
 func stamina_regen():
 	# Decrease stamina if sprinting
 	if sprint == true:
-		player_stamina_node.value -= stamina_sprint_value
-	if player_dead == false and player_stamina_node.value < 100 and sprint == false:
+		lose_stamina(stamina_sprint_value)
+	if player_dead == false and player_stamina_node.value < 100 and sprint == false and !stamina_depleted:
 		#print("Regen stamina")
 		player_stamina_node.value += stamina_regen_value
 
@@ -92,6 +95,11 @@ func take_damage(amount):
 		screenFlash()
 		player_health_node.set_value(player_health_node.value - amount)
 
+func lose_stamina(amount):
+	player_stamina_node.value -= amount
+	if player_stamina_node.value <= 28:
+		player_stamina_node.value = 28
+
 func increase_health(amount):
 	if(player_health_node.value + amount >= 100):
 		player_health_node.set_value(100)
@@ -107,16 +115,24 @@ func player_die():
 		$AnimatedSprite.play("slave_dying")
 		game_status = 1
 		dead_animation_played = true # prevents audio stream from playing sounds more than once
+	
+func stamina_penalty_timer():
+	stamina_depleted = true
+	yield(get_tree().create_timer(staminaStopRegenTime), "timeout")
+	stamina_depleted = false
 		
+	
 # player block function
 # Enemy functions directly decrease Player stamina rather than being handled in the block function
 func block():
 	# If the player has a spear (status 0) allow blocking ability. If no spear, disallow blocking.
-	if player_status == 0:
+	if player_status == 0 && player_stamina_node.value >= 29:
 		player_block = true
 		action = true
+		stamina_depleted = false
 		$AnimatedSprite.play("slave_block")
 	else:
+		stamina_penalty_timer()
 		print("Unable to block / no weapon")
 	
 # throw spear function	
@@ -245,7 +261,7 @@ func get_thrown():
 	return self.spear_thrown
 	
 func _physics_process(delta):
-	
+	print("stamina: ", player_stamina_node.value)
 	if $AnimatedSprite.get_animation() == "slave_jab_spear_active":
 		if $AnimatedSprite.frame == 4:
 			$EnemyDamageArea.set_monitoring(true)
