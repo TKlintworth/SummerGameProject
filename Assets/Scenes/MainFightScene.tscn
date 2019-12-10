@@ -190,9 +190,6 @@ shape = SubResource( 4 )
 position = Vector2( -18.3898, 0.601202 )
 scale = Vector2( 3, 5 )
 shape = SubResource( 5 )
-
-[node name="EnemyHeavy" parent="." instance=ExtResource( 3 )]
-position = Vector2( 743.176, 541.114 )
 [connection signal="timeout" from="SpearSpawnTimer" to="." method="_on_SpearSpawnTimer_timeout"]
 [connection signal="timeout" from="HealthSpawnTimer" to="." method="_on_HealthSpawnTimer_timeout"]
 
