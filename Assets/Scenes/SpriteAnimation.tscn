@@ -214,8 +214,8 @@ editor_draw_drag_margin = true
 [node name="attackZone" type="Area2D" parent="."]
 
 [node name="attackZone" type="CollisionShape2D" parent="attackZone"]
-position = Vector2( -13.0267, -6.78867 )
-scale = Vector2( 7, 5 )
+position = Vector2( 4.14703, -17.943 )
+scale = Vector2( 5, 4.5 )
 shape = SubResource( 5 )
 
 [node name="RunningDust" parent="." instance=ExtResource( 48 )]
