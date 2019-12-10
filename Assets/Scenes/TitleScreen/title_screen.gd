@@ -52,3 +52,7 @@ func _on_ExitToDesktopButton_mouse_entered() -> void:
 
 func _on_NewGameButton_mouse_entered() -> void:
 	menuNoisePlayer.play(0)
+
+
+func _on_EndlessButton_mouse_entered() -> void:
+	menuNoisePlayer.play(0)
