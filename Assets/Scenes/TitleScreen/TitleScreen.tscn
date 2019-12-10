@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scenes/TitleScreen/title_screen.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Themes/MaintTheme.tres" type="Theme" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://fade_in/FadeIn.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=9]
 [ext_resource path="res://blackbackground.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/TitleScreen/menuNoise.gd" type="Script" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 size = 124
@@ -117,4 +118,11 @@ visible = false
 [node name="ParallaxBackground" parent="." instance=ExtResource( 10 )]
 scale = Vector2( 2, 2 )
 transform = Transform2D( 2, 0, 0, 2, 0, 0 )
+
+[node name="menuNoise" type="AudioStreamPlayer" parent="."]
+volume_db = -15.0
+script = ExtResource( 11 )
+[connection signal="mouse_entered" from="Menu/CenterRow/Buttons/NewGameButton" to="." method="_on_NewGameButton_mouse_entered"]
+[connection signal="mouse_entered" from="Menu/CenterRow/Buttons/ControlsButton" to="." method="_on_ControlsButton_mouse_entered"]
+[connection signal="mouse_entered" from="Menu/CenterRow/Buttons/ExitToDesktopButton" to="." method="_on_ExitToDesktopButton_mouse_entered"]
 [connection signal="fade_finished" from="FadeIn" to="." method="_on_FadeIn_fade_finished"]
