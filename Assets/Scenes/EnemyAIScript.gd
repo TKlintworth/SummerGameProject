@@ -42,6 +42,7 @@ var idle_timer_start = false
 var state = "idle"
 var states = ["idle", "inCombat", "fleeing", "stunned", "stopped", "dying"]
 var knockbackDistance = 50
+var played_death_animation = false
 
 #Amount of damage the one_time_attack inflicts
 var oneTimeAttackDamage = 20
@@ -324,6 +325,8 @@ func _physics_process(delta):
 			
 	
 	if state == "dying":
+		print("state", state)
+		dead = true
 		var x_pos = self.position.x
 		var y_pos = self.position.y
 		if !noise_played:
@@ -331,7 +334,9 @@ func _physics_process(delta):
 			get_tree().get_root().get_node("MainRoot/AudioStreamPlayer2D").play_enemy_death_noise()
 		disable_collision()
 		$AnimatedSprite.play("redguard_dying")
-		if($AnimatedSprite.frame >= 9):
+		yield(get_node("AnimatedSprite"), "animation_finished")
+		if !played_death_animation:
+			played_death_animation = true
 			rng.randomize()
 			var random_decision = rng.randi_range(0, 1)
 			match random_decision:

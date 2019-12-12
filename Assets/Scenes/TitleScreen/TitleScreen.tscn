@@ -1,17 +1,15 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/TitleScreen/title_screen.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Themes/MaintTheme.tres" type="Theme" id=2]
 [ext_resource path="res://Resources/Fonts/yoster.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://Scenes/TitleScreen/Buttons/NewGameButton.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/TitleScreen/Buttons/MenuButton.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/TitleScreen/Buttons/ControlsButton.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/TitleScreen/Buttons/ExitToDesktopButton.tscn" type="PackedScene" id=7]
-[ext_resource path="res://PNG/idleMan.png" type="Texture" id=8]
-[ext_resource path="res://fade_in/FadeIn.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=10]
-[ext_resource path="res://blackbackground.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Scenes/TitleScreen/menuNoise.gd" type="Script" id=12]
+[ext_resource path="res://Scenes/TitleScreen/Buttons/ControlsButton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/TitleScreen/Buttons/ExitToDesktopButton.tscn" type="PackedScene" id=6]
+[ext_resource path="res://PNG/idleMan.png" type="Texture" id=7]
+[ext_resource path="res://fade_in/FadeIn.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=9]
+[ext_resource path="res://blackbackground.tscn" type="PackedScene" id=10]
 
 [sub_resource type="DynamicFont" id=1]
 size = 124
@@ -32,16 +30,16 @@ script = ExtResource( 1 )
 
 [node name="Menu" type="VBoxContainer" parent="."]
 margin_left = 120.0
-margin_top = 34.0
+margin_top = 33.6369
 margin_right = 1160.0
-margin_bottom = 822.0
-size_flags_vertical = 0
+margin_bottom = 709.637
 
 [node name="Logo" type="Label" parent="Menu"]
 margin_right = 1040.0
 margin_bottom = 200.0
 rect_min_size = Vector2( 0, 200 )
-size_flags_vertical = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = ExtResource( 2 )
 custom_fonts/font = SubResource( 1 )
 custom_constants/shadow_offset_y = 5
@@ -57,12 +55,13 @@ size_flags_vertical = 0
 custom_constants/separation = 100
 
 [node name="Buttons" type="VBoxContainer" parent="Menu/CenterRow"]
+margin_top = 100.0
 margin_right = 438.0
-margin_bottom = 502.0
+margin_bottom = 402.0
 grow_vertical = 2
 rect_min_size = Vector2( 0, 300 )
 size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_vertical = 6
 theme = ExtResource( 2 )
 custom_constants/separation = 50
 
@@ -73,23 +72,17 @@ grow_vertical = 0
 theme = ExtResource( 2 )
 scene_to_load = "res://Scenes/MapSelect.tscn"
 
-[node name="EndlessButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 5 )]
+[node name="ControlsButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 5 )]
 margin_top = 110.0
 margin_right = 438.0
 margin_bottom = 181.0
-scene_to_load = "res://Scenes/EndlessScene.tscn"
-
-[node name="ControlsButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 6 )]
-margin_top = 231.0
-margin_right = 438.0
-margin_bottom = 302.0
 custom_styles/hover = SubResource( 2 )
 scene_to_load = "res://Scenes/ControlsScreen.tscn"
 
-[node name="ExitToDesktopButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 7 )]
-margin_top = 352.0
+[node name="ExitToDesktopButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 6 )]
+margin_top = 231.0
 margin_right = 438.0
-margin_bottom = 423.0
+margin_bottom = 302.0
 custom_styles/hover = SubResource( 2 )
 scene_to_load = "Quit"
 
@@ -104,7 +97,7 @@ size_flags_vertical = 3
 margin_right = 502.0
 margin_bottom = 502.0
 size_flags_horizontal = 3
-texture = ExtResource( 8 )
+texture = ExtResource( 7 )
 
 [node name="VersionLabel" type="Label" parent="Menu"]
 margin_top = 710.0
@@ -116,20 +109,12 @@ text = "Version 0.0
 
 "
 
-[node name="FadeIn" parent="." instance=ExtResource( 9 )]
+[node name="FadeIn" parent="." instance=ExtResource( 8 )]
 visible = false
 
-[node name="AudioStreamPlayer2D" parent="." instance=ExtResource( 10 )]
+[node name="AudioStreamPlayer2D" parent="." instance=ExtResource( 9 )]
 
-[node name="ParallaxBackground" parent="." instance=ExtResource( 11 )]
+[node name="ParallaxBackground" parent="." instance=ExtResource( 10 )]
 scale = Vector2( 2, 2 )
 transform = Transform2D( 2, 0, 0, 2, 0, 0 )
-
-[node name="menuNoise" type="AudioStreamPlayer" parent="."]
-volume_db = -15.0
-script = ExtResource( 12 )
-[connection signal="mouse_entered" from="Menu/CenterRow/Buttons/NewGameButton" to="." method="_on_NewGameButton_mouse_entered"]
-[connection signal="mouse_entered" from="Menu/CenterRow/Buttons/EndlessButton" to="." method="_on_EndlessButton_mouse_entered"]
-[connection signal="mouse_entered" from="Menu/CenterRow/Buttons/ControlsButton" to="." method="_on_ControlsButton_mouse_entered"]
-[connection signal="mouse_entered" from="Menu/CenterRow/Buttons/ExitToDesktopButton" to="." method="_on_ExitToDesktopButton_mouse_entered"]
 [connection signal="fade_finished" from="FadeIn" to="." method="_on_FadeIn_fade_finished"]
