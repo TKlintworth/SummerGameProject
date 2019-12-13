@@ -73,9 +73,12 @@ func stamina_regen():
 	# Decrease stamina if sprinting
 	if sprint == true:
 		lose_stamina(stamina_sprint_value)
-	if player_dead == false and player_stamina_node.value < 100 and sprint == false and !stamina_depleted:
+	if player_dead == false and player_stamina_node.value < 87 and sprint == false and !stamina_depleted:
 		#print("Regen stamina")
-		player_stamina_node.value += stamina_regen_value
+		if player_stamina_node.value <= 87:
+			player_stamina_node.value = 87 
+		else: 
+			player_stamina_node.value += stamina_regen_value
 
 
 func _on_stamina_timer_timeout():
@@ -84,7 +87,7 @@ func _on_stamina_timer_timeout():
 # take damage function
 func take_damage(amount):
 	#player_health_node.value -= 2
-	if (player_health_node.value - amount) <= 0:
+	if (player_health_node.value - amount) <= 28:
 		#Player dies
 		player_dead = true
 		player_health_node.set_value(0)	
@@ -101,8 +104,8 @@ func lose_stamina(amount):
 		player_stamina_node.value = 28
 
 func increase_health(amount):
-	if(player_health_node.value + amount >= 100):
-		player_health_node.set_value(100)
+	if(player_health_node.value + amount >= 90):
+		player_health_node.set_value(90)
 	else:
 		player_health_node.set_value(player_health_node.value + amount)
 	
@@ -263,7 +266,6 @@ func get_thrown():
 	return self.spear_thrown
 	
 func _physics_process(delta):
-	print("stamina: ", player_stamina_node.value)
 	if $AnimatedSprite.get_animation() == "slave_jab_spear_active":
 		if $AnimatedSprite.frame == 4:
 			$EnemyDamageArea.set_monitoring(true)

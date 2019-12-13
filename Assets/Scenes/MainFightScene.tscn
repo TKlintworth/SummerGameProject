@@ -51,11 +51,16 @@ autoplay = false
 layer = 100
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource( 9 )]
-editor/display_folded = true
 margin_left = 40.9653
 margin_top = -0.735077
 margin_right = 40.9652
 margin_bottom = -0.735107
+
+[node name="Stamina" parent="CanvasLayer/Control/NinePatchRect" index="2"]
+value = 87.0
+
+[node name="Health" parent="CanvasLayer/Control/NinePatchRect" index="3"]
+value = 90.0
 
 [node name="Timer" type="Timer" parent="CanvasLayer/Control"]
 autostart = true
