@@ -266,7 +266,6 @@ func get_thrown():
 	return self.spear_thrown
 	
 func _physics_process(delta):
-	print("stamina: ", player_stamina_node.value)
 	if $AnimatedSprite.get_animation() == "slave_jab_spear_active":
 		if $AnimatedSprite.frame == 4:
 			$EnemyDamageArea.set_monitoring(true)
