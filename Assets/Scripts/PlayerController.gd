@@ -75,7 +75,7 @@ func stamina_regen():
 		lose_stamina(stamina_sprint_value)
 	if player_dead == false and player_stamina_node.value < 87 and sprint == false and !stamina_depleted:
 		#print("Regen stamina")
-		if player_stamina_node.value <= 87:
+		if player_stamina_node.value >= 87:
 			player_stamina_node.value = 87 
 		else: 
 			player_stamina_node.value += stamina_regen_value
@@ -135,6 +135,9 @@ func block():
 		stamina_depleted = false
 		$AnimatedSprite.play("slave_block")
 	else:
+		action = false
+		player_block = false
+		stamina_depleted = true
 		stamina_penalty_timer()
 		print("Unable to block / no weapon")
 	
@@ -212,9 +215,9 @@ func get_input():
 			
 	############# ACTIONS ###########################
 	# Block action
-	if Input.is_action_pressed("E") && spear_thrown == false: #block animation
+	if Input.is_action_pressed("E") && spear_thrown == false && !stamina_depleted: #block animation
 		#get_parent().get_node("ColorRect/AnimationPlayer").play("transition_in")
-		#print("Player Blocking")
+		print("Player Blocking")
 		block()
 		
 	
