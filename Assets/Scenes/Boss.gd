@@ -33,18 +33,45 @@ extends KinematicBody2D
 #		parameters: a string variable containing one of the states
 #		return: None
 
-
-var states = ["idle", "light_swipe", "heavy_swipe", "charge", "tri_shout"]
+var vel = Vector2()
+var states = ["idle", "lightSwipe", "heavySwipe", "charge", "triShout"]
+var stack = []
 var activeState = funcref(self, "idle")
 
-func setState(state):
-	if state in states:
-		activeState = funcref(self, state)
-	else:
-		print("Trying to set an invalid state")
+#func setState(state):
+#	if state in states:
+#		activeState = funcref(self, state)
+#	else:
+#		print("Trying to set an invalid state")
+
+func popState():
+	return stack.pop_back()
+	
+func pushState(state):
+	if(getCurrentState() != state):
+		stack.push_back(state)
+		if state in states:
+			activeState = funcref(self, state)
+
+func getCurrentState():
+	if len(stack) > 0:
+		return stack[len(stack)-1]
 
 func idle():
 	print("Idle state")
+	pushState("heavySwipe")
+
+func lightSwipe():
+	print("light swipe state")
+
+func heavySwipe():
+	print("heavy swipe state")
+
+func charge():
+	print("charge state")
+	
+func triShout():
+	print("triShout state")
 
 func _physics_process(delta):
 	if activeState != null:
