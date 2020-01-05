@@ -38,20 +38,17 @@ var states = ["idle", "lightSwipe", "heavySwipe", "charge", "triShout"]
 var stack = []
 var activeState = funcref(self, "idle")
 
-#func setState(state):
-#	if state in states:
-#		activeState = funcref(self, state)
-#	else:
-#		print("Trying to set an invalid state")
+func brain():
+	pushState("idle")
 
 func popState():
 	return stack.pop_back()
 	
 func pushState(state):
 	if(getCurrentState() != state):
-		stack.push_back(state)
 		if state in states:
 			activeState = funcref(self, state)
+			stack.push_back(activeState)
 
 func getCurrentState():
 	if len(stack) > 0:
@@ -59,23 +56,28 @@ func getCurrentState():
 
 func idle():
 	print("Idle state")
-	pushState("heavySwipe")
 
 func lightSwipe():
 	print("light swipe state")
 
 func heavySwipe():
 	print("heavy swipe state")
+	popState()
 
 func charge():
 	print("charge state")
 	
 func triShout():
 	print("triShout state")
+	
 
 func _physics_process(delta):
-	if activeState != null:
-		activeState.call_func()
+	brain()
+	
+	var currentStateFunction = getCurrentState()
+	
+	if currentStateFunction != null:
+		currentStateFunction.call_func()
 
 
 
