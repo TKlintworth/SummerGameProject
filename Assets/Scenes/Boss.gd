@@ -38,7 +38,8 @@ var states = ["idle", "lightSwipe", "heavySwipe", "charge", "triShout"]
 var stack = []
 var activeState = funcref(self, "idle")
 
-func brain():
+# Starting state
+func _ready():
 	pushState("idle")
 
 func popState():
@@ -55,6 +56,7 @@ func getCurrentState():
 		return stack[len(stack)-1]
 
 func idle():
+	# Check for player 
 	print("Idle state")
 
 func lightSwipe():
@@ -72,7 +74,6 @@ func triShout():
 	
 
 func _physics_process(delta):
-	brain()
 	
 	var currentStateFunction = getCurrentState()
 	
