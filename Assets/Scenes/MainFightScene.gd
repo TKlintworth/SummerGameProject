@@ -42,6 +42,7 @@ func _ready():
 func start_game():
 	$Player.action = false
 	$SpearSpawnTimer.start()
+	$Music.play_battle_music()
 	
 func play_win():
 	scene_path_to_load = "res://Scenes/WinScreen.tscn"
