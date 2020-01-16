@@ -324,6 +324,7 @@ func _physics_process(delta):
 			get_tree().get_root().get_node("MainRoot/AudioStreamPlayer2D").play_enemy_death_noise()
 		disable_collision()
 		$AnimatedSprite.play("redguard_dying")
+		$BloodParticles.emitting = false
 		yield(get_node("AnimatedSprite"), "animation_finished")
 		if !played_death_animation:
 			played_death_animation = true
