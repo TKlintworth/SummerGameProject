@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/wilfred's_song.wav-4e50a99379140e784f3b5ca68e7bd70e.sample"
+
+[deps]
+
+source_file="res://sounds/Music/wilfred's_song.wav"
+dest_files=[ "res://.import/wilfred's_song.wav-4e50a99379140e784f3b5ca68e7bd70e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
