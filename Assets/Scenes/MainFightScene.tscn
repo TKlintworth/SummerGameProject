@@ -11,7 +11,7 @@
 [ext_resource path="res://Scenes/UserInterface.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Pause.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/ScreenFlash.tscn" type="PackedScene" id=11]
-[ext_resource path="res://spritesheets/items&UI/BigAreanaFinished.png" type="Texture" id=12]
+[ext_resource path="res://spritesheets/items&UI/BigAreanaFinished300.png" type="Texture" id=12]
 [ext_resource path="res://sounds/Music/BattleMusic.wav" type="AudioStream" id=13]
 [ext_resource path="res://Scenes/Music.gd" type="Script" id=14]
 [ext_resource path="res://Scenes/enemyMovementZones.gd" type="Script" id=15]
@@ -38,7 +38,7 @@ spear_pickup_scene = ExtResource( 4 )
 health_pickup_scene = ExtResource( 5 )
 
 [node name="Player" parent="." instance=ExtResource( 6 )]
-position = Vector2( 250, 550 )
+position = Vector2( 316.64, 424.653 )
 scale = Vector2( 0.5, 0.5 )
 spear_scene = ExtResource( 7 )
 
@@ -83,13 +83,10 @@ margin_bottom = 371.0
 material = SubResource( 1 )
 margin_left = 22.689
 margin_top = 3.78149
-margin_right = 662.689
-margin_bottom = 323.781
-rect_scale = Vector2( 3, 3.375 )
+margin_right = 1942.69
+margin_bottom = 963.781
+rect_scale = Vector2( 1, 1.1 )
 texture = ExtResource( 12 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 13 )
