@@ -6,7 +6,7 @@
 [ext_resource path="res://Scenes/TitleScreen/Buttons/NewGameButton.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/TitleScreen/Buttons/ControlsButton.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/TitleScreen/Buttons/ExitToDesktopButton.tscn" type="PackedScene" id=6]
-[ext_resource path="res://PNG/idleMan.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/slave_spear_running/tile002.png" type="Texture" id=7]
 [ext_resource path="res://fade_in/FadeIn.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/DeathSounds.tscn" type="PackedScene" id=9]
 [ext_resource path="res://blackbackground.tscn" type="PackedScene" id=10]
@@ -49,15 +49,15 @@ align = 1
 [node name="CenterRow" type="HBoxContainer" parent="Menu"]
 margin_top = 204.0
 margin_right = 1040.0
-margin_bottom = 706.0
+margin_bottom = 704.0
 grow_vertical = 0
 size_flags_vertical = 0
 custom_constants/separation = 100
 
 [node name="Buttons" type="VBoxContainer" parent="Menu/CenterRow"]
-margin_top = 100.0
-margin_right = 438.0
-margin_bottom = 402.0
+margin_top = 99.0
+margin_right = 440.0
+margin_bottom = 401.0
 grow_vertical = 2
 rect_min_size = Vector2( 0, 300 )
 size_flags_horizontal = 3
@@ -66,7 +66,7 @@ theme = ExtResource( 2 )
 custom_constants/separation = 50
 
 [node name="NewGameButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 4 )]
-margin_right = 438.0
+margin_right = 440.0
 margin_bottom = 60.0
 grow_vertical = 0
 theme = ExtResource( 2 )
@@ -74,33 +74,33 @@ scene_to_load = "res://Scenes/MapSelect.tscn"
 
 [node name="ControlsButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 5 )]
 margin_top = 110.0
-margin_right = 438.0
+margin_right = 440.0
 margin_bottom = 181.0
 custom_styles/hover = SubResource( 2 )
 scene_to_load = "res://Scenes/ControlsScreen.tscn"
 
 [node name="ExitToDesktopButton" parent="Menu/CenterRow/Buttons" instance=ExtResource( 6 )]
 margin_top = 231.0
-margin_right = 438.0
+margin_right = 440.0
 margin_bottom = 302.0
 custom_styles/hover = SubResource( 2 )
 scene_to_load = "Quit"
 
 [node name="CenterContainer" type="CenterContainer" parent="Menu/CenterRow"]
-margin_left = 538.0
+margin_left = 540.0
 margin_right = 1040.0
-margin_bottom = 502.0
+margin_bottom = 500.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Characters" type="TextureRect" parent="Menu/CenterRow/CenterContainer"]
-margin_right = 502.0
-margin_bottom = 502.0
+margin_right = 500.0
+margin_bottom = 500.0
 size_flags_horizontal = 3
 texture = ExtResource( 7 )
 
 [node name="VersionLabel" type="Label" parent="Menu"]
-margin_top = 710.0
+margin_top = 708.0
 margin_right = 1040.0
 margin_bottom = 788.0
 size_flags_vertical = 3
