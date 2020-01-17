@@ -33,6 +33,9 @@ var staminaStopRegenTime = 2 # penalty for having 0 stamina
 onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Health")
 onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Stamina")
 onready var screen_flash = get_parent().get_node("CanvasLayer/ScreenFlash")
+onready var knockbackEffect = get_node("knockbackEffect")
+var knockbackDistance = 50
+var knockbackDirection
 #onready var mainScene = get_node("MainFightScene")
 
 func set_player_dead(choice):
@@ -123,7 +126,16 @@ func stamina_penalty_timer():
 	stamina_depleted = true
 	yield(get_tree().create_timer(staminaStopRegenTime), "timeout")
 	stamina_depleted = false
-		
+
+func setKnockbackDirection(direction):
+	knockbackDirection = -direction
+
+func knockback():
+	
+	var newPos = position + (knockbackDistance * -knockbackDirection)
+	
+	knockbackEffect.interpolate_property(self, "position", null, newPos, 0.5, Tween.TRANS_EXPO, Tween.EASE_OUT)
+	knockbackEffect.start()		
 	
 # player block function
 # Enemy functions directly decrease Player stamina rather than being handled in the block function
@@ -140,7 +152,15 @@ func block():
 		stamina_depleted = true
 		stamina_penalty_timer()
 		print("Unable to block / no weapon")
-	
+
+func spear_destroy_from_enemy():
+	$SpearDestruction.emitting = true
+	if (self.player_status == 0):
+		set_thrown(true)
+		$AnimatedSprite.play("slave_idle")
+		#player_block = false
+		self.player_status = 1
+
 # throw spear function	
 func throw_spear():
 	#spear_thrown = true

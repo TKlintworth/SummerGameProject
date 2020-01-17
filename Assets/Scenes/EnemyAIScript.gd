@@ -390,6 +390,8 @@ func knockback():
 	flashRed()
 	
 	dir = (Player.position - position).normalized()
+	print("enemy direction")
+	print(dir)
 	var newPos = position + (knockbackDistance * -dir)
 	
 	knockbackEffect.interpolate_property(self, "position", null, newPos, 0.5, Tween.TRANS_EXPO, Tween.EASE_OUT)
