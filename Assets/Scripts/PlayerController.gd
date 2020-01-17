@@ -127,13 +127,13 @@ func stamina_penalty_timer():
 	yield(get_tree().create_timer(staminaStopRegenTime), "timeout")
 	stamina_depleted = false
 
+# This function is necessary to set the direction for the player to get knocked back after being hit by enemy while blocking
 func setKnockbackDirection(direction):
 	knockbackDirection = -direction
 
+# Player is knocked back when hit by heavy enemy while blocking
 func knockback():
-	
 	var newPos = position + (knockbackDistance * -knockbackDirection)
-	
 	knockbackEffect.interpolate_property(self, "position", null, newPos, 0.5, Tween.TRANS_EXPO, Tween.EASE_OUT)
 	knockbackEffect.start()		
 	
@@ -153,12 +153,12 @@ func block():
 		stamina_penalty_timer()
 		print("Unable to block / no weapon")
 
+# Emits spear destruction particle effect and sets player to not have spear
 func spear_destroy_from_enemy():
 	$SpearDestruction.emitting = true
-	if (self.player_status == 0):
+	if (self.player_status == 0): # if player has spear, set player to not have spear
 		set_thrown(true)
 		$AnimatedSprite.play("slave_idle")
-		#player_block = false
 		self.player_status = 1
 
 # throw spear function	

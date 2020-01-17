@@ -117,10 +117,10 @@ func choose_attack(attack):
 			player_recently_taken_damage = true
 			player_damage_timer()
 		elif(Player.player_block == true and in_attack_zone == true and not player_recently_taken_damage):
+			# direction_from_player is used to set the direction for the player to get knocked back. setKnockbackDirection function sets this direction
 			direction_from_player = (Player.position - position).normalized()
-			print("direction:")
-			print(direction_from_player)
 			Player.setKnockbackDirection(direction_from_player)
+			# Calls function to destroy spear in player's hand
 			Player.spear_destroy_from_enemy()
 			Player.knockback()
 			if oneTimeAttackDamage/2 > Player.player_stamina_node.value:
