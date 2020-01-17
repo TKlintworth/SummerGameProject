@@ -35,9 +35,10 @@ var idle_timer_start = false
 var state = "idle"
 var states = ["idle", "inCombat", "fleeing", "stopped", "dying"]
 var knockbackDistance = 15
+var direction_from_player
 
 #Amount of damage the one_time_attack inflicts
-var oneTimeAttackDamage = 100
+export var oneTimeAttackDamage = 20
 
 func _ready():
 	playerAlive = !Player.player_dead
@@ -116,6 +117,12 @@ func choose_attack(attack):
 			player_recently_taken_damage = true
 			player_damage_timer()
 		elif(Player.player_block == true and in_attack_zone == true and not player_recently_taken_damage):
+			# direction_from_player is used to set the direction for the player to get knocked back. setKnockbackDirection function sets this direction
+			direction_from_player = (Player.position - position).normalized()
+			Player.setKnockbackDirection(direction_from_player)
+			# Calls function to destroy spear in player's hand
+			Player.spear_destroy_from_enemy()
+			Player.knockback()
 			if oneTimeAttackDamage/2 > Player.player_stamina_node.value:
 				print("player take damage")
 				Player.player_stamina_node.value -= oneTimeAttackDamage/2

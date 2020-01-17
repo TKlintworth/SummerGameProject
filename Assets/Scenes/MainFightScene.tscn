@@ -48,6 +48,7 @@ scale = Vector2( 0.5, 0.5 )
 autoplay = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+editor/display_folded = true
 layer = 100
 
 [node name="Control" parent="CanvasLayer" instance=ExtResource( 9 )]
@@ -76,6 +77,7 @@ margin_right = 668.0
 margin_bottom = 371.0
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+editor/display_folded = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 
@@ -179,7 +181,7 @@ shape = SubResource( 5 )
 ]]
 editor/display_folded = true
 position = Vector2( 980, 1000 )
-rotation = 4.71239
+rotation = -1.5708
 scale = Vector2( 1, 20.1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallSegment4"]

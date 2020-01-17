@@ -33,6 +33,7 @@ margin_left = 120.0
 margin_top = 33.6369
 margin_right = 1160.0
 margin_bottom = 709.637
+rect_scale = Vector2( 1, 0.9 )
 
 [node name="Logo" type="Label" parent="Menu"]
 margin_right = 1040.0
@@ -102,7 +103,7 @@ texture = ExtResource( 7 )
 [node name="VersionLabel" type="Label" parent="Menu"]
 margin_top = 708.0
 margin_right = 1040.0
-margin_bottom = 788.0
+margin_bottom = 786.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 3 )
 text = "Version 0.0
