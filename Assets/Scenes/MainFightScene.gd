@@ -21,7 +21,7 @@ var health_count_array = []
 
 func _input(event):
 	if event.is_action_pressed("toggle_fullscreen"):
-    	OS.window_fullscreen = !OS.window_fullscreen
+		OS.window_fullscreen = !OS.window_fullscreen
 
 func _ready():
 	$CanvasLayer/Control/Wave_Enemy_Spawn_Timer.wait_time = 2
