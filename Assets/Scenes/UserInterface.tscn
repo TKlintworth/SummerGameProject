@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Resources/Fonts/yoster.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scenes/Wave.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scenes/UI/StaminaProgressBar.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/UI/HealthProgressBar.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/AudioStreamPlayer2D.gd" type="Script" id=6]
+[ext_resource path="res://PNG/UI_spear_throw1.png" type="Texture" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 42
@@ -70,6 +71,26 @@ anchor_bottom = 1.0
 margin_top = -337.146
 margin_right = 500.0
 margin_bottom = 162.854
+
+[node name="SpearThrow" type="TextureProgress" parent="NinePatchRect"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 640.0
+margin_top = -150.0
+margin_right = 360.0
+margin_bottom = 850.0
+rect_scale = Vector2( 0.1, 0.1 )
+value = 100.0
+texture_under = ExtResource( 7 )
+texture_progress = ExtResource( 7 )
+fill_mode = 4
+tint_under = Color( 0.462745, 0.462745, 0.462745, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="NinePatchRect/SpearThrow"]
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource( 3 )

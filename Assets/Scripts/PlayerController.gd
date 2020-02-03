@@ -36,6 +36,7 @@ onready var player_health_node = get_parent().get_node("CanvasLayer/Control/Nine
 onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Stamina")
 onready var screen_flash = get_parent().get_node("CanvasLayer/ScreenFlash")
 onready var knockbackEffect = get_node("knockbackEffect")
+onready var spearIcon = get_parent().get_node("CanvasLayer/Control/NinePatchRect/SpearThrow")
 
 var knockbackDistance = 50
 var knockbackDirection
@@ -170,6 +171,16 @@ func throw_spear():
 		# Timer duration determined by spearCooldown variable
 		get_node("SpearCooldownTimer").wait_time = spearCooldown
 		get_node("SpearCooldownTimer").start()
+		
+		spearIcon.set_max(spearCooldown)
+		
+		print(get_node("SpearCooldownTimer").time_left)
+		# Cooldown visual timer clockwise
+		# Tween between the max and min value for the texture progress node's value
+		var tween = get_parent().get_node("CanvasLayer/Control/NinePatchRect/SpearThrow/Tween")
+		tween.interpolate_property(spearIcon, "value",
+		0, 10, 10, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		tween.start()
 		
 		set_thrown(true)
 		action = true
