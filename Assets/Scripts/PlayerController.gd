@@ -11,6 +11,8 @@ export (PackedScene) var spear_scene
 export (PackedScene) var spear_on_ground
 
 #var spear_ready
+var spearCooldown = 10.0 # How long before you can throw your spear again
+var spearThrowable = true # Is the spear throwable (i.e., no cooldown left)
 var player_dead = false
 var dead_animation_played = false
 var player_block = false # boolean for if player is blocking
@@ -34,9 +36,9 @@ onready var player_health_node = get_parent().get_node("CanvasLayer/Control/Nine
 onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Stamina")
 onready var screen_flash = get_parent().get_node("CanvasLayer/ScreenFlash")
 onready var knockbackEffect = get_node("knockbackEffect")
+
 var knockbackDistance = 50
 var knockbackDirection
-#onready var mainScene = get_node("MainFightScene")
 
 func set_player_dead(choice):
 	if choice == true:
@@ -65,11 +67,10 @@ func _ready():
 	#_on_timer_timeout is the callback, can have any name
 	add_child(timer) #to process
 	timer.start() #to start
-	
-	
-	#print(get_parent().get_node("ColorRect/AnimationPlayer").play("transition_in"))
-	
+
+
 ############## FUNCTIONS ################
+
 
 # Stamina regeneration if the players alive and stamina is less than max
 func stamina_regen():
@@ -161,19 +162,29 @@ func spear_destroy_from_enemy():
 		$AnimatedSprite.play("slave_idle")
 		self.player_status = 1
 
-# throw spear function	
+# Function to handle spear throwing
 func throw_spear():
-	#spear_thrown = true
-	set_thrown(true)
-	action = true
-	get_parent().get_node("AudioStreamPlayer2D").play_attack_noise()
-	spear = spear_scene.instance()
-	get_parent().add_child(spear) # adds the spear "object" to the scene
-	spear_pick = get_parent().get_node("Spear/Area2D")
-	match character_direction:
-		0: spear.position = Vector2((self.position.x - 50), (self.position.y - 30)) # set starting position of spear when player is facing left
-		1: spear.position = Vector2((self.position.x + 50), (self.position.y - 30)) # set starting postion of spear when player is facing right
-	$AnimatedSprite.play("slave_throw_spear_active")
+	if spearThrowable:
+		# Unable to throw spear until cooldown timer elapses
+		spearThrowable = false
+		# Timer duration determined by spearCooldown variable
+		get_node("SpearCooldownTimer").wait_time = spearCooldown
+		get_node("SpearCooldownTimer").start()
+		
+		set_thrown(true)
+		action = true
+		get_parent().get_node("AudioStreamPlayer2D").play_attack_noise()
+		spear = spear_scene.instance()
+		get_parent().add_child(spear) # adds the spear "object" to the scene
+		spear_pick = get_parent().get_node("Spear/Area2D")
+		match character_direction:
+			0: spear.position = Vector2((self.position.x - 50), (self.position.y - 30)) # set starting position of spear when player is facing left
+			1: spear.position = Vector2((self.position.x + 50), (self.position.y - 30)) # set starting postion of spear when player is facing right
+		$AnimatedSprite.play("slave_throw_spear_active")
+	else:
+		# Wait for cooldown timer to elapse before throwing again
+		print("Wait ", get_node("SpearCooldownTimer").time_left, " longer!")
+
 
 func jab():
 	action = true
@@ -186,14 +197,7 @@ func jab():
 
 func get_input():
 	velocity = Vector2()
-	#var sprint = false
 	sprint = false
-	
-	#if (player_health_node.value <=27):
-	#	player_dead = true
-	#	#action = true
-	#	player_die()
-		
 	########### MOVEMENT #################
 	if Input.is_action_pressed("left") && action == false:
 		look_direction = Vector2(-1,0)
@@ -306,10 +310,7 @@ func _on_AnimatedSprite_animation_finished(): #ran everytime animation is finish
 	player_block = false
 	if !Input.is_action_pressed("E"): #this is needed so player does cannot move when animation plays
 		action = false
-	if spear_thrown == true:
-		set_player_status(1)
-	else:
-		player_status = 0
+
 	$EnemyDamageArea.set_monitoring(false)
 	$RunningDust.emitting = false
 	$AnimatedSprite.set_speed_scale(1)
@@ -349,7 +350,7 @@ func _on_EnemyDamageArea_area_exited(area):
 				enemy_area_array.min().get_parent().play_blood_one_time()
 		enemy_area_array.clear()
 
-
-
-
-
+# Spear cooldown finished, able to throw spear again
+func _on_SpearCooldownTimer_timeout():
+	get_node("SpearCooldownTimer").wait_time = spearCooldown
+	spearThrowable = true

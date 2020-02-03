@@ -9,7 +9,8 @@ export var spear_attack_bool = false
 export var character_direction = 0 # int value to decide direction; 0 = Character is facing LEFT; 1 = Character is facing RIGHT
 export (PackedScene) var spear_scene
 
-#var spear_ready
+# How long before player can throw spear again
+var spearCooldown = 10.0
 var player_dead = false
 var dead_animation_played = false
 var player_block = false # boolean for if player is blocking
@@ -50,7 +51,7 @@ func block():
 	player_stamina_node.value -= 2
 	$AnimatedSprite.play("slave_block")
 	
-# throw spear function	
+# Throw Spear
 func throw_spear():
 	spear_thrown = true
 	action = true
@@ -63,6 +64,9 @@ func throw_spear():
 		0: spear.position = Vector2((self.position.x - 120), (self.position.y - 30)) # set starting position of spear when player is facing left
 		1: spear.position = Vector2((self.position.x + 120), (self.position.y - 30)) # set starting postion of spear when player is facing right
 	$AnimatedSprite.play("slave_throw_spear_active")
+
+func _timeout():
+	print("Timed out!")
 
 func get_input():
 	velocity = Vector2()
