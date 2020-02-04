@@ -284,26 +284,17 @@ func _physics_process(delta):
 		else:
 			if Player.position.x - self.position.x < 0:
 				$AnimatedSprite.set_flip_h(false)
-				$AnimatedSprite.play("heavy_enemy_running")
+				$AnimatedSprite.play("heavy_enemy_idle")
 			else:
 				$AnimatedSprite.set_flip_h(true)
-				$AnimatedSprite.play("heavy_enemy_running")
-	
-	if state == "stopped" && dead == false:
-		player_distance = abs(Player.position.x - position.x)
-		if(player_distance < 50):
-			change_state("inCombat")
-		$AnimatedSprite.play("redguard_idle")
-		if(idle_timer_start == false):
-			$IdleWaitTimer.start()
-			idle_timer_start = true
-	
+				$AnimatedSprite.play("heavy_enemy_idle")
 	
 	if state == "dying":
 		var x_pos = self.position.x
 		var y_pos = self.position.y
 		disable_collision()
 		$AnimatedSprite.play("heavy_enemy_dying")
+		$BloodParticles.emitting = false
 		if($AnimatedSprite.frame >= 9):
 			rng.randomize()
 			var random_decision = rng.randi_range(0, 1)
