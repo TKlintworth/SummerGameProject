@@ -106,6 +106,8 @@ func _on_Area2D_area_entered(area):
 		on_ground = false
 		get_parent().get_tree().get_root().get_node("MainRoot/Player").set_player_status(0)
 		get_parent().get_tree().get_root().get_node("MainRoot/Player").set_thrown(false)
+		get_parent().get_tree().get_root().get_node("MainRoot/Player").set_throwable(true)
+		get_parent().get_tree().get_root().get_node("MainRoot/Player").reset_spear_icon()
 		self.queue_free()
 		
 	#Destroy spear if it hits wall
