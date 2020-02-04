@@ -126,11 +126,13 @@ func choose_attack(attack):
 			Player.take_damage(45)
 			player_recently_taken_damage = true
 			player_damage_timer()
-		elif(Player.player_block == true and in_attack_zone == true and not player_recently_taken_damage):
-				stunned = true
-				#Decrease player stamina by half the value of the potential damage inflicted
-				Player.lose_stamina(oneTimeAttackDamage/2)
-				change_state("stunned")		
+		#Removed the check for "not player_recently_taken_damage" out to fix issue #170 on Feb 4, 2020
+		#Don't think the removal will cause issue but documenting just in case
+		elif(Player.player_block == true and in_attack_zone == true):
+			stunned = true
+			#Decrease player stamina by half the value of the potential damage inflicted
+			Player.lose_stamina(oneTimeAttackDamage/2)
+			change_state("stunned")		
 		attacking = false
 		change_state("fleeing")
 		#$AnimatedSprite.speed_scale = 1

@@ -354,7 +354,7 @@ func screenFlash():
 #### THESE 2 FUNCTIONS PREVENT KILLING MORE THAN ONE ENEMY IN ONE JAB########
 func _on_EnemyDamageArea_area_entered(area):
 	if area.name == "DamageArea":
-		enemy_area_array.append(area)		
+		enemy_area_array.append(area)
 func _on_EnemyDamageArea_area_exited(area):
 	
 	if(enemy_area_array.size() > 0):
