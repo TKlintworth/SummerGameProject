@@ -31,6 +31,8 @@ var stamina_sprint_value = 4
 var sprint
 var stamina_depleted = false # Bool to tell if player has used up all stamina
 var staminaStopRegenTime = 2 # penalty for having 0 stamina
+var spear_picked_up = false
+var tween
 
 onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Health")
 onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Stamina")
@@ -163,12 +165,19 @@ func spear_destroy_from_enemy():
 		$AnimatedSprite.play("slave_idle")
 		self.player_status = 1
 
+func reset_spear_icon():
+	print('reset')
+	tween.set_active(false)
+	self.set_thrown(false)
+	spearIcon.set_value(10)
+
 # Function to handle spear throwing
 func throw_spear():
 	if spearThrowable:
 		# Unable to throw spear until cooldown timer elapses
 		spearThrowable = false
-		# Timer duration determined by spearCooldown variable
+		
+			# Timer duration determined by spearCooldown variable
 		get_node("SpearCooldownTimer").wait_time = spearCooldown
 		get_node("SpearCooldownTimer").start()
 		
@@ -177,7 +186,7 @@ func throw_spear():
 		print(get_node("SpearCooldownTimer").time_left)
 		# Cooldown visual timer clockwise
 		# Tween between the max and min value for the texture progress node's value
-		var tween = get_parent().get_node("CanvasLayer/Control/NinePatchRect/SpearThrow/Tween")
+		tween = get_parent().get_node("CanvasLayer/Control/NinePatchRect/SpearThrow/Tween")
 		tween.interpolate_property(spearIcon, "value",
 		0, 10, 10, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 		tween.start()
@@ -261,7 +270,7 @@ func get_input():
 		throw_spear()
 	
 	# Jab action
-	if Input.is_action_just_pressed("space") and !get_thrown() and !action:
+	if Input.is_action_just_pressed("space") and !action:
 		jab()
 	
 	#Sprint action
@@ -302,8 +311,12 @@ func set_thrown(spear_thrown):
 # Getter for spear_thrown bool
 func get_thrown():
 	return self.spear_thrown
-	
+
+func set_throwable(value):
+	self.spearThrowable = value
+
 func _physics_process(delta):
+	print(spearIcon.get_value())
 	if $AnimatedSprite.get_animation() == "slave_jab_spear_active":
 		if $AnimatedSprite.frame == 4:
 			$EnemyDamageArea.set_monitoring(true)
@@ -365,3 +378,4 @@ func _on_EnemyDamageArea_area_exited(area):
 func _on_SpearCooldownTimer_timeout():
 	get_node("SpearCooldownTimer").wait_time = spearCooldown
 	spearThrowable = true
+	set_thrown(false)
