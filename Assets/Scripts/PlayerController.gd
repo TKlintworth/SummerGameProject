@@ -23,13 +23,15 @@ var spear_pick
 var game_status = 0 # game is a go
 var enemy_area_array = []
 # How much stamina should the player regenerate per second
-var stamina_regen_value = 2
+var stamina_regen_value = 4
 # How much stamina should sprinting cost per second
-var stamina_sprint_value = 3
+var stamina_sprint_value = 4
 var sprint
+var stamina_depleted = false # Bool to tell if player has used up all stamina
+var staminaStopRegenTime = 2 # penalty for having 0 stamina
 
-onready var player_health_node = get_parent().get_node("CanvasLayer/health")
-onready var player_stamina_node = get_parent().get_node("CanvasLayer/stamina")
+onready var player_health_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Health")
+onready var player_stamina_node = get_parent().get_node("CanvasLayer/Control/NinePatchRect/Stamina")
 onready var screen_flash = get_parent().get_node("CanvasLayer/ScreenFlash")
 #onready var mainScene = get_node("MainFightScene")
 
@@ -61,6 +63,7 @@ func _ready():
 	add_child(timer) #to process
 	timer.start() #to start
 	
+	
 	#print(get_parent().get_node("ColorRect/AnimationPlayer").play("transition_in"))
 	
 ############## FUNCTIONS ################
@@ -69,10 +72,13 @@ func _ready():
 func stamina_regen():
 	# Decrease stamina if sprinting
 	if sprint == true:
-		player_stamina_node.value -= stamina_sprint_value
-	if player_dead == false and player_stamina_node.value < 100 and sprint == false:
+		lose_stamina(stamina_sprint_value)
+	if player_dead == false and player_stamina_node.value < 87 and sprint == false and !stamina_depleted:
 		#print("Regen stamina")
-		player_stamina_node.value += stamina_regen_value
+		if player_stamina_node.value >= 87:
+			player_stamina_node.value = 87 
+		else: 
+			player_stamina_node.value += stamina_regen_value
 
 
 func _on_stamina_timer_timeout():
@@ -81,7 +87,7 @@ func _on_stamina_timer_timeout():
 # take damage function
 func take_damage(amount):
 	#player_health_node.value -= 2
-	if (player_health_node.value - amount) <= 0:
+	if (player_health_node.value - amount) <= 28:
 		#Player dies
 		player_dead = true
 		player_health_node.set_value(0)	
@@ -92,9 +98,14 @@ func take_damage(amount):
 		screenFlash()
 		player_health_node.set_value(player_health_node.value - amount)
 
+func lose_stamina(amount):
+	player_stamina_node.value -= amount
+	if player_stamina_node.value <= 28:
+		player_stamina_node.value = 28
+
 func increase_health(amount):
-	if(player_health_node.value + amount >= 100):
-		player_health_node.set_value(100)
+	if(player_health_node.value + amount >= 90):
+		player_health_node.set_value(90)
 	else:
 		player_health_node.set_value(player_health_node.value + amount)
 	
@@ -107,16 +118,27 @@ func player_die():
 		$AnimatedSprite.play("slave_dying")
 		game_status = 1
 		dead_animation_played = true # prevents audio stream from playing sounds more than once
+	
+func stamina_penalty_timer():
+	stamina_depleted = true
+	yield(get_tree().create_timer(staminaStopRegenTime), "timeout")
+	stamina_depleted = false
 		
+	
 # player block function
 # Enemy functions directly decrease Player stamina rather than being handled in the block function
 func block():
 	# If the player has a spear (status 0) allow blocking ability. If no spear, disallow blocking.
-	if player_status == 0:
+	if player_status == 0 && player_stamina_node.value >= 29:
 		player_block = true
 		action = true
+		stamina_depleted = false
 		$AnimatedSprite.play("slave_block")
 	else:
+		action = false
+		player_block = false
+		stamina_depleted = true
+		stamina_penalty_timer()
 		print("Unable to block / no weapon")
 	
 # throw spear function	
@@ -135,9 +157,12 @@ func throw_spear():
 
 func jab():
 	action = true
-	$AnimatedSprite.set_speed_scale(3)
+	get_parent().get_node("AudioStreamPlayer2D").play_attack_noise()
+	$AnimatedSprite.set_speed_scale(3.5)
 	$AnimatedSprite.play("slave_jab_spear_active")
 	$EnemyDamageArea.check_if_enemy_hit()
+	yield(get_node("AnimatedSprite"), "animation_finished")
+	
 
 func get_input():
 	velocity = Vector2()
@@ -190,22 +215,22 @@ func get_input():
 			
 	############# ACTIONS ###########################
 	# Block action
-	if Input.is_action_pressed("E") && spear_thrown == false: #block animation
+	if Input.is_action_pressed("E") && spear_thrown == false && !stamina_depleted: #block animation
 		#get_parent().get_node("ColorRect/AnimationPlayer").play("transition_in")
-		#print("Player Blocking")
+		print("Player Blocking")
 		block()
 		
 	
 	# Throw spear action
-	if Input.is_action_pressed("T") && spear_thrown == false && action == false: # player has not thrown spear yet
+	if Input.is_action_pressed("T") and !spear_thrown and !action: # player has not thrown spear yet
 		throw_spear()
 	
 	# Jab action
-	if Input.is_action_just_pressed("space") && get_thrown() == false:
+	if Input.is_action_just_pressed("space") and !get_thrown() and !action:
 		jab()
 	
 	#Sprint action
-	if Input.is_action_pressed("shift") && action == false && player_stamina_node.value > 3:
+	if Input.is_action_pressed("shift") and !action and player_stamina_node.value > 3:
 		$AnimatedSprite.set_speed_scale(1.5)
 		match player_status:
 			0: $AnimatedSprite.play("player_run_spear")
@@ -216,7 +241,7 @@ func get_input():
 		#$AnimatedSprite.set_speed_scale(1)
 		
 	# Standing player
-	if Input.is_action_pressed("left") == false && Input.is_action_pressed("down") == false && Input.is_action_pressed("right") == false && Input.is_action_pressed("up") == false && player_dead == false && player_block == false && action == false:
+	if !Input.is_action_pressed("left") and !Input.is_action_pressed("down") and !Input.is_action_pressed("right") and !Input.is_action_pressed("up") and !player_dead and !player_block and !action:
 		match player_status:
 			0: $AnimatedSprite.play("player_idle_spear") # player has not thrown spear yet
 			1: $AnimatedSprite.play("slave_idle") # player has thrown spear
@@ -232,8 +257,8 @@ func get_input():
 # Setter for player_status
 func set_player_status(status):
 	match status:
-		0: player_status = 0
-		1: player_status = 1
+		0: player_status = 0 # has spear
+		1: player_status = 1 # no spear
 	
 # Setter for spear_thrown bool 	
 func set_thrown(spear_thrown):
@@ -244,7 +269,6 @@ func get_thrown():
 	return self.spear_thrown
 	
 func _physics_process(delta):
-	
 	if $AnimatedSprite.get_animation() == "slave_jab_spear_active":
 		if $AnimatedSprite.frame == 4:
 			$EnemyDamageArea.set_monitoring(true)
@@ -304,27 +328,7 @@ func _on_EnemyDamageArea_area_exited(area):
 			if enemy_area_array.min().get_parent().is_in_group("Enemy1"):
 				enemy_area_array.min().get_parent().play_blood_one_time()
 		enemy_area_array.clear()
-####################################################################
 
-	
-
-
-#func _on_EnemyDamageArea_body_shape_entered(body_id, body, body_shape, area_shape):
-#		print("area id: ")
-#		print(body_id)
-#		print("shape: ")
-#		print(area_shape)
-
-
-#func _on_EnemyDamageArea_area_shape_entered(area_id, area, area_shape, self_shape):
-#	if area.name == "DamageArea":
-#		print("area id: ")
-#		print(area_id)
-#		print("area shape: ")
-#		print(area_shape)
-#		print("self shape: ")
-#		print(self_shape)
-		
 
 
 

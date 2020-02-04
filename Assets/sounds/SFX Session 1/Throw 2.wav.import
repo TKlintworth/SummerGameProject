@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Throw 2.wav-9b2b87cc5c80c724e3c226ea5ee6fbd0.sample"
+
+[deps]
+
+source_file="res://sounds/SFX Session 1/Throw 2.wav"
+dest_files=[ "res://.import/Throw 2.wav-9b2b87cc5c80c724e3c226ea5ee6fbd0.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

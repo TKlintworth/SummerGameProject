@@ -42,6 +42,7 @@ var idle_timer_start = false
 var state = "idle"
 var states = ["idle", "inCombat", "fleeing", "stunned", "stopped", "dying"]
 var knockbackDistance = 50
+var played_death_animation = false
 
 #Amount of damage the one_time_attack inflicts
 var oneTimeAttackDamage = 20
@@ -116,37 +117,20 @@ func choose_attack(attack):
 		change_state("fleeing")
 		
 	elif attack == "one_time_attack":
-		
 		$AnimatedSprite.speed_scale = 1.85
 		$AnimatedSprite.play("redguard_attack")
 		yield(get_node("AnimatedSprite"), "animation_finished")
 		
 		#IF player isn't blocking and they're in the attack zone at the end of the attack animation, recieve damage
 		if(Player.player_block == false and in_attack_zone == true and not player_recently_taken_damage):
-			print("player take damage")
 			Player.take_damage(45)
 			player_recently_taken_damage = true
-			print("player did not block")
 			player_damage_timer()
 		elif(Player.player_block == true and in_attack_zone == true and not player_recently_taken_damage):
-			if oneTimeAttackDamage/2 > Player.player_stamina_node.value:
-				print("player take damage")
-				Player.player_stamina_node.value -= oneTimeAttackDamage/2
-				# Damage equal to whatever the stamina/block didnt absorb
-				var damageTaken = Player.player_stamina_node.value - oneTimeAttackDamage/2
-				#Player.take_damage(45)
-				stunned = true
-				change_state("stunned")
-			else:
-				print("player blocked damage")
 				stunned = true
 				#Decrease player stamina by half the value of the potential damage inflicted
-				Player.player_stamina_node.value -= oneTimeAttackDamage/2
-				change_state("stunned")
-				
-				
-				
-				
+				Player.lose_stamina(oneTimeAttackDamage/2)
+				change_state("stunned")		
 		attacking = false
 		change_state("fleeing")
 		#$AnimatedSprite.speed_scale = 1
@@ -169,6 +153,8 @@ func enemy_stun_timer():
 	stunTimerStart = false
 	change_state("idle")
 
+
+
 func enemy_delay_timer():
 	yield(get_tree().create_timer(enemyAttackDelay), "timeout")
 	enemy_recently_attacked = false
@@ -178,11 +164,10 @@ func _physics_process(delta):
 	#var distance = dis_to_player.length()
 	#var direction = dis_to_player.normalize()
 	if state == "inCombat" && dead == false:
+		
 		if attacking == false:
-			var player_distance_x = abs(Player.position.x - position.x)
-			var player_distance_y = abs(Player.position.y - position.y)
-			
-			if (player_distance_x > 350 or player_distance_y > 350):
+			var distance_to_player = self.global_position.distance_to(Player.global_position)
+			if (distance_to_player > 350):
 				change_state("idle")
 			
 			dir = (Player.position - position).normalized()
@@ -216,10 +201,9 @@ func _physics_process(delta):
 			
 		elif(in_attack_zone == false && health > 61):		
 			rng.randomize()
-			var random_decision = rng.randi_range(0, 2)
+			var random_decision = rng.randi_range(0, 1)
 			match random_decision:
 				0:
-					attacking = true
 					change_state("inCombat")
 				1:
 					change_state("idle")
@@ -300,8 +284,9 @@ func _physics_process(delta):
 		
 	if state == "idle" && dead == false:		
 			$AnimatedSprite.speed_scale = 1
-			player_distance = abs(Player.position.x - position.x)
-			if(playerAlive && player_distance < 200):
+			var distance_to_player = self.global_position.distance_to(Player.global_position)
+			#player_distance = abs(Player.position.x - position.x)
+			if(playerAlive && distance_to_player < 300):
 				change_state("inCombat")
 			else:
 				if Player.position.x - self.position.x < 0:
@@ -331,6 +316,7 @@ func _physics_process(delta):
 			
 	
 	if state == "dying":
+		dead = true
 		var x_pos = self.position.x
 		var y_pos = self.position.y
 		if !noise_played:
@@ -338,7 +324,10 @@ func _physics_process(delta):
 			get_tree().get_root().get_node("MainRoot/AudioStreamPlayer2D").play_enemy_death_noise()
 		disable_collision()
 		$AnimatedSprite.play("redguard_dying")
-		if($AnimatedSprite.frame >= 9):
+		$BloodParticles.emitting = false
+		yield(get_node("AnimatedSprite"), "animation_finished")
+		if !played_death_animation:
+			played_death_animation = true
 			rng.randomize()
 			var random_decision = rng.randi_range(0, 1)
 			match random_decision:
@@ -363,25 +352,25 @@ func chooseMovementZone():
 
 func _on_enemyMovementZones_area_entered(area: Area2D) -> void:
 	
-	print("in a movement zone")
+
 	#if self.health <= 33:
 	isEnemyInMovementZone = true
 	#return isEnemyInMovementZone
 
 
 func _on_enemyMovementZones_area_exited(area: Area2D) -> void:
-	print("left movement zone")
+
 	isEnemyInMovementZone = false
 
 
 func _on_SenseArea_area_entered(area: Area2D):
-	print(area.name)
+
 	if area.name == "attackZone" && state == "inCombat":
 		attacking = true
 		in_attack_zone = true
 		isEnemyInMovementZone = false
 	if area.is_in_group("EnemyMovementZone"):
-		print("zone entered")
+
 		isEnemyInMovementZone = true
 		attacking = false
 
@@ -392,7 +381,6 @@ func _on_SenseArea_area_exited(area):
 
 
 func _on_IdleWaitTimer_timeout():
-	print("timer done")
 	$IdleWaitTimer.wait_time = 5
 	change_state("inCombat")
 
