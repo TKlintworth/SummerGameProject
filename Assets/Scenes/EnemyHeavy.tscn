@@ -10,20 +10,20 @@
 [ext_resource path="res://Sprites/enemy_heavy_running/tile001.png" type="Texture" id=8]
 [ext_resource path="res://Sprites/enemy_heavy_running/tile002.png" type="Texture" id=9]
 [ext_resource path="res://Sprites/enemy_heavy_running/tile003.png" type="Texture" id=10]
-[ext_resource path="res://Sprites/enemy_heavy_dying/tile000.png" type="Texture" id=11]
-[ext_resource path="res://Sprites/enemy_heavy_dying/tile001.png" type="Texture" id=12]
-[ext_resource path="res://Sprites/enemy_heavy_dying/tile002.png" type="Texture" id=13]
-[ext_resource path="res://Sprites/enemy_heavy_dying/tile003.png" type="Texture" id=14]
-[ext_resource path="res://Sprites/enemy_heavy_dying/tile004.png" type="Texture" id=15]
-[ext_resource path="res://Sprites/enemy_heavy_dying/tile005.png" type="Texture" id=16]
-[ext_resource path="res://Sprites/enemy_heavy_dying/tile006.png" type="Texture" id=17]
-[ext_resource path="res://Sprites/enemy_heavy_dying/tile007.png" type="Texture" id=18]
-[ext_resource path="res://Sprites/enemy_heavy_dying/tile008.png" type="Texture" id=19]
-[ext_resource path="res://Sprites/enemy_heavy_dying/tile009.png" type="Texture" id=20]
-[ext_resource path="res://Sprites/enemy_heavy_stun/tile000.png" type="Texture" id=21]
-[ext_resource path="res://Sprites/enemy_heavy_stun/tile001.png" type="Texture" id=22]
-[ext_resource path="res://Sprites/enemy_heavy_stun/tile002.png" type="Texture" id=23]
-[ext_resource path="res://Sprites/enemy_heavy_stun/tile003.png" type="Texture" id=24]
+[ext_resource path="res://Sprites/enemy_heavy_stun/tile000.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/enemy_heavy_stun/tile001.png" type="Texture" id=12]
+[ext_resource path="res://Sprites/enemy_heavy_stun/tile002.png" type="Texture" id=13]
+[ext_resource path="res://Sprites/enemy_heavy_stun/tile003.png" type="Texture" id=14]
+[ext_resource path="res://Sprites/enemy_heavy_dying/tile000.png" type="Texture" id=15]
+[ext_resource path="res://Sprites/enemy_heavy_dying/tile001.png" type="Texture" id=16]
+[ext_resource path="res://Sprites/enemy_heavy_dying/tile002.png" type="Texture" id=17]
+[ext_resource path="res://Sprites/enemy_heavy_dying/tile003.png" type="Texture" id=18]
+[ext_resource path="res://Sprites/enemy_heavy_dying/tile004.png" type="Texture" id=19]
+[ext_resource path="res://Sprites/enemy_heavy_dying/tile005.png" type="Texture" id=20]
+[ext_resource path="res://Sprites/enemy_heavy_dying/tile006.png" type="Texture" id=21]
+[ext_resource path="res://Sprites/enemy_heavy_dying/tile007.png" type="Texture" id=22]
+[ext_resource path="res://Sprites/enemy_heavy_dying/tile008.png" type="Texture" id=23]
+[ext_resource path="res://Sprites/enemy_heavy_dying/tile009.png" type="Texture" id=24]
 [ext_resource path="res://Scenes/BloodSplashParticles.tscn" type="PackedScene" id=25]
 [ext_resource path="res://Scenes/BloodParticles.tscn" type="PackedScene" id=26]
 
@@ -39,14 +39,14 @@ animations = [ {
 "name": "heavy_enemy_running",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ) ],
-"loop": true,
-"name": "heavy_enemy_dying",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ) ],
+"frames": [ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ],
 "loop": true,
 "name": "heavy_enemy_stun",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ) ],
+"loop": true,
+"name": "heavy_enemy_dying",
 "speed": 5.0
 } ]
 
@@ -61,6 +61,8 @@ animations = [ {
 ]]
 scale = Vector2( 1.4, 1.4 )
 script = ExtResource( 1 )
+health = 150.0
+oneTimeAttackDamage = 45
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="." groups=[
 "HeavyEnemy",

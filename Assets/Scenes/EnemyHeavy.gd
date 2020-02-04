@@ -10,7 +10,7 @@ onready var knockbackEffect = get_node("knockbackEffect")
 onready var enemy = self
 
 var SPEED = 120.0
-var health = 300.0
+export var health = 300.0
 var playerAlive
 var react_time = 0
 var dir = 1
