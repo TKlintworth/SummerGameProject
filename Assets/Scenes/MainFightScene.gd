@@ -156,17 +156,17 @@ func wave_3():
 	add_child(enemy2)
 	enemy2.position = Vector2(250, 750)
 	
-	#var enemy3 = enemy_scene.instance()
-	#add_child(enemy3)
-	#enemy3.position = Vector2(1500, 500)
+	var enemy3 = enemy_scene.instance()
+	add_child(enemy3)
+	enemy3.position = Vector2(1500, 350)
 	
 	var enemy4 = enemy_scene.instance()
 	add_child(enemy4)
 	enemy4.position = Vector2(1500, 750)
 	
-	var enemy5 = enemy_scene.instance()
-	add_child(enemy5)
-	enemy5.position = Vector2(100, 750)
+	#var enemy5 = enemy_scene.instance()
+	#add_child(enemy5)
+	#enemy5.position = Vector2(100, 750)
 	
 func wave_4():
 	var heavy_enemy1 = heavy_enemy_scene.instance()
