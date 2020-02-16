@@ -116,8 +116,12 @@ position = Vector2( 1786.08, 900 )
 shape = SubResource( 3 )
 
 [node name="SpearSpawnTimer" type="Timer" parent="."]
+wait_time = 5.0
 
 [node name="HealthSpawnTimer" type="Timer" parent="."]
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 3.0
 
 [node name="WallSegment1" type="KinematicBody2D" parent="." groups=[
 "Wall",
@@ -127,13 +131,14 @@ position = Vector2( 13.7365, 585.68 )
 scale = Vector2( 1, 10 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallSegment1"]
+position = Vector2( 0, -1.91333 )
 scale = Vector2( 3, 3 )
 shape = SubResource( 4 )
 
 [node name="Wall" type="Area2D" parent="WallSegment1"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallSegment1/Wall"]
-position = Vector2( 10.2744, 0 )
+position = Vector2( 10.2744, -2.39166 )
 scale = Vector2( 3, 5 )
 shape = SubResource( 5 )
 
@@ -145,14 +150,14 @@ position = Vector2( 1900, 585.68 )
 scale = Vector2( 1, 10 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallSegment2"]
-position = Vector2( 36, 0 )
+position = Vector2( 36, -1.94802 )
 scale = Vector2( 2, 3 )
 shape = SubResource( 4 )
 
 [node name="Wall" type="Area2D" parent="WallSegment2"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallSegment2/Wall"]
-position = Vector2( 16.5032, 0.229233 )
+position = Vector2( 16.5032, -2.23142 )
 scale = Vector2( 2, 5 )
 shape = SubResource( 5 )
 
@@ -165,14 +170,15 @@ rotation = 1.5708
 scale = Vector2( 1, 20.1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallSegment3"]
-scale = Vector2( 3, 3 )
+position = Vector2( 1.90735e-005, 0.237976 )
+scale = Vector2( 3, 2.95 )
 shape = SubResource( 4 )
 
 [node name="Wall" type="Area2D" parent="WallSegment3"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallSegment3/Wall"]
-position = Vector2( 10.2744, 0 )
-scale = Vector2( 3, 5 )
+position = Vector2( 10.2745, 0.947048 )
+scale = Vector2( 3, 4.9 )
 shape = SubResource( 5 )
 
 [node name="WallSegment4" type="KinematicBody2D" parent="." groups=[
@@ -184,20 +190,18 @@ rotation = -1.5708
 scale = Vector2( 1, 20.1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallSegment4"]
-position = Vector2( 18.0492, 0 )
-scale = Vector2( 3, 3 )
+position = Vector2( 18.0492, -0.387661 )
+scale = Vector2( 3, 2.9 )
 shape = SubResource( 4 )
 
 [node name="Wall" type="Area2D" parent="WallSegment4"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallSegment4/Wall"]
-position = Vector2( -18.3898, 0.601202 )
-scale = Vector2( 3, 5 )
+position = Vector2( -11.6912, -0.450613 )
+scale = Vector2( 3, 4.9 )
 shape = SubResource( 5 )
-
-[node name="EnemyHeavy" parent="." instance=ExtResource( 3 )]
-position = Vector2( 902.014, 797.499 )
 [connection signal="timeout" from="SpearSpawnTimer" to="." method="_on_SpearSpawnTimer_timeout"]
 [connection signal="timeout" from="HealthSpawnTimer" to="." method="_on_HealthSpawnTimer_timeout"]
+[connection signal="timeout" from="DeathTimer" to="Player" method="_on_DeathTimer_timeout"]
 
 [editable path="CanvasLayer/Control"]

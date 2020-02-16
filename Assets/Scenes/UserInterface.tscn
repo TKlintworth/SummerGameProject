@@ -5,8 +5,8 @@
 [ext_resource path="res://Scenes/Wave_Large.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/UI/StaminaProgressBar.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/UI/HealthProgressBar.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/AudioStreamPlayer2D.gd" type="Script" id=6]
-[ext_resource path="res://PNG/UI_spear_throw1.png" type="Texture" id=7]
+[ext_resource path="res://PNG/UI_spear_throw1.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/AudioStreamPlayer2D.gd" type="Script" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 42
@@ -60,30 +60,32 @@ script = ExtResource( 3 )
 [node name="Stamina" parent="NinePatchRect" instance=ExtResource( 4 )]
 anchor_top = 1.0
 anchor_bottom = 1.0
+margin_left = 10.0
 margin_top = -337.146
-margin_right = 500.0
+margin_right = 510.0
 margin_bottom = 162.854
 value = 100.0
 
 [node name="Health" parent="NinePatchRect" instance=ExtResource( 5 )]
 anchor_top = 1.0
 anchor_bottom = 1.0
+margin_left = 10.0
 margin_top = -337.146
-margin_right = 500.0
+margin_right = 510.0
 margin_bottom = 162.854
 
 [node name="SpearThrow" type="TextureProgress" parent="NinePatchRect"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 640.0
-margin_top = -150.0
-margin_right = 360.0
-margin_bottom = 850.0
-rect_scale = Vector2( 0.1, 0.1 )
+margin_left = 1056.19
+margin_top = -187.964
+margin_right = 776.188
+margin_bottom = 812.036
+rect_scale = Vector2( 0.15, 0.15 )
 value = 100.0
-texture_under = ExtResource( 7 )
-texture_progress = ExtResource( 7 )
+texture_under = ExtResource( 6 )
+texture_progress = ExtResource( 6 )
 fill_mode = 4
 tint_under = Color( 0.462745, 0.462745, 0.462745, 1 )
 __meta__ = {
@@ -94,4 +96,4 @@ __meta__ = {
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource( 3 )
-script = ExtResource( 6 )
+script = ExtResource( 7 )

@@ -102,7 +102,6 @@ func take_damage(amount):
 			
 			
 	else:
-		screenFlash()
 		player_health_node.set_value(player_health_node.value - amount)
 
 func lose_stamina(amount):
@@ -125,6 +124,8 @@ func player_die():
 		$AnimatedSprite.play("slave_dying")
 		game_status = 1
 		dead_animation_played = true # prevents audio stream from playing sounds more than once
+		get_tree().get_root().get_node("MainRoot/DeathTimer").start()
+		
 	
 func stamina_penalty_timer():
 	stamina_depleted = true
@@ -163,6 +164,7 @@ func spear_destroy_from_enemy():
 	if (self.player_status == 0): # if player has spear, set player to not have spear
 		set_thrown(true)
 		$AnimatedSprite.play("slave_idle")
+		get_tree().get_root().get_node("MainRoot").startSpearTimer()
 		self.player_status = 1
 
 func reset_spear_icon():
@@ -183,7 +185,6 @@ func throw_spear():
 		
 		spearIcon.set_max(spearCooldown)
 		
-		print(get_node("SpearCooldownTimer").time_left)
 		# Cooldown visual timer clockwise
 		# Tween between the max and min value for the texture progress node's value
 		tween = get_parent().get_node("CanvasLayer/Control/NinePatchRect/SpearThrow/Tween")
@@ -316,7 +317,6 @@ func set_throwable(value):
 	self.spearThrowable = value
 
 func _physics_process(delta):
-	print(spearIcon.get_value())
 	if $AnimatedSprite.get_animation() == "slave_jab_spear_active":
 		if $AnimatedSprite.frame == 4:
 			$EnemyDamageArea.set_monitoring(true)
@@ -338,8 +338,8 @@ func _on_AnimatedSprite_animation_finished(): #ran everytime animation is finish
 	$EnemyDamageArea.set_monitoring(false)
 	$RunningDust.emitting = false
 	$AnimatedSprite.set_speed_scale(1)
-	if player_dead == true:
-		get_parent().play_lose()
+	#if player_dead == true:
+	#	get_parent().play_lose()
 	#$EnemyDamageArea.set_collision_mask(0) # set player spear to cannot kill enemy
 	# GAME OVER, player has died. Return to menu
 	#if game_status == 1:
@@ -379,3 +379,7 @@ func _on_SpearCooldownTimer_timeout():
 	get_node("SpearCooldownTimer").wait_time = spearCooldown
 	spearThrowable = true
 	set_thrown(false)
+
+
+func _on_DeathTimer_timeout():
+	get_parent().play_lose()

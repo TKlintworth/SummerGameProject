@@ -40,7 +40,7 @@ var vel = Vector2()
 var idle_timer = false
 var idle_timer_start = false
 var state = "idle"
-var states = ["idle", "inCombat", "fleeing", "stunned", "stopped", "dying"]
+var states = ["idle", "inCombat", "fleeing", "stunned", "stopped", "dying", "finished"]
 var knockbackDistance = 50
 var played_death_animation = false
 
@@ -99,10 +99,13 @@ func change_state(var nextState):
 		state = "stopped"
 	if nextState == "dying":
 		state = "dying"
+	if nextState == "finished":
+		state = "finished"
 
 		
 # Seperating out playing attack animations into chooseable attacks
 func choose_attack(attack):
+	
 	if attack == "light_flurry":
 		# Light flurry plays individual attack animations faster
 		$AnimatedSprite.speed_scale = 1.85
@@ -144,9 +147,10 @@ func ai_get_direction(target):
 
 #Timer for allowing player to take more damage after being damaged
 func player_damage_timer():
-	get_tree().get_root().get_node("MainRoot/Player/AnimationPlayer").play("blink")
-	yield(get_tree().create_timer(playerDamageTime), "timeout")
-	player_recently_taken_damage = false
+	if(Player.player_health_node.value > 0): #dont blink if player is dead on the ground
+		get_tree().get_root().get_node("MainRoot/Player/AnimationPlayer").play("blink")
+		yield(get_tree().create_timer(playerDamageTime), "timeout")
+		player_recently_taken_damage = false
 
 func enemy_stun_timer():
 	knockback()
@@ -162,10 +166,12 @@ func enemy_delay_timer():
 	enemy_recently_attacked = false
 
 func _physics_process(delta):
+	if(Player.game_status==1):
+		change_state("finished")
 	#var dis_to_player = Player.global_position - self.global_position
 	#var distance = dis_to_player.length()
 	#var direction = dis_to_player.normalize()
-	if state == "inCombat" && dead == false:
+	elif state == "inCombat" && dead == false:
 		
 		if attacking == false:
 			var distance_to_player = self.global_position.distance_to(Player.global_position)
@@ -190,7 +196,7 @@ func _physics_process(delta):
 			attacking = false
 			#change_state("fleeing")
 		
-	if(state == "fleeing" && dead == false):
+	elif(state == "fleeing" && dead == false):
 		
 		
 		if(stunned == true):
@@ -284,7 +290,7 @@ func _physics_process(delta):
 			#enemyMovementZoneChosen = false
 		
 		
-	if state == "idle" && dead == false:		
+	elif state == "idle" && dead == false:		
 			$AnimatedSprite.speed_scale = 1
 			var distance_to_player = self.global_position.distance_to(Player.global_position)
 			#player_distance = abs(Player.position.x - position.x)
@@ -307,7 +313,7 @@ func _physics_process(delta):
 	
 	
 	
-	if state == "stopped" && dead == false:
+	elif state == "stopped" && dead == false:
 		player_distance = abs(Player.position.x - position.x)
 		if(player_distance < 50):
 			change_state("inCombat")
@@ -317,7 +323,7 @@ func _physics_process(delta):
 			idle_timer_start = true
 			
 	
-	if state == "dying":
+	elif state == "dying":
 		dead = true
 		var x_pos = self.position.x
 		var y_pos = self.position.y
@@ -339,8 +345,11 @@ func _physics_process(delta):
 					pass	
 			self.queue_free()
 	
-func chooseMovementZone():
+	elif(state=="finished"):
+		$AnimatedSprite.play("redguard_idle")
+		attacking=false
 	
+func chooseMovementZone():
 	if(Player.position.x - self.position.x > 0):
 		var runToIndex = range(0,2)[randi()%range(0,2).size()]
 		var runToZone = enemyMovementZones.zones[runToIndex]
