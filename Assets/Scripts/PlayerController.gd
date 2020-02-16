@@ -163,6 +163,7 @@ func spear_destroy_from_enemy():
 	if (self.player_status == 0): # if player has spear, set player to not have spear
 		set_thrown(true)
 		$AnimatedSprite.play("slave_idle")
+		get_tree().get_root().get_node("MainRoot").startSpearTimer()
 		self.player_status = 1
 
 func reset_spear_icon():

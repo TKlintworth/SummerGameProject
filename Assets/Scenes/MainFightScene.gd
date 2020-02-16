@@ -41,7 +41,7 @@ func _ready():
 
 func start_game():
 	$Player.action = false
-	$SpearSpawnTimer.start()
+	#$SpearSpawnTimer.start()
 	$Music.play_battle_music()
 	
 func play_win():
@@ -65,6 +65,9 @@ func get_enemy_number():
 
 func play_battle_music():
 	$Music.play_battle_music()
+
+func startSpearTimer():
+	$SpearSpawnTimer.start()
 
 # Add spear to random location on map
 func add_spear(ran_num_x, ran_num_y):
@@ -207,8 +210,10 @@ func _on_SpearSpawnTimer_timeout():
 	var random_spear_location_y = rng.randf_range(75, 800)
 	var random_spear_spawn_timer = rng.randf_range(15, 50)
 	add_spear(random_spear_location_x, random_spear_location_y)
-	$SpearSpawnTimer.wait_time = random_spear_spawn_timer
-	$SpearSpawnTimer.start()
+	$SpearSpawnTimer.wait_time = 5
+	$SpearSpawnTimer.stop()
+	#$SpearSpawnTimer.wait_time = random_spear_spawn_timer
+	#$SpearSpawnTimer.start()
 
 
 #func _on_HealthSpawnTimer_timeout():

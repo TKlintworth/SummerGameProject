@@ -116,6 +116,7 @@ position = Vector2( 1786.08, 900 )
 shape = SubResource( 3 )
 
 [node name="SpearSpawnTimer" type="Timer" parent="."]
+wait_time = 5.0
 
 [node name="HealthSpawnTimer" type="Timer" parent="."]
 
