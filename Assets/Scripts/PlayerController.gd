@@ -271,7 +271,7 @@ func get_input():
 		throw_spear()
 	
 	# Jab action
-	if Input.is_action_just_pressed("space") and !action:
+	if Input.is_action_just_pressed("space") and !action and player_status == 0:
 		jab()
 	
 	#Sprint action

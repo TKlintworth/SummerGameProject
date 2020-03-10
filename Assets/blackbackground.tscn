@@ -9,8 +9,8 @@
 [node name="TextureRect" type="TextureRect" parent="ParallaxLayer"]
 margin_left = 0.307129
 margin_top = 4.24939
-margin_right = 256.307
-margin_bottom = 148.249
+margin_right = 512.307
+margin_bottom = 292.249
 rect_scale = Vector2( 4, 4 )
 texture = ExtResource( 1 )
 stretch_mode = 3
