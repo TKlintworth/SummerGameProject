@@ -126,12 +126,15 @@ func choose_attack(attack):
 		
 		#IF player isn't blocking and they're in the attack zone at the end of the attack animation, recieve damage
 		if(Player.player_block == false and in_attack_zone == true and not player_recently_taken_damage):
+			$AnimatedSprite.speed_scale = 1
 			Player.take_damage(45)
 			player_recently_taken_damage = true
 			player_damage_timer()
+			
 		#Removed the check for "not player_recently_taken_damage" out to fix issue #170 on Feb 4, 2020
 		#Don't think the removal will cause issue but documenting just in case
 		elif(Player.player_block == true and in_attack_zone == true):
+			$AnimatedSprite.speed_scale = 1
 			stunned = true
 			#Decrease player stamina by half the value of the potential damage inflicted
 			Player.lose_stamina(oneTimeAttackDamage/2)

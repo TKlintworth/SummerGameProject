@@ -21,16 +21,16 @@ onready var mapDetails = get_node("HBoxContainer/MapDetails")
 onready var menuNoisePlayer = get_node("menuNoise")
 
 var sandyArenaPNG = preload("res://Art/BigArena.png")
-var brazierArenaPNG = preload("res://arena/environment/tilesets/wall/walloverview.png")
+var brazierArenaPNG = preload("res://arena/environment/arena2large!.png")
 
 var map1Descrip = ("Description:\nSandy map free from obstacles.\n\nSize: Large")
-var map2Descrip = ""
+var map2Descrip = "Description:\nThe OG map free from obstacles.\n\nSize: Large"
 
 
 func _ready() -> void:
 	#Go ahead and set the current map buttons mapPaths to be connected to the button pressed signal later
 	map1Button.mapPath = "res://Scenes/MainFightScene.tscn"
-	map2Button.mapPath = ""
+	map2Button.mapPath = "res://Scenes/MainFightScene2.tscn"
 	
 	#Go ahead and display map 1 info
 	_on_Panel_mouse_entered()
@@ -53,7 +53,7 @@ func _on_Panel_mouse_entered() -> void:
 	#Set map description
 	#get_node(String(mapDetails "/NameOfMap")).text = map1Button.nameOfMap
 	$HBoxContainer/MapDetails/NameOfMap.text = map1Button.nameOfMap
-	#$HBoxContainer/MapDetails/MapPic.set_texture(sandyArenaPNG)
+	$HBoxContainer/MapDetails/MapPic.set_texture(sandyArenaPNG)
 	$HBoxContainer/MapDetails/MapDescrip.text = map1Descrip
 	
 
@@ -67,7 +67,7 @@ func _on_Panel2_mouse_entered() -> void:
 	#Set MapPic to appropriate thumbnail for map
 	#Set map description
 	$HBoxContainer/MapDetails/NameOfMap.text = map2Button.nameOfMap
-	#$HBoxContainer/MapDetails/MapPic.set_texture(brazierArenaPNG)
+	$HBoxContainer/MapDetails/MapPic.set_texture(brazierArenaPNG)
 	$HBoxContainer/MapDetails/MapDescrip.text = map2Descrip
 
 
@@ -81,6 +81,7 @@ func _on_Panel2_mouse_exited() -> void:
 
 func _on_Button_pressed(scene):
 	print("button pressed")
+	print(scene)
 	if scene:
 		get_node("/root/GameStateManager").getScene(scene)
 	else:

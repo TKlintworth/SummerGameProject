@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scenes/WinScreen.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Fonts/yoster.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://blackbackground.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/ParallaxBackground2.tscn" type="PackedScene" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 200
@@ -44,7 +44,7 @@ custom_colors/font_color_pressed = Color( 0.945098, 0.917647, 0.917647, 1 )
 text = "Menu"
 flat = true
 
-[node name="ParallaxBackground" parent="." instance=ExtResource( 3 )]
-
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
+[node name="ParallaxBackground2" parent="." instance=ExtResource( 3 )]
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
