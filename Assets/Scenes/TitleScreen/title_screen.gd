@@ -4,13 +4,13 @@ var scene_path_to_load
 var scene_to_load
 
 onready var menuNoisePlayer = get_node("menuNoise")
+onready var newGameButton = get_node("Menu/CenterRow/Buttons/NewGameButton")
 
 func _ready():
 	$AudioStreamPlayer2D.play_menu_music() # play menu music
 	$Menu/CenterRow/Buttons/NewGameButton.grab_focus()
 	for button in $Menu/CenterRow/Buttons.get_children():
 		button.connect("pressed", self, "_on_Button_pressed", [button.scene_to_load])
-		#print("hello")
 
 func _on_Button_pressed(scene):
 	
